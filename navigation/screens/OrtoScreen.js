@@ -69,6 +69,7 @@ export default class OrtoScreen extends Component {
 					<ImageBackground source={require('../imgs/grassBack.png')} style={styles.backgroundImagePlant}>
 						<View >
 							<TouchableOpacity activeOpacity={0.7} onPress={() => {
+												this.setState({newPlant: false})
 												this.setModalVisible(true);
 												this.state.plant = item;
 											}}
@@ -87,6 +88,7 @@ export default class OrtoScreen extends Component {
 					<ImageBackground source={require('../imgs/grassBack.png')} style={styles.backgroundImagePlant}>
 						<View >
 							<TouchableOpacity activeOpacity={0.7} onPress={() => {
+													this.setState({newPlant: false})
 													this.setModalVisible(true);
 													this.state.plant = item;
 												}}
@@ -121,14 +123,15 @@ export default class OrtoScreen extends Component {
 				<View>
 					<Text style={styles.text}>{this.state.plant.id}</Text>
 					<TouchableHighlight onPress={() => {
+						const {navigate} = this.props.navigation;
 						this.setModalVisible(!this.state.modalVisible);
-							navigate('Wiki', 
-									{
-										id: this.state.plant,
-										otherParam: 'Serra',
-									}
-								);
-						}}
+						navigate('WikiHome', 
+							{
+								id: this.state.plant,
+								otherParam: 'Orto',
+							}
+						);
+					}}
 					>
 						<Text style={styles.text}>Go to Wiki</Text>
 					</TouchableHighlight>
@@ -157,8 +160,6 @@ export default class OrtoScreen extends Component {
 	}
 
 	render(){
-		const {navigate} = this.props.navigation;
-
 		{this.genEmpty()}
 		return (
 			<View style={styles.container}>
@@ -188,10 +189,10 @@ export default class OrtoScreen extends Component {
 								<ImageBackground source={require('../imgs/grassBack.png')} style={styles.backgroundImageNewPlant}>
 									<View style={styles.containerNew}>
 										<TouchableOpacity activeOpacity={0.7} onPress={() => {
-																this.setState({newPlant: true});
-																this.setModalVisible(!this.state.modalVisible);
-															}}
-															>
+											this.setState({newPlant: true});
+											this.setModalVisible(!this.state.modalVisible);
+											}}
+										>
 											<Image
 												style={styles.plantImage}
 												source={require('../imgs/soilEmpty.png')}

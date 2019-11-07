@@ -56,9 +56,6 @@ export default class SerraScreen extends Component {
 				dataSource: responseJson
 			});
 		});
-		console.log(this.state.data.length);
-		console.log(this.state.dataSource.length);
-		console.log('exiting with length = '+ this.state.data.length );
 	}
 	
 	genEmpty () {
@@ -128,13 +125,14 @@ export default class SerraScreen extends Component {
 				<View>
 					<Text style={styles.text}>{this.state.plant.id}</Text>
 					<TouchableHighlight onPress={() => {
+						const {navigate} = this.props.navigation;
 						this.setModalVisible(!this.state.modalVisible);
-							navigate('Wiki', 
-									{
-										id: this.state.plant,
-										otherParam: 'Serra',
-									}
-								);
+						navigate('WikiHome', 
+							{
+								id: this.state.plant,
+								otherParam: 'Serra',
+							}
+							);
 						}}
 					>
 						<Text style={styles.text}>Go to Wiki</Text>
@@ -164,8 +162,6 @@ export default class SerraScreen extends Component {
 	}
 
 	render(){
-		const {navigate} = this.props.navigation;
-
 		{this.genEmpty()}
 		return (
 			<View style={styles.container}>
@@ -195,10 +191,10 @@ export default class SerraScreen extends Component {
 								<ImageBackground source={require('../imgs/mensola-up2.png')} style={styles.backgroundImageNewPlant}>
 									<View style={styles.containerNew}>
 										<TouchableOpacity activeOpacity={0.7} onPress={() => {
-																this.setState({newPlant: true});
-																this.setModalVisible(!this.state.modalVisible);
-															}}
-															>
+											this.setState({newPlant: true});
+											this.setModalVisible(!this.state.modalVisible);
+											}}
+										>
 											<Image
 												style={styles.plantImage}
 												source={require('../imgs/plantEmpty.png')}

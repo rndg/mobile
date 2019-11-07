@@ -135,28 +135,30 @@ const CustomDrawerComponent = (props) => (
 
 const WikiOutdoorStackNavigator = createStackNavigator(
     {
-      WikiOutdoorHome: WikiOutdoorHomeScreen,
-      WikiHorticultural: HorticulturalScreen,
+      WikiOutdoorHome: {screen: WikiOutdoorHomeScreen},
+      WikiHorticultural: {screen: HorticulturalScreen},
     },
     {
       initialRouteName: 'WikiOutdoorHome',
+      headerMode: 'none',
     }
 )
 const WikiIndoorStackNavigator = createStackNavigator(
   {
-    WikiIndoorHome: WikiIndoorHomeScreen,
-    WikiOrnamental: OrnamentalScreen,
-    WikiOrnamental: FloweringScreen,
+    WikiIndoorHome: {screen: WikiIndoorHomeScreen},
+    WikiOrnamental: {screen: OrnamentalScreen},
+    WikiFlowering: {screen: FloweringScreen},
   },
   {
     initialRouteName: 'WikiIndoorHome',
+    headerMode: 'none',
   }
 )
 const WikiStackNavigator = createStackNavigator(
   {
-    WikiHome: WikiScreen,
-    WikiIndoor: WikiIndoorStackNavigator,
-    WikiOutdoor: WikiOutdoorStackNavigator,
+    WikiHome: {screen: WikiScreen},
+    WikiIndoor: {screen: WikiIndoorStackNavigator},
+    WikiOutdoor: {screen: WikiOutdoorStackNavigator},
   },
   {
     initialRouteName: 'WikiHome',

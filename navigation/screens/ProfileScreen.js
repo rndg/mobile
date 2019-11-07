@@ -23,13 +23,12 @@ class ProfileScreen extends Component {
     }
     
     render () {
-        const { goBack } = this.props.navigation;
 
         return (
             <View style={styles.container}>
                 <Header>
                     <Left>
-                        <TouchableOpacity onPress = {()=> goBack()}>
+                        <TouchableOpacity onPress = {()=> this.props.navigation.goBack()}>
                             <View style={{paddingHorizontal: 10}}>
                                 <Icon name="ios-arrow-back" size={10}/>
                             </View>

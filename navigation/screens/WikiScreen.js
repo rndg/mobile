@@ -41,7 +41,6 @@ class WikiScreen extends Component {
     }
 
     render () {
-        const { goBack } = this.props.navigation;
 
         return (
             <View style={styles.container}>
@@ -49,7 +48,7 @@ class WikiScreen extends Component {
                     <Left>
                         <TouchableOpacity onPress = {()=> {
                             this.clearParams();
-                            goBack();
+                            this.props.navigation.navigate('Home');
                             }
                             }>
                             <View style={{paddingHorizontal: 10}}>
@@ -61,7 +60,11 @@ class WikiScreen extends Component {
                 <View style={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
                     <Text>WikiScreen</Text>
                     {this.displayRoute()}
-                    <Button title="Back" onPress={() => goBack()} />
+                    <Button title="Indoor Stack" onPress={()=> 
+                        this.props.navigation.navigate('WikiIndoor')
+                        } />
+                    <Button title="Outdoor Stack" onPress={()=> 
+                        this.props.navigation.navigate('WikiOutdoor')} /> 
                 </View>
             </View>
         );
