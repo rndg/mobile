@@ -26,15 +26,20 @@ import SignInScreen from './screens/SignInScreen';
 import SignUpScreen from './screens/SignUpScreen';
 
 import HomeScreen from './screens/HomeScreen';
-import SettingsScreen from './screens/SettingsScreen';
-
-import HomeScreenOld from './screens/HomeScreenOld';
 import SerraScreen from './screens/SerraScreen';
 import OrtoScreen from './screens/OrtoScreen';
+import HomeScreenOld from './screens/HomeScreenOld';
 
 import WikiScreen from './screens/WikiScreen';
+import WikiIndoorHomeScreen from './screens/WikiIndoorHomeScreen';
+import WikiOutdoorHomeScreen from './screens/WikiOutdoorHomeScreen';
+import OrnamentalScreen from './screens/OrnamentalScreen';
+import FloweringScreen from './screens/FloweringScreen';
+import HorticulturalScreen from './screens/HorticulturalScreen';
+
 import ProfileScreen from './screens/ProfileScreen';
 import AchievScreen from './screens/AchievScreen';
+import SettingsScreen from './screens/SettingsScreen';
 
 
 const {width} = Dimensions.get('window')
@@ -128,10 +133,41 @@ const CustomDrawerComponent = (props) => (
   </SafeAreaView>
 )
 
+const WikiOutdoorStackNavigator = createStackNavigator(
+    {
+      WikiOutdoorHome: WikiOutdoorHomeScreen,
+      WikiHorticultural: HorticulturalScreen,
+    },
+    {
+      initialRouteName: 'WikiOutdoorHome',
+    }
+)
+const WikiIndoorStackNavigator = createStackNavigator(
+  {
+    WikiIndoorHome: WikiIndoorHomeScreen,
+    WikiOrnamental: OrnamentalScreen,
+    WikiOrnamental: FloweringScreen,
+  },
+  {
+    initialRouteName: 'WikiIndoorHome',
+  }
+)
+const WikiStackNavigator = createStackNavigator(
+  {
+    WikiHome: WikiScreen,
+    WikiIndoor: WikiIndoorStackNavigator,
+    WikiOutdoor: WikiOutdoorStackNavigator,
+  },
+  {
+    initialRouteName: 'WikiHome',
+    headerMode: 'none',
+  }
+)
+
 const AppDrawerNavigator = createDrawerNavigator(
   {
     Home: AppStackNavigator,
-    Wiki: WikiScreen,
+    Wiki: WikiStackNavigator,
     Profile: ProfileScreen,
     Achievements: AchievScreen
   },{
