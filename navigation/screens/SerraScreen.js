@@ -19,6 +19,15 @@ import {
 	Picker,
 } from 'react-native';
 
+import {
+	myPlants,
+	selectPlants,
+	uploadPlantToServer,
+} from '../functions/dbRequest'
+  
+import {
+	plantImg,
+} from '../functions/function'
 
 export default class SerraScreen extends Component {
 
@@ -41,6 +50,14 @@ export default class SerraScreen extends Component {
 			name: null,
 		},
 		newPlant: false,
+		plants: [],
+		plName: '',
+		id_plant: 4,
+		id_user: 1,
+		email: '',
+		password: '',
+		userData: [],
+		type: 'Indoor'
 	}
 
 	setModalVisible(visible) {
@@ -48,14 +65,28 @@ export default class SerraScreen extends Component {
 	}
 
 	componentDidMount () {
-		fetch('http://192.168.64.2/MyLeaf/Plants.php')
-		.then((response) => response.json())
-		.then((responseJson) => {
-			this.setState({
-				isLoading: false,
-				dataSource: responseJson
+		myPlants(this.state.id_user, this.state.type).then(data => {
+			this.state.isLoading = false;
+			this.state.dataSource = data;
 			});
-		});
+			
+			fetch('http://192.168.64.2/MyLeaf/selectPlants.php', {
+				method: 'POST',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				},
+					body: JSON.stringify({
+						type: 'Indoor'
+					})
+			})
+			.then((response) => response.json())
+			.then((responseJson) => {
+				this.setState({
+					isLoading: false,
+					plants: responseJson
+				});
+			});
 	}
 	
 	genEmpty () {
@@ -78,7 +109,7 @@ export default class SerraScreen extends Component {
 											>
 								<Image
 									style={styles.plantImage}
-									source={require('../imgs/plant.png')}
+									source={plantImg(item.id_plant)}
 								/>
 									<Text style={styles.plantName}>{item.name}</Text>
 							</TouchableOpacity>
@@ -97,7 +128,7 @@ export default class SerraScreen extends Component {
 												>
 								<Image
 									style={styles.plantImage}
-									source={require('../imgs/rose.png')}
+									source={plantImg(item.id_plant)}
 								/>
 									<Text style={styles.plantName}>{item.name}</Text>
 							</TouchableOpacity>
@@ -149,6 +180,36 @@ export default class SerraScreen extends Component {
 		} else {
 			return (
 				<View>
+					<TextInput
+						placeholder="Enter Name Plant"
+						onChangeText={data => this.setState({ plName: data })}
+						style={styles.TextInputStyle}
+					/>
+					<TouchableHighlight onPress={() => 
+						uploadPlantToServer(this.state.id_plant, this.state.id_user, this.state.plName, this.state.type)}
+					>
+						<Text style={styles.text}> UPLOAD Plant TO SERVER </Text>
+					</TouchableHighlight>
+					<View>
+						<Picker
+							mode='dialog'
+							selectedValue={this.state.id_plant}
+							style={{height: 50, width: 100, backgroundColor:'rgba(255, 255, 255, 0.5)'}}
+							itemStyle={{backgroundColor:'rgba(255, 255, 255, 0.5)'}}
+							enabled={false}
+							onValueChange={(itemValue, itemIndex) =>
+								this.setState({id_plant: itemValue})
+							}
+						>
+						{ 
+							this.state.plants.map((item) =>{
+								return(
+									<Picker.Item  label={item.name} value={item.id} key={item.name}/>
+								);
+							})
+						}
+						</Picker>
+					</View>
 					<TouchableHighlight
 						onPress={() => {
 							this.setModalVisible(!this.state.modalVisible);
@@ -207,6 +268,7 @@ export default class SerraScreen extends Component {
 									numColumns={2}
 									columnWrapperStyle={styles.row}
 									data={this.state.dataSource}
+									scrollEnabled={false}
 									keyExtractor = {(item, index) => index}
 									renderItem = {({item, index}) => 
 										<View>

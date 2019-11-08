@@ -7,7 +7,8 @@ import {
     SafeAreaView,
     ScrollView,
     Dimensions, 
-    Image
+    Image,
+    YellowBox,
 } from 'react-native';
 import { 
   createSwitchNavigator,
@@ -41,6 +42,9 @@ import ProfileScreen from './screens/ProfileScreen';
 import AchievScreen from './screens/AchievScreen';
 import SettingsScreen from './screens/SettingsScreen';
 
+YellowBox.ignoreWarnings([
+	'VirtualizedLists should never be nested', // TODO: Remove when fixed
+])
 
 const {width} = Dimensions.get('window')
 

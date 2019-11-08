@@ -20,7 +20,7 @@ export default class SignInScreen extends Component {
 
 	state = {
       email: '',
-      password: '',
+      pass: '',
 	  userData: [],
 	  isLoading: false,
     };
@@ -37,13 +37,13 @@ export default class SignInScreen extends Component {
 	login = (email, pass) => {
 		fetch('http://192.168.64.2/MyLeaf/Login.php', {
       	method: 'POST',
-     	 headers: {
-      	  'Accept': 'application/json',
-      	  'Content-Type': 'application/json'
-    	  },
-     	 body: JSON.stringify({
-     	   email: email,
-     	   password: pass
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+            email: email,
+            password: pass
       	})
     	})
       	.then((response) => response.json())
@@ -67,10 +67,10 @@ export default class SignInScreen extends Component {
 							secureTextEntry = {true} 
 							style = {styles.input} 
 							placeholder = 'password'
-							onChangeText={data => this.setState({ password: data })}
+							onChangeText={data => this.setState({ pass: data })}
 							/>
                             <TouchableOpacity 
-							onPress={() => this.login(this.state.email, this.state.password)}
+							onPress={() => this.login(this.state.email, this.state.pass)}
                             style = {styles.buttonContainer}>
                                 <Text style = {styles.buttonText}>Login</Text>
                             </TouchableOpacity>
@@ -83,47 +83,47 @@ export default class SignInScreen extends Component {
 };
 
 const styles = StyleSheet.create({
-  container: {
-      flex: 1,
-  },
-  backgroundImage: {
-      flex: 1,
-      alignSelf: 'stretch',
-      width: null,
-      justifyContent: 'center',
-  },
-  content: {
-      alignItems: 'center',
-  },
-  inputContainer: {
-      margin: 20,
-      marginBottom: 0, 
-      padding: 20,
-      paddingBottom: 10,
-      alignSelf: 'stretch',
-      borderWidth: 1,
-      borderColor: '#fff',
-      backgroundColor: 'rgba(255,255,255,0.2)'
-  },
-  input: {
-      fontSize: 16,
-      height: 40,
-      padding: 10,
-      marginBottom: 10,
-      backgroundColor: 'rgba(255,255,255,1)'
-  },
-  buttonContainer: {
-      margin: 20,
-      padding: 20,
-      alignSelf: 'stretch',
-      backgroundColor: 'blue',
-      borderWidth: 1,
-      borderColor: '#fff',
-      backgroundColor: 'rgba(255,255,255,0.6)'
-  },
-  buttonText: {
-      fontSize: 16,
-      fontWeight: 'bold',
-      textAlign: 'center',
-  },
+    container: {
+        flex: 1,
+    },
+    backgroundImage: {
+        flex: 1,
+        alignSelf: 'stretch',
+        width: null,
+        justifyContent: 'center',
+    },
+    content: {
+        alignItems: 'center',
+    },
+    inputContainer: {
+        margin: 20,
+        marginBottom: 0, 
+        padding: 20,
+        paddingBottom: 10,
+        alignSelf: 'stretch',
+        borderWidth: 1,
+        borderColor: '#fff',
+        backgroundColor: 'rgba(255,255,255,0.2)'
+    },
+    input: {
+        fontSize: 16,
+        height: 40,
+        padding: 10,
+        marginBottom: 10,
+        backgroundColor: 'rgba(255,255,255,1)'
+    },
+    buttonContainer: {
+        margin: 20,
+        padding: 20,
+        alignSelf: 'stretch',
+        backgroundColor: 'blue',
+        borderWidth: 1,
+        borderColor: '#fff',
+        backgroundColor: 'rgba(255,255,255,0.6)'
+    },
+    buttonText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
 });

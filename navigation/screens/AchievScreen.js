@@ -19,7 +19,7 @@ class AchievScreen extends Component {
 
         return (
             <View style={styles.container}>
-                <Header>
+                <Header style={styles.header}>
                     <Left>
                         <TouchableOpacity onPress = {()=> goBack()}>
                             <View style={{paddingHorizontal: 10}}>
@@ -43,5 +43,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center'
-    }
+    },
+    header: {
+        backgroundColor: '#45803b',
+    },
 });

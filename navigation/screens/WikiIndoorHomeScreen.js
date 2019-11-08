@@ -17,7 +17,7 @@ class WikiIndoorHomeScreen extends Component {
     render() {
         return (
             <View style={styles.containerMain}>
-                <Header>
+                <Header style={styles.header}>
                     <Left>
                         <TouchableOpacity onPress = {()=> {
                             this.props.navigation.goBack(null);
@@ -56,5 +56,8 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    header: {
+        backgroundColor: '#45803b',
     },
 });

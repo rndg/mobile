@@ -17,6 +17,15 @@ import {
 	Dimensions,
 } from 'react-native';
 
+import {
+	myPlants,
+	selectPlants,
+	uploadPlantToServer,
+} from '../functions/dbRequest'
+
+import {
+	plantImg,
+} from '../functions/function'
 
 export default class OrtoScreen extends Component {
 
@@ -39,6 +48,14 @@ export default class OrtoScreen extends Component {
 			name: null,
 		},
 		newPlant: false,
+		plants: [],
+		plName: '',
+		id_plant: 4,
+		id_user: 1,
+		email: '',
+		password: '',
+		userData: [],
+		type: 'Outdoor'
 	}
 
 	setModalVisible(visible) {
@@ -46,14 +63,28 @@ export default class OrtoScreen extends Component {
 	}
 
 	componentDidMount () {
-		fetch('http://192.168.64.2/MyLeaf/Plants.php')
-		.then((response) => response.json())
-		.then((responseJson) => {
-			this.setState({
-				isLoading: false,
-				dataSource: responseJson
+		myPlants(this.state.id_user, this.state.type).then(data => {
+			this.state.isLoading = false;
+			this.state.dataSource = data;
 			});
-		});
+			
+			fetch('http://192.168.64.2/MyLeaf/selectPlants.php', {
+				method: 'POST',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				},
+					body: JSON.stringify({
+						type: 'Indoor'
+					})
+			})
+			.then((response) => response.json())
+			.then((responseJson) => {
+				this.setState({
+					isLoading: false,
+					plants: responseJson
+				});
+			});
 	}
 	
 	genEmpty () {
@@ -76,7 +107,7 @@ export default class OrtoScreen extends Component {
 											>
 								<Image
 									style={styles.plantImage}
-									source={require('../imgs/carrot.png')}
+									source={plantImg(item.id_plant)}
 								/>
 									<Text style={styles.plantName}>{item.name}</Text>
 							</TouchableOpacity>
@@ -95,7 +126,7 @@ export default class OrtoScreen extends Component {
 												>
 								<Image
 									style={styles.plantImage}
-									source={require('../imgs/tomato.png')}
+									source={plantImg(item.id_plant)}
 								/>
 									<Text style={styles.plantName}>{item.name}</Text>
 							</TouchableOpacity>
@@ -205,6 +236,7 @@ export default class OrtoScreen extends Component {
 									numColumns={2}
 									columnWrapperStyle={styles.row}
 									data={this.state.dataSource}
+									scrollEnabled={false}
 									keyExtractor = {(item, index) => index}
 									renderItem = {({item, index}) => 
 										<View>

@@ -16,23 +16,23 @@ import {
 
 
 class WikiScreen extends Component {
+
     clearParams = () => {
         this.props.navigation.setParams({id: null, from: null});
     }
 
 	displayRoute() {
         id = JSON.stringify(this.props.navigation.getParam('id'));
-        console.log(id);
         if (id == 'null' || id == undefined){
             return (
-                <View style={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
+                <View style={styles.container}>
                     <Text>Welcome to WikiScreen</Text>
                 </View>
             )
         } else {
             from = JSON.stringify(this.props.navigation.getParam('otherParam', 'Somewhere'));
             return (
-                <View style={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
+                <View style={styles.container}>
                     <Text>Plant: {id}</Text>
                     <Text>Came from: {from}</Text>
                 </View>
@@ -43,8 +43,8 @@ class WikiScreen extends Component {
     render () {
 
         return (
-            <View style={styles.container}>
-                <Header>
+            <View style={styles.containerMain}>
+                <Header style={styles.header}>
                     <Left>
                         <TouchableOpacity onPress = {()=> {
                             this.clearParams();
@@ -57,14 +57,16 @@ class WikiScreen extends Component {
                         </TouchableOpacity>
                     </Left>
                 </Header>
-                <View style={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
+                <View style={styles.container}>
                     <Text>WikiScreen</Text>
                     {this.displayRoute()}
-                    <Button title="Indoor Stack" onPress={()=> 
-                        this.props.navigation.navigate('WikiIndoor')
-                        } />
-                    <Button title="Outdoor Stack" onPress={()=> 
-                        this.props.navigation.navigate('WikiOutdoor')} /> 
+                    <View style={styles.container}>
+                        <Button title="Indoor Stack" onPress={()=> 
+                            this.props.navigation.navigate('WikiIndoor')
+                            } />
+                        <Button title="Outdoor Stack" onPress={()=> 
+                            this.props.navigation.navigate('WikiOutdoor')} /> 
+                    </View>
                 </View>
             </View>
         );
@@ -73,8 +75,17 @@ class WikiScreen extends Component {
 export default WikiScreen;
 
 const styles = StyleSheet.create({
+    containerMain: {
+        flex: 1,
+        justifyContent: 'center',
+        backgroundColor: '#2c3e50',
+    },
     container: {
         flex: 1,
-        justifyContent: 'center'
-    }
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    header: {
+        backgroundColor: '#45803b',
+    },
 });
