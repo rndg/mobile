@@ -11,18 +11,28 @@ import {
     TextInput,
     TouchableOpacity,
 } from 'react-native';
+import {
+    Header,
+    Left,
+    Icon
+} from 'native-base';
 
 import AsyncStorage from '@react-native-community/async-storage';
+
+import AwesomeButtonRick from "react-native-really-awesome-button/src/themes/rick";
+
+
+
 
 import AuthLoading from './AuthLoadingScreen';
 
 export default class SignInScreen extends Component { 
 
 	state = {
-      email: '',
-      pass: '',
-	  userData: [],
-	  isLoading: false,
+        email: '',
+        pass: '',
+        userData: [],
+        isLoading: false,
     };
 
 	async storeToken(user) {
@@ -50,80 +60,102 @@ export default class SignInScreen extends Component {
       	.then((responseJson) => {
 			this.storeToken(JSON.stringify(responseJson));
       	});
-	};
+    };
 
 	render(){
+
 		return (
-            <View style = {styles.container}>
-                <ImageBackground source = {require('../imgs/backScreenSx.png')} style = {styles.backgroundImage}>
-                    <View style = {styles.content}>
+
+            <View style = {styles.containerMain}>
+                <Image source = {require('../imgs/grassBack1.jpg')} style = {styles.bkImage}/>
+                    <Header style={styles.header}>
+                        <Left>
+                            <TouchableOpacity onPress = {()=> {
+                                this.props.navigation.goBack(null);
+                                }
+                                }>
+                                <View style={{paddingHorizontal: 10}}>
+                                    <Icon name="ios-arrow-back" size={10}/>
+                                </View>
+                            </TouchableOpacity>
+                        </Left>
+                    </Header>
+                    <View style = {styles.containerBody}>
+                        <View style={styles.container}></View>
                         <View style = {styles.inputContainer}>
                             <TextInput 
-							style = {styles.input} 
-							placeholder = 'email'
-							onChangeText={data => this.setState({ email: data })}
+                                style = {[styles.input, styles.fontComic]}
+                                placeholder = 'email'
+                                placeholderTextColor= 'rgba(123,223,69, 0.3)'
+                                onChangeText={data => this.setState({ email: data })}
 							/>
                             <TextInput 
-							secureTextEntry = {true} 
-							style = {styles.input} 
-							placeholder = 'password'
-							onChangeText={data => this.setState({ pass: data })}
+                                secureTextEntry = {true} 
+                                style = {[styles.input, styles.fontComic]}
+                                placeholder = 'password'
+                                placeholderTextColor= 'rgba(123,223,69, 0.3)'
+                                onChangeText={data => this.setState({ pass: data })}
 							/>
-                            <TouchableOpacity 
-							onPress={() => this.login(this.state.email, this.state.pass)}
-                            style = {styles.buttonContainer}>
-                                <Text style = {styles.buttonText}>Login</Text>
-                            </TouchableOpacity>
+                            <AwesomeButtonRick type="anchor" stretch
+                                onPress={() => 
+                                    this.login(this.state.email, this.state.pass)
+                                }
+                            >
+                                <Text>Sign In</Text>
+                            </AwesomeButtonRick>
                         </View>
+                        <View style={styles.container}></View>                            
                     </View>
-                </ImageBackground>
             </View>
 		);
     }
 };
 
 const styles = StyleSheet.create({
+    containerMain: {
+        flex: 1,
+        justifyContent: 'center',
+        backgroundColor: '#2c3e50',
+    },
+    containerBody: {
+        flex: 1,
+        alignItems: 'center',
+    },
     container: {
         flex: 1,
     },
-    backgroundImage: {
-        flex: 1,
-        alignSelf: 'stretch',
-        width: null,
-        justifyContent: 'center',
+    header: {
+        backgroundColor: '#45803b',
     },
-    content: {
-        alignItems: 'center',
+    bkImage:{
+		position: "absolute",
+		resizeMode: "repeat",
+		height: '100%',
+		width: undefined,
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0
     },
     inputContainer: {
-        margin: 20,
-        marginBottom: 0, 
-        padding: 20,
-        paddingBottom: 10,
-        alignSelf: 'stretch',
-        borderWidth: 1,
-        borderColor: '#fff',
-        backgroundColor: 'rgba(255,255,255,0.2)'
+        flex: 1,
+        alignContent: 'center',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        width: 300,
+        height:50,
     },
     input: {
-        fontSize: 16,
-        height: 40,
-        padding: 10,
-        marginBottom: 10,
-        backgroundColor: 'rgba(255,255,255,1)'
+        height: 50,
+        width: 300,
+        //margin: 20,
+        paddingHorizontal:20,
+        borderRadius: 20,
+        backgroundColor: '#45803b',
+        alignItems: 'center',
     },
-    buttonContainer: {
-        margin: 20,
-        padding: 20,
-        alignSelf: 'stretch',
-        backgroundColor: 'blue',
-        borderWidth: 1,
-        borderColor: '#fff',
-        backgroundColor: 'rgba(255,255,255,0.6)'
-    },
-    buttonText: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
+    fontComic: {
+		fontSize: 15,
+		fontFamily: 'Hey Comic',
+	},
 });

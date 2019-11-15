@@ -12,7 +12,9 @@ import {
     Left,
     Right,
     Icon
-} from 'native-base'
+} from 'native-base';
+
+import AwesomeButtonRick from "react-native-really-awesome-button/src/themes/rick";
 
 class HomeScreen extends Component {
 
@@ -23,10 +25,13 @@ class HomeScreen extends Component {
     }
 
     render () {
+        
+        
         return (
             <ImageBackground source={require('../imgs/backScreenFull.jpg')} style={styles.backgroundImage} >
                 <View style={styles.container}>
                     <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
+                        <AwesomeButtonRick type="anchor">Rick's Secondary Button</AwesomeButtonRick>
                         <Text>HomeScreen</Text>
                     </View>
                 </View>
@@ -47,8 +52,4 @@ const styles = StyleSheet.create({
     	flex: 1,
     	width : '100%'
     },
-	text: {
-		fontSize:30,
-		color: '#fff'
-	},
 });

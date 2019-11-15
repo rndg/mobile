@@ -29,6 +29,15 @@ import {
 	plantImg,
 } from '../functions/function'
 
+import AwesomeButtonRick from "react-native-really-awesome-button/src/themes/rick";
+
+
+
+//TODO ORTO/SERRA
+//UPDATE PAGINA DOPO INSERIMENTO NUOVA PIANTA
+//ALCUNE VOLTE NON CARICA SUBITO LE PIANTE DOPO IL LOGIN
+
+
 export default class OrtoScreen extends Component {
 
 	state = {
@@ -51,13 +60,14 @@ export default class OrtoScreen extends Component {
 		},
 		newPlant: false,
 		plants: [],
-		plName: '',
+		plantName: '',
 		id_plant: 4,
 		id_user: 1,
 		email: '',
 		password: '',
 		userData: [],
-		type: 'Outdoor'
+		type: 'Outdoor',
+		pickerDisplayed: true,
 	}
 
 	setModalVisible(visible) {
@@ -65,6 +75,8 @@ export default class OrtoScreen extends Component {
 	}
 
 	componentDidMount () {
+		
+		
 		myPlants(this.state.id_user, this.state.type).then(data => {
 			this.state.isLoading = false;
 			this.state.dataSource = data;
@@ -121,11 +133,11 @@ export default class OrtoScreen extends Component {
 					<ImageBackground source={require('../imgs/grassBack.png')} style={styles.backgroundImagePlant}>
 						<View >
 							<TouchableOpacity activeOpacity={0.7} onPress={() => {
-													this.setState({newPlant: false})
-													this.setModalVisible(true);
-													this.state.plant = item;
-												}}
-												>
+												this.setState({newPlant: false})
+												this.setModalVisible(true);
+												this.state.plant = item;
+											}}
+											>
 								<Image
 									style={styles.plantImage}
 									source={plantImg(item.id_plant)}
@@ -139,13 +151,13 @@ export default class OrtoScreen extends Component {
         } else {
             return (
 				<ImageBackground source={require('../imgs/grassBack.png')} style={styles.backgroundImagePlant}>
-						<View >
-							<Image
-								style={styles.plantImage}
-							/>
-							<Text style={styles.plantName}>{item.name}</Text>
-						</View>
-					</ImageBackground>
+					<View >
+						<Image
+							style={styles.plantImage}
+						/>
+						<Text style={styles.plantName}>{item.name}</Text>
+					</View>
+				</ImageBackground>
 			);
 		}
 	}
@@ -154,7 +166,7 @@ export default class OrtoScreen extends Component {
 		if(!this.state.newPlant){
 			return (
 				<View>
-					<Text style={styles.text}>{this.state.plant.id}</Text>
+					<Text>{this.state.plant.id}</Text>
 					<TouchableHighlight onPress={() => {
 						const {navigate} = this.props.navigation;
 						this.setModalVisible(!this.state.modalVisible);
@@ -166,7 +178,7 @@ export default class OrtoScreen extends Component {
 						);
 					}}
 					>
-						<Text style={styles.text}>Go to Wiki</Text>
+						<Text>Go to Wiki</Text>
 					</TouchableHighlight>
 					<TouchableHighlight
 						onPress={() => {
@@ -179,45 +191,56 @@ export default class OrtoScreen extends Component {
 			);
 		} else {
 			return (
-				<View>
-					<TextInput
-						placeholder="Enter Name Plant"
-						onChangeText={data => this.setState({ plName: data })}
-						style={styles.TextInputStyle}
-					/>
-					<TouchableHighlight onPress={() => 
-						uploadPlantToServer(this.state.id_plant, this.state.id_user, this.state.plName, this.state.type)}
-					>
-						<Text style={styles.text}> UPLOAD Plant TO SERVER </Text>
-					</TouchableHighlight>
-					<View>
-						<Picker
-							mode='dialog'
-							selectedValue={this.state.id_plant}
-							style={{height: 50, width: 100, backgroundColor:'rgba(255, 255, 255, 0.5)'}}
-							itemStyle={{backgroundColor:'rgba(255, 255, 255, 0.5)'}}
-							enabled={false}
-							onValueChange={(itemValue, itemIndex) =>
-								this.setState({id_plant: itemValue})
-							}
-						>
-						{ 
-							this.state.plants.map((item) =>{
-								return(
-									<Picker.Item  label={item.name} value={item.id} key={item.name}/>
-								);
-							})
-						}
-						</Picker>
-					</View>
-					<TouchableHighlight
-						onPress={() => {
-							this.setModalVisible(!this.state.modalVisible);
-						}}
-					>
-						<Text>Cancel</Text>
-					</TouchableHighlight>
-				</View>
+				<View style={styles.containerNewPlant}>
+					<View style={styles.container}></View>
+					<View style={styles.bigContainer}>
+						<View style={styles.textInContainer}> 
+							<Text style={{width: 300}}>Plant's name:</Text>
+							<TextInput
+								placeholder="Choose a name for the plant"
+								onChangeText={data => this.setState({ plantName: data })}
+							/>
+						</View>
+						<View style={styles.pickerBox}>
+							<Picker
+								mode='dropdown'
+								selectedValue={this.state.id_plant}
+								style={[styles.fontComic, {width: 100, alignSelf: 'center'}]}
+								itemStyle={[styles.fontComic, styles.pickerItems]}
+								enabled={true}
+								onValueChange={(itemValue, itemIndex) =>{
+									console.log(itemValue);
+									this.setState({id_plant: itemValue});}
+								}
+							>
+								{ 
+									this.state.plants.map((item) =>{
+										return(
+											<Picker.Item  label={item.name} value={item.id} key={item.name}/>
+										);
+									})
+								}
+							</Picker>
+						</View>
+						<View style={styles.containerButtons}>
+							<View style={styles.containerButtons}>
+								<AwesomeButtonRick type="anchor" stretch
+									onPress={() => 
+									uploadPlantToServer(this.state.id_plant, this.state.id_user, this.state.plantName, this.state.type)}>
+									<Text>Add plant</Text>
+								</AwesomeButtonRick>
+							</View>
+							<View style={styles.containerButtons}>
+								<AwesomeButtonRick type="anchor" stretch
+									onPress={() => 
+										this.setModalVisible(!this.state.modalVisible)
+									}>
+									<Text> Cancel </Text>
+								</AwesomeButtonRick>
+							</View>
+						</View>
+					</View>					
+				</View>	
 			)
 		}
 	}
@@ -226,7 +249,7 @@ export default class OrtoScreen extends Component {
 		{this.genEmpty()}
 		return (
 			<View style={styles.container}>
-			<Image source={require('../imgs/grassPatt.jpg')} style={styles.backgroundImage}/>
+			<Image source={require('../imgs/soilBack1.jpg')} style={styles.bkImage}/>
 				<View style={styles.container}>
 					<View style={styles.containerModal}>
 						<Modal
@@ -247,7 +270,7 @@ export default class OrtoScreen extends Component {
 						<ScrollView style={styles.scrollview} bounces={false}>
 							<Image
 								style={styles.bkImage}
-								source={require('../imgs/soilPatt.jpeg')}
+								source={require('../imgs/soilBack1.jpg')}
 							/>
 								<ImageBackground source={require('../imgs/grassBack.png')} style={styles.backgroundImageNewPlant}>
 									<View style={styles.containerNew}>
@@ -290,7 +313,16 @@ const styles = StyleSheet.create({
 	},
 	container: {
 		flex: 1,
+	},
+	bigContainer:{
+		justifyContent: 'center',
+		flex: 6,
+	},
+	containerNewPlant: {
+		flex: 1,
 		backgroundColor: 'transparent',
+		justifyContent: 'center',
+
 	},
 	containerModal: {
 		flex: 0,
@@ -304,24 +336,13 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems:'center',
 	},
-	text: {
+	textInContainer:{
+		flex: 0.5,
+		alignItems: 'center',
 		alignContent: 'center',
-		fontSize:20,
-		color: '#000',
-		backgroundColor: '#87B56A',
-		borderColor: '#87B56A',
-		borderRadius: 80,
+		justifyContent: 'space-around',
 	},
 	backgroundImage: {
-		//////IMMAGINE DI SFONDO SE POCHE PIANTE
-
-
-
-
-
-
-
-		
 		position: "absolute",
 		resizeMode: "repeat",
 		height: '100%',
@@ -346,6 +367,7 @@ const styles = StyleSheet.create({
 	},
 	plantName: {
 		alignSelf:'center',
+		backgroundColor: '#45803b',
 	},
 	row: {
 		backgroundColor: 'transparent',
@@ -375,5 +397,28 @@ const styles = StyleSheet.create({
 		left: 0,
 		right: 0,
 		bottom: 0
+	},
+	fontComic: {
+		fontSize: 15,
+		fontFamily: 'Hey Comic',
+	},
+	pickerItems:{
+		backgroundColor: 'transparent',
+	},
+	pickerBox:{
+		//flex:1,
+		width: 200,
+		height: 200,
+		alignSelf: 'center',
+		borderRadius: 210, 
+		borderWidth: 1, 
+		borderColor: '#bdc3c7', 
+		overflow:'hidden',
+		backgroundColor: '#87B56A',
+
+	},
+	containerButtons:{
+		flex: 1,
+		justifyContent: 'space-around',
 	}
 });

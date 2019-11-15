@@ -4,13 +4,16 @@ import {
     Text,
     StyleSheet, 
     Button,
-    TouchableOpacity
+    TouchableOpacity,
+    Image
 } from 'react-native';
 import {
     Header,
     Left,
     Icon
 } from 'native-base';
+
+import AwesomeButtonRick from "react-native-really-awesome-button/src/themes/rick";
 
 // create a component
 class FloweringScreen extends Component {
@@ -54,4 +57,3 @@ const styles = StyleSheet.create({
         backgroundColor: '#45803b',
     },
 });
-//make this component available to the app

@@ -4,12 +4,19 @@ import {
     Text,
     StyleSheet,
     Button,
-    ImageBackground,
+    Image,
     TextInput,
     TouchableOpacity
 } from 'react-native';
+import {
+    Header,
+    Left,
+    Icon
+} from 'native-base';
 
-import {signUp} from '../functions/dbRequest'
+import {signUp} from '../functions/dbRequest';
+
+import AwesomeButtonRick from "react-native-really-awesome-button/src/themes/rick";
 
 class SignUpScreen extends Component {
 
@@ -21,37 +28,57 @@ class SignUpScreen extends Component {
     };
 
     render () {
+
         return (
-            <View style = {styles.container}>
-                <ImageBackground source = {require('../image/backScreenSx.jpg')} style = {styles.backgroundImage}>
-                    <View style = {styles.content}>
-					<View style = {styles.inputContainer}>
+            <View style = {styles.containerMain}>
+                <Image source = {require('../imgs/grassBack1.jpg')} style = {styles.bkImage}/>
+                    <Header style={styles.header}>
+                        <Left>
+                            <TouchableOpacity onPress = {()=> {
+                                this.props.navigation.goBack(null);
+                                }
+                                }>
+                                <View style={{paddingHorizontal: 10}}>
+                                    <Icon name="ios-arrow-back" size={10}/>
+                                </View>
+                            </TouchableOpacity>
+                        </Left>
+                    </Header>
+                    <View style = {styles.containerBody}>
+                        <View style={styles.container}></View>
+                        <View style = {styles.inputContainer}>
                             <TextInput 
-                                style = {styles.input} 
+                                style = {[styles.input, styles.fontComic]}
                                 placeholder = 'Username'
+                                placeholderTextColor= 'rgba(123,223,69, 0.3)'
                                 onChangeText={data => this.setState({ username: data })} />
                             <TextInput 
-                                style = {styles.input} 
+                                style = {[styles.input, styles.fontComic]}
                                 placeholder = 'Email'
+                                placeholderTextColor= 'rgba(123,223,69, 0.3)'
                                 onChangeText={data => this.setState({ email: data })} />
                             <TextInput 
                                 secureTextEntry = {true} 
-                                style = {styles.input} 
+                                style = {[styles.input, styles.fontComic]}
                                 placeholder = 'Password'
+                                placeholderTextColor= 'rgba(123,223,69, 0.3)'
                                 onChangeText={data => this.setState({ pass: data })} />
                             <TextInput 
                                 secureTextEntry = {true} 
-                                style = {styles.input} 
+                                style = {[styles.input, styles.fontComic]}
                                 placeholder = 'Confirm Password'
-                                onChangeText={data => this.setState({ passConf: data })} />                     
-                            <TouchableOpacity 
-                                onPress={() => signUp(this.state.username, this.state.email, this.state.pass, this.state.passConf)}
-                                style = {styles.buttonContainer}>
-                            <Text style = {styles.buttonText}>Sign Up</Text>
-                            </TouchableOpacity>
+                                placeholderTextColor= 'rgba(123,223,69, 0.3)'
+                                onChangeText={data => this.setState({ passConf: data })} />  
+                            <AwesomeButtonRick type="anchor" stretch
+                                onPress={() => 
+                                    signUp(this.state.username, this.state.email, this.state.pass, this.state.passConf)
+                                }
+                            >
+                                <Text>Sign Up</Text>
+                            </AwesomeButtonRick>                   
                         </View>
+                        <View style={styles.container}></View>
                     </View>
-                </ImageBackground>
             </View>
 		);
     }
@@ -59,47 +86,50 @@ class SignUpScreen extends Component {
 export default SignUpScreen;
 
 const styles = StyleSheet.create({
+    containerMain: {
+        flex: 1,
+        justifyContent: 'center',
+        backgroundColor: '#2c3e50',
+    },
+    containerBody: {
+        flex: 1,
+        alignItems: 'center',
+    },
     container: {
         flex: 1,
     },
-    backgroundImage: {
-        flex: 1,
-        alignSelf: 'stretch',
-        width: null,
-        justifyContent: 'center',
+    header: {
+        backgroundColor: '#45803b',
     },
-    content: {
-        alignItems: 'center',
+    bkImage:{
+		position: "absolute",
+		resizeMode: "repeat",
+		height: '100%',
+		width: undefined,
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0
     },
     inputContainer: {
-        margin: 20,
-        marginBottom: 0, 
-        padding: 20,
-        paddingBottom: 10,
-        alignSelf: 'stretch',
-        borderWidth: 1,
-        borderColor: '#fff',
-        backgroundColor: 'rgba(255,255,255,0.2)'
+        flex: 1,
+        alignContent: 'center',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        width: 300,
+        height:50,
     },
     input: {
-        fontSize: 16,
-        height: 40,
-        padding: 10,
-        marginBottom: 10,
-        backgroundColor: 'rgba(255,255,255,1)'
+        height: 50,
+        width: 300,
+        //margin: 20,
+        paddingHorizontal:20,
+        borderRadius: 20,
+        backgroundColor: '#45803b',
+        alignItems: 'center',
     },
-    buttonContainer: {
-        margin: 20,
-        padding: 20,
-        alignSelf: 'stretch',
-        backgroundColor: 'blue',
-        borderWidth: 1,
-        borderColor: '#fff',
-        backgroundColor: 'rgba(255,255,255,0.6)'
-    },
-    buttonText: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
+    fontComic: {
+		fontSize: 15,
+		fontFamily: 'Hey Comic',
+	},
 });

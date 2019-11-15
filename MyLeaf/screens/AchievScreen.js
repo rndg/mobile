@@ -13,8 +13,37 @@ import {
     Icon
 } from 'native-base';
 
+import {
+	setCustomTextInput,
+	setCustomText,
+} from 'react-native-global-props';
+
+import AwesomeButtonRick from "react-native-really-awesome-button/src/themes/rick";
+
+
+// Setting default for all TextInput components.
+const customTextInputProps = {
+	underlineColorAndroid: 'rgba(0,0,0,0)',
+	style: {
+		fontSize: 15,
+		fontFamily: 'Hey Comic',
+	}
+};
+
+// Setting default styles for all Text components.
+const customTextProps = {
+	style: {
+		fontSize: 15,
+		fontFamily: 'Hey Comic',
+		//alignSelf: 'center',
+	}
+};
+
 class AchievScreen extends Component {
     render () {
+        setCustomText(customTextProps);
+        setCustomTextInput(customTextInputProps);
+        
         const { goBack } = this.props.navigation;
 
         return (

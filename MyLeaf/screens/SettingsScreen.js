@@ -12,6 +12,9 @@ import {
     Icon
 } from 'native-base';
 
+import AwesomeButtonRick from "react-native-really-awesome-button/src/themes/rick";
+
+
 import AsyncStorage from '@react-native-community/async-storage';
 
 
@@ -23,6 +26,7 @@ class SettingsScreen extends Component {
     }
     
     render () {
+
         return (
             <View style={styles.container}>
                 <Header>
@@ -44,5 +48,5 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center'
-    }
+    },
 });

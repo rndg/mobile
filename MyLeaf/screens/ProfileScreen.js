@@ -13,6 +13,8 @@ import {
     Icon
 } from 'native-base';
 
+import AwesomeButtonRick from "react-native-really-awesome-button/src/themes/rick";
+
 import AsyncStorage from '@react-native-community/async-storage';
 
 class ProfileScreen extends Component {

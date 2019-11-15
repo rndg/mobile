@@ -12,6 +12,8 @@ import {
     Icon
 } from 'native-base';
 
+import AwesomeButtonRick from "react-native-really-awesome-button/src/themes/rick";
+
 // create a component
 class OrnamentalScreen extends Component {
     render() {

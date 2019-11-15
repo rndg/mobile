@@ -4,7 +4,8 @@ import {
     Text,
     StyleSheet, 
     Button,
-    TouchableOpacity
+    TouchableOpacity,
+    Image
 } from 'react-native';
 import {
     Header,
@@ -12,11 +13,13 @@ import {
     Icon
 } from 'native-base';
 
-// create a component
+import AwesomeButtonRick from "react-native-really-awesome-button/src/themes/rick";
+
 class WikiIndoorHomeScreen extends Component {
     render() {
         return (
             <View style={styles.containerMain}>
+                <Image source = {require('../imgs/grassBack1.jpg')} style = {styles.bkImage}/>
                 <Header style={styles.header}>
                     <Left>
                         <TouchableOpacity onPress = {()=> {
@@ -29,14 +32,28 @@ class WikiIndoorHomeScreen extends Component {
                         </TouchableOpacity>
                     </Left>
                 </Header>
-                <View style={styles.container}>
-                    <Text>WikiIndoorHomeScreen</Text>
-                    <Button title="WikiOrnamental" onPress={()=> 
-                            this.props.navigation.navigate('WikiOrnamental')
-                            } />
-                    <Button title="WikiFlowering" onPress={()=> 
-                            this.props.navigation.navigate('WikiFlowering')
-                            } />
+                <View style={styles.containerBody}>
+                    <View style={styles.container}>
+                        <View style={styles.containerText}>
+                            <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam non massa vitae nunc luctus interdum. Sed rutrum sit amet tortor ut congue. Vestibulum vitae porta diam. Aliquam facilisis sem a justo aliquam euismod. Curabitur facilisis elit eget odio tristique auctor. Quisque cursus enim magna. Aliquam viverra placerat erat, quis sollicitudin risus sodales ac. Nam fermentum ex ut suscipit gravida. Praesent nec eros hendrerit mi commodo accumsan ut eu velit. Nunc vehicula faucibus diam, nec molestie nunc placerat ut. In sagittis diam vel orci convallis fermentum.</Text>
+                        </View>
+                        <View style={styles.containerButtons}>
+                            <View style={styles.containerButton1}>
+                                <AwesomeButtonRick type="anchor" stretch
+                                    onPress={() => 
+                                        this.props.navigation.navigate('WikiOrnamental')}>
+                                    <Text>Piante Ornamentali</Text>
+                                </AwesomeButtonRick>
+                            </View>
+                            <View style={styles.containerButton2}>
+                                <AwesomeButtonRick type="anchor" stretch
+                                    onPress={() => 
+                                        this.props.navigation.navigate('WikiFlowering')}>
+                                    <Text>Piante Floricole</Text>
+                                </AwesomeButtonRick>
+                            </View>
+                        </View>
+                    </View>
                 </View>
             </View>
         );
@@ -54,10 +71,42 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
+    },
+    containerText: {
+        flex: 1,
+        alignContent: 'center',
+        justifyContent: 'space-around',
+        width: 300,
     },
     header: {
         backgroundColor: '#45803b',
+    },
+    containerButtons:{
+        flex: 1,
+        alignContent: 'center',
+        justifyContent: 'space-around',
+        width: 300,
+        height:50,
+    },
+    containerButton1:{
+        flex: 1,
+        justifyContent: 'center',
+    },
+    containerButton2:{
+		flex: 1,
+    },
+    containerBody: {
+        flex: 1,
+        alignItems: 'center',
+    },
+    bkImage:{
+		position: "absolute",
+		resizeMode: "repeat",
+		height: '100%',
+		width: undefined,
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0
     },
 });
