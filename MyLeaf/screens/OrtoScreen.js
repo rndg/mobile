@@ -292,6 +292,7 @@ export default class OrtoScreen extends Component {
 									columnWrapperStyle={styles.row}
 									data={this.state.dataSource}
 									scrollEnabled={false}
+									extraData={this.state}
 									keyExtractor = {(item, index) => index}
 									renderItem = {({item, index}) => 
 										<View>

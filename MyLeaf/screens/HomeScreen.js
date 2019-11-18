@@ -4,7 +4,7 @@ import {
     Text,
     StyleSheet,
     Button,
-    ImageBackground
+    Image
 } from 'react-native';
 
 import {
@@ -25,31 +25,40 @@ class HomeScreen extends Component {
     }
 
     render () {
-        
-        
         return (
-            <ImageBackground source={require('../imgs/backScreenFull.jpg')} style={styles.backgroundImage} >
-                <View style={styles.container}>
-                    <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
-                        <AwesomeButtonRick type="anchor">Rick's Secondary Button</AwesomeButtonRick>
-                        <Text>HomeScreen</Text>
-                    </View>
+            <View style={styles.containerMain}>
+            <Image source = {require('../imgs/grassBack1.jpg')} style = {styles.bkImage}/>
+                <View style={styles.containerBody}>
+                    <AwesomeButtonRick type="anchor">Rick's Secondary Button</AwesomeButtonRick>
                 </View>
-            </ImageBackground>
+            </View>
         );
     }
 }
 export default HomeScreen;
 
 const styles = StyleSheet.create({
+    containerMain: {
+        flex: 1,
+        justifyContent: 'center',
+        backgroundColor: '#2c3e50',
+    },
     container: {
 		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		//backgroundColor: '#eb9f34',
-	},
-	backgroundImage: {
-    	flex: 1,
-    	width : '100%'
+    },
+    containerBody: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+	bkImage:{
+		position: "absolute",
+		resizeMode: "repeat",
+		height: '100%',
+		width: undefined,
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0
     },
 });

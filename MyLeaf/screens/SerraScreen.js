@@ -35,7 +35,7 @@ export default class SerraScreen extends Component {
 	state = {
 		isLoading: true,
 		dataSource: [],
-		data: [ 
+		data: [  
 			{ id: "00", name: "Relâmpago McQueen" },
 			{ id: "01", name: "Agente Tom Mate" },
 			{ id: "02", name: "Doc Hudson" },
@@ -284,6 +284,7 @@ export default class SerraScreen extends Component {
 									columnWrapperStyle={styles.row}
 									data={this.state.dataSource}
 									scrollEnabled={false}
+									extraData={this.state}
 									keyExtractor = {(item, index) => index}
 									renderItem = {({item, index}) => 
 										<View>

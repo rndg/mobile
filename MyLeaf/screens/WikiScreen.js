@@ -50,6 +50,17 @@ class WikiScreen extends Component {
         );
     }
 
+    plantInfo(id, from) {
+        return(
+            <View style={styles.container}>
+                <View style={styles.containerText}>
+                    <Text>Plant: {id}</Text>
+                    <Text>Came from: {from}</Text>
+                </View>
+            </View>
+        );
+    }
+
 	displayRoute() {
         id = JSON.stringify(this.props.navigation.getParam('id'));
         if (id == 'null' || id == undefined){
@@ -59,11 +70,8 @@ class WikiScreen extends Component {
         } else {
             from = JSON.stringify(this.props.navigation.getParam('otherParam', 'Somewhere'));
             return (
-                <View style={styles.container}>
-                    <Text>Plant: {id}</Text>
-                    <Text>Came from: {from}</Text>
-                </View>
-            )
+                this.plantInfo(id, from)
+            );
         }
     }
 
