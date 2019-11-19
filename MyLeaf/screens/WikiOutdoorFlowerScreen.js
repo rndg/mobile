@@ -56,87 +56,23 @@ class FloweringScreen extends Component {
 		userData: [],
 		type: 'Outdoor',
     }
-
-    componentDidMount () {
-		
-		
-		myPlants(this.state.id_user, this.state.type).then(data => {
-			this.state.isLoading = false;
-			this.state.dataSource = data;
-			});
-			
-			fetch('http://192.168.64.2/MyLeaf/selectPlants.php', {
-				method: 'POST',
-				headers: {
-					'Accept': 'application/json',
-					'Content-Type': 'application/json'
-				},
-					body: JSON.stringify({
-						type: 'Outdoor'
-					})
-			})
-			.then((response) => response.json())
-			.then((responseJson) => {
-				this.setState({
-					isLoading: false,
-					plants: responseJson
-				});
-			});
-    }
     
-    displayRow(item, index) {
-        return (
-            <TouchableOpacity activeOpacity={0.7} onPress={() => {
-                this.props.navigation.navigate('WikiIndoorFlower',
-                    {
-                        id: item,
-                        otherParam: 'Floricole',
-                    }
-            )
-            }}
-            >
-                <View style={styles.row}>
-                    <Image
-                        style={styles.plantImage}
-                        source={plantImg(item.id_plant)}
-                    />
-                    <View style={styles.col}> 
-                        <Text style={styles.plantName}>{item.name}</Text>
-                        <View style={styles.stars}>
-                            <Image
-                                style={styles.starImage}
-                                source={require('../imgs/star.png')}
-                            />
-                            <Image
-                                style={styles.starImage}
-                                source={require('../imgs/star.png')}
-                            />
-                            <Image
-                                style={styles.starImage}
-                                source={require('../imgs/star.png')}
-                            />
-                            <Image
-                                style={styles.starImage}
-                                source={require('../imgs/starEmpty.png')}
-                            />
-                            <Image
-                                style={styles.starImage}
-                                source={require('../imgs/starEmpty.png')}
-                            />
-                        </View>
-                    </View>
-                </View>
-            </TouchableOpacity>
-        )
+    clearParams = () => {
+        this.props.navigation.setParams({id: null, from: null});
     }
     
     render() {
+        {
+            item = this.props.navigation.getParam('id');
+            from = this.props.navigation.getParam('otherParam', 'Somewhere');
+        }
         return (
             <View style={styles.containerMain}>
             <Image source = {require('../imgs/grassBack1.jpg')} style = {styles.bkImage}/>
                 <Header style={styles.header}>
                     <Left>
                         <TouchableOpacity onPress = {()=> {
+                            this.clearParams();
                             this.props.navigation.goBack(null);
                             }
                             }>
@@ -155,19 +91,10 @@ class FloweringScreen extends Component {
                         />  
                             <View style={styles.body}>
                                 <View style={styles.containerText}>
-                                    <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam non massa vitae nunc luctus interdum. Sed rutrum sit amet tortor ut congue. Vestibulum vitae porta diam. Aliquam facilisis sem a justo aliquam euismod. Curabitur facilisis elit eget odio tristique auctor. Quisque cursus enim magna. Aliquam viverra placerat erat, quis sollicitudin risus sodales ac. Nam fermentum ex ut suscipit gravida. Praesent nec eros hendrerit mi commodo accumsan ut eu velit. Nunc vehicula faucibus diam, nec molestie nunc placerat ut. In sagittis diam vel orci convallis fermentum.</Text>
+                                    <Text>Pianta Orticola: {JSON.stringify(item)} </Text>
                                 </View>
-                                <FlatList 
-                                    numColumns={1}
-                                    data={this.state.dataSource}
-                                    scrollEnabled={false}
-                                    keyExtractor = {(item, index) => index.toString()}
-                                    renderItem = {({item, index}) => 
-                                        <View style={styles.plantBox}>
-                                            {this.displayRow(item, index)}                                            
-                                        </View>
-                                    } 
-                                />
+                                <View style={styles.plantBox}>
+                                </View>
                             </View>
                         </ScrollView>
                     </View>

@@ -173,7 +173,7 @@ export default class OrtoScreen extends Component {
 						navigate('WikiHome', 
 							{
 								id: this.state.plant,
-								otherParam: 'Orto',
+								otherParam: 'Orticole',
 							}
 						);
 					}}
@@ -209,7 +209,6 @@ export default class OrtoScreen extends Component {
 								itemStyle={[styles.fontComic, styles.pickerItems]}
 								enabled={true}
 								onValueChange={(itemValue, itemIndex) =>{
-									console.log(itemValue);
 									this.setState({id_plant: itemValue});}
 								}
 							>
@@ -293,7 +292,7 @@ export default class OrtoScreen extends Component {
 									data={this.state.dataSource}
 									scrollEnabled={false}
 									extraData={this.state}
-									keyExtractor = {(item, index) => index}
+									keyExtractor = {(item, index) => index.toString()}
 									renderItem = {({item, index}) => 
 										<View>
 											{this.displayImg(item, index)}

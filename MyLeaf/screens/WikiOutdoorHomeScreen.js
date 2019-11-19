@@ -42,7 +42,7 @@ class WikiIndoorHomeScreen extends Component {
                                 <AwesomeButtonRick type="anchor" stretch
                                     onPress={() => 
                                         this.props.navigation.navigate('WikiHorticultural')}>
-                                    <Text>Piante Ornamentali</Text>
+                                    <Text>Piante Orticole</Text>
                                 </AwesomeButtonRick>
                             </View>
                         </View>

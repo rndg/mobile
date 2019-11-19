@@ -18,13 +18,51 @@ import AwesomeButtonRick from "react-native-really-awesome-button/src/themes/ric
 
 
 class WikiScreen extends Component {
+    state = {
+		plant: {
+			id: null,
+			name: null,
+        },
+    }
+
+    componentDidUpdate(){
+        this.route();
+    }
+
+    componentDidMount(){
+        this.route();
+    }
+
+    route() {
+        item = this.props.navigation.getParam('id');
+        from = this.props.navigation.getParam('otherParam', 'Somewhere');
+        this.state.plant = item;
+        if (id == 'null' || id == undefined){   
+            
+        } else {
+            if(from == 'Orticole'){
+                this.props.navigation.navigate('WikiOutdoorFlower',
+                    {
+                        id: this.state.plant,
+                        otherParam: from,
+                    }
+                );
+            } else {
+                this.props.navigation.navigate('WikiIndoorFlower',
+                    {
+                        id: this.state.plant,
+                        otherParam: from,
+                    }
+                );
+            }
+        }
+    }
 
     clearParams = () => {
         this.props.navigation.setParams({id: null, from: null});
     }
 
     wikiStack() {
-        console.log('wikistart');
         return (
             <View style={styles.container}>
                 <View style={styles.containerText}>
@@ -63,20 +101,21 @@ class WikiScreen extends Component {
 
 	displayRoute() {
         id = JSON.stringify(this.props.navigation.getParam('id'));
+        from = JSON.stringify(this.props.navigation.getParam('otherParam', 'Somewhere'));
+
         if (id == 'null' || id == undefined){
             return (
                 this.wikiStack()
             );            
         } else {
-            from = JSON.stringify(this.props.navigation.getParam('otherParam', 'Somewhere'));
             return (
-                this.plantInfo(id, from)
+                this.wikiStack()
+                //this.plantInfo(id, from)
             );
         }
     }
 
     render () {
-
         return (
             <View style={styles.containerMain}>
                 <Image source = {require('../imgs/grassBack1.jpg')} style = {styles.bkImage}/>
