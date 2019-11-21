@@ -161,29 +161,61 @@ export default class OrtoScreen extends Component {
 	genModal () {
 		if(!this.state.newPlant){
 			return (
-				<View>
-					<Text>{this.state.plant.id}</Text>
-					<TouchableHighlight onPress={() => {
-						const {navigate} = this.props.navigation;
-						this.setModalVisible(!this.state.modalVisible);
-						navigate('WikiHome', 
-							{ 
-								id: this.state.plant,
-								otherParam: 'Orticole',
-							}
-						);
-					}}
-					>
-						<Text>Go to Wiki</Text>
-					</TouchableHighlight>
-					<TouchableHighlight
-						onPress={() => {
-							this.setModalVisible(!this.state.modalVisible);
-						}}
-					>
-						<Text>Cancel</Text>
-					</TouchableHighlight>
-				</View>
+				<ScrollView style={[styles.scrollview, styles.scrollPadd]} bounces={false} showsVerticalScrollIndicator={false} >
+					<View style={styles.containerNewPlant}>
+						<View style={styles.body}>
+							<View style={styles.plantTitle}>
+								<Text style={styles.textTitle}>{this.state.plant.id}</Text>
+							</View>
+							<Image
+								style={[styles.plantPicture, styles.padd]}
+								source={require('../imgs/plantPicture.jpg')}
+							/>  
+							<View style={[styles.plantDescr, styles.padd]}>
+								<Text style={styles.textSubTitle}>Description:</Text>
+								<Text style={styles.textSection}>{JSON.stringify(this.state.plant)}</Text>
+							</View>
+							<View style={[styles.plantField, styles.padd]}>
+								<Text style={styles.textSubTitle}>Field1:</Text>
+								<Text style={styles.textSection}>{JSON.stringify(this.state.plant)}</Text>
+							</View>
+							<View style={[styles.plantField, styles.padd]}>
+								<Text style={styles.textSubTitle}>Field2:</Text>
+								<Text style={styles.textSection}>{JSON.stringify(this.state.plant)}</Text>
+							</View>
+							<View style={[styles.plantField, styles.padd]}>
+								<Text style={styles.textSubTitle}>Field3:</Text>
+								<Text style={styles.textSection}>{JSON.stringify(this.state.plant)}</Text>
+							</View>
+						</View>
+						<View style={styles.containerButtons2}>
+							<View style={styles.containerButton1}>
+								<AwesomeButtonRick type="anchor" stretch
+									onPress={() => {
+										const {navigate} = this.props.navigation;
+										this.setModalVisible(!this.state.modalVisible);
+										navigate('WikiHome', 
+											{
+												id: this.state.plant,
+												otherParam: 'Outdoor',
+											}
+										);
+									}}
+								>								
+									<Text>Go to Wiki!</Text>
+								</AwesomeButtonRick>
+							</View>
+							<View style={styles.containerButton2}>
+								<AwesomeButtonRick type="anchor" stretch
+									onPress={() => 
+										this.setModalVisible(!this.state.modalVisible)
+									}>
+									<Text> Cancel </Text>
+								</AwesomeButtonRick>
+							</View>
+						</View>
+					</View>
+				</ScrollView>
 			);
 		} else {
 			return (
@@ -252,13 +284,15 @@ export default class OrtoScreen extends Component {
 							transparent={true}
 							visible={this.state.modalVisible}
 						>
-							<View style={styles.spaceAroundModal}></View>
-							<View style={styles.mdlBody}>
-								<View>
-									{this.genModal()}
+							<View style={styles.modalContainer}>
+								<View style={styles.spaceAroundModal}></View>
+								<View style={styles.mdlBody}>
+									<View>
+										{this.genModal()}
+									</View>
 								</View>
+								<View style={styles.spaceAroundModal}></View>
 							</View>
-							<View style={styles.spaceAroundModal}></View>
 						</Modal>
 					</View>
 					<View style={styles.containerBody}>
@@ -371,12 +405,22 @@ const styles = StyleSheet.create({
 		backgroundColor: 'transparent',
 		justifyContent: 'center',
 	},
+	modalContainer:{
+		flex:1,
+		paddingHorizontal: 5,
+	},
 	mdlBody: {
 		flex: 6,
-		borderRadius: 80,
+		borderRadius: 70,
 		justifyContent: 'center',
 		alignItems: 'center',
 		backgroundColor: '#45803b',
+		paddingHorizontal: 5,
+		shadowColor: '#000',
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.8,
+		shadowRadius: 2,
+		elevation: 1,
 	},
 	spaceAroundModal: {
 		flex: 1,
@@ -385,6 +429,9 @@ const styles = StyleSheet.create({
 	scrollview: {
 		flex: 1,
 		backgroundColor: 'transparent'
+	},
+	scrollPadd: {
+		paddingVertical: 10,
 	},
 	bkImage:{
 		position: "absolute",
@@ -413,10 +460,63 @@ const styles = StyleSheet.create({
 		borderColor: '#bdc3c7', 
 		overflow:'hidden',
 		backgroundColor: '#87B56A',
-
 	},
 	containerButtons:{
 		flex: 1,
 		justifyContent: 'space-around',
-	}
+	},
+	containerButtons2:{
+        flex: 3,
+        alignContent: 'center',
+        justifyContent: 'space-around',
+		width: 300,
+		height: 300,
+		paddingBottom: 20,
+    },
+	containerButton1:{
+        flex: 1,
+        justifyContent: 'center',
+    },
+    containerButton2:{
+		flex: 1,
+    },
+	plantTitle: {
+        flex: 1,
+        alignContent: 'center',
+        alignSelf: 'center',
+        width: 300,
+    },
+    plantPicture: {
+        alignSelf:'center',
+        borderRadius:90,
+        borderWidth: 3,
+        borderColor: 'rgba(255, 0, 0, 0.3)',
+        height: 150,
+		width : 150,
+    },
+    plantDescr: {
+        flex: 1,
+        alignContent: 'center',
+        alignSelf: 'center',
+        width: 300,
+    },
+    plantField: {
+        flex: 1,
+        alignContent: 'center',
+        alignSelf: 'center',
+        width: 300,
+    },
+    textTitle:{
+        textAlign: 'center',
+        fontSize: 25,
+    },
+    textSubTitle: {
+        fontSize: 20,
+    },
+    textSection: {
+
+    },
+    padd: {
+        paddingVertical: 60,
+    },
 });

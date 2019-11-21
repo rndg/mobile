@@ -54,7 +54,7 @@ class FloweringScreen extends Component {
 		email: '',
 		password: '',
 		userData: [],
-		type: 'Outdoor',
+		type: 'Indoor',
     }
 
     componentDidMount () {
@@ -72,7 +72,7 @@ class FloweringScreen extends Component {
 					'Content-Type': 'application/json'
 				},
 					body: JSON.stringify({
-						type: 'Outdoor'
+						type: 'Indoor'
 					})
 			})
 			.then((response) => response.json())

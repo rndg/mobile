@@ -82,6 +82,12 @@ class FloweringScreen extends Component {
 			});
     }
 
+    _goback(){
+        this.props.navigation.goBack(null);
+        this.props.navigation.goBack(null);
+        this.props.navigation.goBack(null);
+    }
+
     clearParams = () => {
         this.props.navigation.setParams({id: null, from: null});
     }
@@ -97,10 +103,14 @@ class FloweringScreen extends Component {
                 <Header style={styles.header}>
                     <Left>
                         <TouchableOpacity onPress = {()=> {
-                            this.clearParams();
-                            this.props.navigation.goBack(null);
-                            }
-                            }>
+                                if (from == 'Indoor'){   
+                                    this.clearParams();
+                                    this._goback();
+                                } else {
+                                    this.clearParams();
+                                    this.props.navigation.goBack(null);
+                                }
+                        }}>
                             <View style={{paddingHorizontal: 10}}>
                                 <Icon name="ios-arrow-back" size={10}/>
                             </View>
@@ -115,10 +125,28 @@ class FloweringScreen extends Component {
                             source={require('../imgs/grassBack1.jpg')}
                         />  
                             <View style={styles.body}>
-                            <View style={styles.containerText}>
-                                    <Text>Pianta Indoor: {JSON.stringify(item)}</Text>
+                                <View style={styles.plantTitle}>
+                                    <Text style={styles.textTitle}>{item.name}</Text>
                                 </View>
-                                <View style={styles.plantBox}>
+                                <Image
+                                    style={[styles.plantPicture, styles.padd]}
+                                    source={require('../imgs/plantPicture.jpg')}
+                                />  
+                                <View style={[styles.plantDescr, styles.padd]}>
+                                    <Text style={styles.textSubTitle}>Description:</Text>
+                                    <Text style={styles.textSection}>{JSON.stringify(item)}</Text>
+                                </View>
+                                <View style={[styles.plantField, styles.padd]}>
+                                    <Text style={styles.textSubTitle}>Field1:</Text>
+                                    <Text style={styles.textSection}>{JSON.stringify(item)}</Text>
+                                </View>
+                                <View style={[styles.plantField, styles.padd]}>
+                                    <Text style={styles.textSubTitle}>Field2:</Text>
+                                    <Text style={styles.textSection}>{JSON.stringify(item)}</Text>
+                                </View>
+                                <View style={[styles.plantField, styles.padd]}>
+                                    <Text style={styles.textSubTitle}>Field3:</Text>
+                                    <Text style={styles.textSection}>{JSON.stringify(item)}</Text>
                                 </View>
                             </View>
                         </ScrollView>
@@ -198,16 +226,50 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
 		width : 300
     },
-    containerText: {
+    body: {
         flex: 1,
         alignContent: 'center',
         alignSelf: 'center',
         width: 300,
         paddingVertical: 60,
     },
-    body:{
-        //alignItems: 'center', 
-        backgroundColor: 'transparent'
-    }
-    
+    plantTitle: {
+        flex: 1,
+        alignContent: 'center',
+        alignSelf: 'center',
+        width: 300,
+    },
+    plantPicture: {
+        alignSelf:'center',
+        borderRadius:90,
+        borderWidth: 3,
+        borderColor: 'rgba(255, 0, 0, 0.3)',
+        height: 150,
+		width : 150,
+    },
+    plantDescr: {
+        flex: 1,
+        alignContent: 'center',
+        alignSelf: 'center',
+        width: 300,
+    },
+    plantField: {
+        flex: 1,
+        alignContent: 'center',
+        alignSelf: 'center',
+        width: 300,
+    },
+    textTitle:{
+        textAlign: 'center',
+        fontSize: 25,
+    },
+    textSubTitle: {
+        fontSize: 20,
+    },
+    textSection: {
+
+    },
+    padd: {
+        paddingVertical: 60,
+    },
 });

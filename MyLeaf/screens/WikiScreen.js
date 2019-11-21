@@ -40,7 +40,7 @@ class WikiScreen extends Component {
         if (id == 'null' || id == undefined){   
             
         } else {
-            if(from == 'Orticole'){
+            if(from == 'Outdoor'){
                 this.props.navigation.navigate('WikiOutdoorFlower',
                     {
                         id: this.state.plant,
