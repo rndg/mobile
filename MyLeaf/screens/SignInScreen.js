@@ -10,6 +10,7 @@ import {
     ImageBackground,
     TextInput,
     TouchableOpacity,
+    Alert,
 } from 'react-native';
 import {
     Header,
@@ -17,12 +18,11 @@ import {
     Icon
 } from 'native-base';
 
+import {login} from '../functions/dbRequest';
+
 import AsyncStorage from '@react-native-community/async-storage';
 
 import AwesomeButtonRick from "react-native-really-awesome-button/src/themes/rick";
-
-
-
 
 import AuthLoading from './AuthLoadingScreen';
 
@@ -44,23 +44,18 @@ export default class SignInScreen extends Component {
 		}
 	}
 
-	login = (email, pass) => {
-		fetch('http://192.168.64.2/MyLeaf/Login.php', {
-      	method: 'POST',
-            headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-            email: email,
-            password: pass
-      	})
-    	})
-      	.then((response) => response.json())
-      	.then((responseJson) => {
-			this.storeToken(JSON.stringify(responseJson));
-      	});
-    };
+	completeLogin() {
+        login(this.state.email, this.state.pass).then(data => {
+            if (data == 'Login Fail'){
+                this.setState({ pass: '' });
+                Alert.alert(
+                    'Credenziali errate'
+                );
+            } else {
+                this.storeToken(JSON.stringify(data));              
+            }
+        });
+    }
 
 	render(){
 
@@ -98,7 +93,7 @@ export default class SignInScreen extends Component {
 							/>
                             <AwesomeButtonRick type="anchor" stretch
                                 onPress={() => 
-                                    this.login(this.state.email, this.state.pass)
+                                    this.completeLogin()
                                 }
                             >
                                 <Text>Sign In</Text>

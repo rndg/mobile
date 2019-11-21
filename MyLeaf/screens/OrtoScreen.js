@@ -3,25 +3,19 @@ import {
 	View, 
 	Text, 
 	StyleSheet, 
-	Button, 
 	Image,
 	ImageBackground,
 	FlatList,
-	ListItem,
 	ScrollView,
-	Alert,
 	TouchableHighlight,
 	TouchableOpacity,
 	Modal,
-	SafeAreaView,
-	Dimensions,
 	TextInput,
 	Picker,
 } from 'react-native';
 
 import {
 	myPlants,
-	selectPlants,
 	uploadPlantToServer,
 } from '../functions/dbRequest'
 
@@ -67,6 +61,7 @@ export default class OrtoScreen extends Component {
 		password: '',
 		userData: [],
 		type: 'Outdoor',
+		sub_type: 'Orticola',
 		pickerDisplayed: true,
 	}
 
@@ -76,20 +71,20 @@ export default class OrtoScreen extends Component {
 
 	componentDidMount () {
 		
-		
 		myPlants(this.state.id_user, this.state.type).then(data => {
 			this.state.isLoading = false;
 			this.state.dataSource = data;
 			});
 			
-			fetch('http://192.168.64.2/MyLeaf/selectPlants.php', {
+			fetch('http://Try-env.9sjucipmt3.eu-central-1.elasticbeanstalk.com/selectPlants.php', {
 				method: 'POST',
 				headers: {
 					'Accept': 'application/json',
 					'Content-Type': 'application/json'
 				},
 					body: JSON.stringify({
-						type: 'Outdoor'
+						type: this.state.type,
+						sub_type: this.state.sub_type
 					})
 			})
 			.then((response) => response.json())
@@ -99,6 +94,7 @@ export default class OrtoScreen extends Component {
 					plants: responseJson
 				});
 			});
+		
 	}
 	
 	genEmpty () {
@@ -171,7 +167,7 @@ export default class OrtoScreen extends Component {
 						const {navigate} = this.props.navigation;
 						this.setModalVisible(!this.state.modalVisible);
 						navigate('WikiHome', 
-							{
+							{ 
 								id: this.state.plant,
 								otherParam: 'Orticole',
 							}
@@ -299,6 +295,8 @@ export default class OrtoScreen extends Component {
 										</View>
 									} 
 								/>
+								<View style={styles.containerNew}>
+								</View>
 						</ScrollView>
 					</View>
 				</View>

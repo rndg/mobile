@@ -6,7 +6,8 @@ import {
     Button,
     Image,
     TextInput,
-    TouchableOpacity
+    TouchableOpacity,
+    Alert
 } from 'react-native';
 import {
     Header,
@@ -26,6 +27,42 @@ class SignUpScreen extends Component {
         pass: '',
 		passConf: '',
     };
+
+    controlSignUp() {
+        let reg = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/ ;
+
+        if (this.state.pass != this.state.passConf){
+            this.setState({ pass: '' });
+            this.setState({ passConf: '' });
+            Alert.alert(
+                'Password non coincidenti',
+                'Reinserire le password'
+            );
+        } else if (reg.test(this.state.email) === false) {
+            Alert.alert(
+                'Email non valida',
+                'Reinserire la mail'
+            );
+        } else {
+            signUp(this.state.username, this.state.email, this.state.pass, this.state.passConf).then(data => {
+                if (data == 'Already existing'){
+                    Alert.alert(
+                        'Email già registrata',
+                        'Reinserire la mail'
+                    );
+                } else if (data == 'Registration completed'){
+                    Alert.alert(
+                        'Utente Registrato con successo'
+                    );
+                    this.props.navigation.goBack(null);
+                } else {
+                    Alert.alert(
+                        'Server Error'
+                    );
+                }
+            });
+        }
+    }
 
     render () {
 
@@ -71,7 +108,7 @@ class SignUpScreen extends Component {
                                 onChangeText={data => this.setState({ passConf: data })} />  
                             <AwesomeButtonRick type="anchor" stretch
                                 onPress={() => 
-                                    signUp(this.state.username, this.state.email, this.state.pass, this.state.passConf)
+                                    this.controlSignUp()
                                 }
                             >
                                 <Text>Sign Up</Text>

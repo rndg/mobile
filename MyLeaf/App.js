@@ -37,10 +37,40 @@ import WikiOutdoorHomeScreen from './screens/WikiOutdoorHomeScreen';
 import OrnamentalScreen from './screens/OrnamentalScreen';
 import FloweringScreen from './screens/FloweringScreen';
 import HorticulturalScreen from './screens/HorticulturalScreen';
+import WikiOutdoorFlowerScreen from './screens/WikiOutdoorFlowerScreen';
+import WikiIndoorFlowerScreen from './screens/WikiIndoorFlowerScreen';
 
-import ProfileScreen from './screens/ProfileScreen';
+import LogOutScreen from './screens/LogOutScreen';
 import AchievScreen from './screens/AchievScreen';
 import SettingsScreen from './screens/SettingsScreen';
+
+import {
+	setCustomTextInput,
+	setCustomText,
+} from 'react-native-global-props';
+
+import AwesomeButtonRick from "react-native-really-awesome-button/src/themes/rick";
+
+// Setting default for all TextInput components.
+const customTextInputProps = {
+	underlineColorAndroid: 'rgba(0,0,0,0)',
+	style: {
+		fontSize: 15,
+		fontFamily: 'Hey Comic',
+	}
+};
+
+// Setting default styles for all Text components.
+const customTextProps = {
+	style: {
+		fontSize: 15,
+		fontFamily: 'Hey Comic',
+		//alignSelf: 'center',
+	}
+};
+
+setCustomText(customTextProps);
+setCustomTextInput(customTextInputProps);
 
 YellowBox.ignoreWarnings([
 	'VirtualizedLists should never be nested', // TODO: Remove when fixed
@@ -99,6 +129,7 @@ const AppTabNavigator = createMaterialTopTabNavigator(
       },
       labelStyle: {
         textAlign: 'center',
+        fontFamily: 'Hey Comic',
       },
       indicatorStyle: {
         borderBottomColor: '#87B56A',
@@ -141,6 +172,7 @@ const WikiOutdoorStackNavigator = createStackNavigator(
     {
       WikiOutdoorHome: {screen: WikiOutdoorHomeScreen},
       WikiHorticultural: {screen: HorticulturalScreen},
+      WikiOutdoorFlower: {screen: WikiOutdoorFlowerScreen},
     },
     {
       initialRouteName: 'WikiOutdoorHome',
@@ -152,6 +184,7 @@ const WikiIndoorStackNavigator = createStackNavigator(
     WikiIndoorHome: {screen: WikiIndoorHomeScreen},
     WikiOrnamental: {screen: OrnamentalScreen},
     WikiFlowering: {screen: FloweringScreen},
+    WikiIndoorFlower: {screen: WikiIndoorFlowerScreen},
   },
   {
     initialRouteName: 'WikiIndoorHome',
@@ -174,24 +207,37 @@ const AppDrawerNavigator = createDrawerNavigator(
   {
     Home: AppStackNavigator,
     Wiki: WikiStackNavigator,
-    Profile: ProfileScreen,
-    Achievements: AchievScreen
+    Achievements: AchievScreen,
+    Logout: {
+      screen: LogOutScreen,
+      navigationOptions: {
+        drawerLabel: (
+          <Text style={{color: 'rgba(255, 0, 0, 0.8)', margin: 16}}>Logout</Text>
+        )
+      }
+    },
   },{
     contentComponent: CustomDrawerComponent,
     drawerWidth: (width/2),
     drawerBackgroundColor: 'rgba(198, 219, 184, 0.5)',
     edgeWidth: 0,
     contentOptions:{
-      activeTintColor: 'orange',
+      activeTintColor: 'rgba(0, 0, 0, 1)',
     }
   }
 )
 
-const AuthStackNavigator = createStackNavigator({
-  Welcome: WelcomeScreen,
-  SignIn: SignInScreen,
-  SignUp: SignUpScreen
-}) 
+const AuthStackNavigator = createStackNavigator(
+  {
+    Welcome: WelcomeScreen,
+    SignIn: SignInScreen,
+    SignUp: SignUpScreen
+  },
+  {
+    initialRouteName: 'Welcome',
+    headerMode: 'none',
+  }
+) 
 
 const DrawStackNavigator = createStackNavigator({
   Welcome: WelcomeScreen,

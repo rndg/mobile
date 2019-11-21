@@ -3,24 +3,19 @@ import {
 	View, 
 	Text, 
 	StyleSheet, 
-	Button, 
 	Image,
 	ImageBackground,
 	FlatList,
 	ScrollView,
-	Alert,
 	TouchableHighlight,
 	TouchableOpacity,
 	Modal,
-	SafeAreaView,
-	Dimensions,
 	TextInput,
 	Picker,
 } from 'react-native';
 
 import {
 	myPlants,
-	selectPlants,
 	uploadPlantToServer,
 } from '../functions/dbRequest'
 
@@ -59,6 +54,7 @@ export default class SerraScreen extends Component {
 		password: '',
 		userData: [],
 		type: 'Indoor',
+		sub_type: 'Floricola',
 		pickerDisplayed: true,
 	}
 
@@ -67,21 +63,21 @@ export default class SerraScreen extends Component {
 	}
 
 	componentDidMount () {
-		
 
 		myPlants(this.state.id_user, this.state.type).then(data => {
 			this.state.isLoading = false;
 			this.state.dataSource = data;
 			});
 			
-			fetch('http://192.168.64.2/MyLeaf/selectPlants.php', {
+			fetch('http://Try-env.9sjucipmt3.eu-central-1.elasticbeanstalk.com/selectPlants.php', {
 				method: 'POST',
 				headers: {
 					'Accept': 'application/json',
 					'Content-Type': 'application/json'
 				},
 					body: JSON.stringify({
-						type: 'Indoor'
+						type: this.state.type,
+						sub_type: this.state.sub_type
 					})
 			})
 			.then((response) => response.json())
@@ -91,6 +87,7 @@ export default class SerraScreen extends Component {
 					plants: responseJson
 				});
 			});
+			
 	}
 	
 	genEmpty () {
@@ -291,6 +288,8 @@ export default class SerraScreen extends Component {
 										</View>
 									} 
 								/>
+								<View style={styles.containerNew}>
+								</View>
 						</ScrollView>
 					</View>
 				</View>
@@ -378,7 +377,7 @@ const styles = StyleSheet.create({
 	},
 	scrollview: {
 		flex: 1,
-		backgroundColor: 'transparent'
+		backgroundColor: 'transparent',
 	},
 	bkImage:{
 		position: "absolute",

@@ -1,27 +1,27 @@
 import React, { Component } from 'react';
 import {
     View,
-    Text,
     StyleSheet,
     ActivityIndicator
 } from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
 
-class AuthLoadingScreen extends Component {
+class ProfileScreen extends Component {
 
-    constructor(){
-        super()
-        this.loadApp()
+    constructor(props){
+        super(props)
+        this.signOut = this.signOut.bind(this);
+        this.signOut();
     }
 
-    loadApp = async() => {
-        const userToken = await AsyncStorage.getItem('userData')
-
-        this.props.navigation.navigate(userToken ? 'App' : 'Auth')
+    signOut = async()=>{
+        AsyncStorage.clear();
+        this.props.navigation.navigate('AuthLoading');
     }
-
+    
     render () {
+ 
         return (
             <View style={styles.container}>
                 <ActivityIndicator/>
@@ -29,13 +29,12 @@ class AuthLoadingScreen extends Component {
         );
     }
 }
-export default AuthLoadingScreen;
+export default ProfileScreen;
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'rgba(92, 145, 28, 1)',
-    }
+    },
 });
