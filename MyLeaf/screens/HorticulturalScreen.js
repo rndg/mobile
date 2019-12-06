@@ -7,7 +7,8 @@ import {
     TouchableOpacity,
     Image,
     FlatList,
-	ScrollView,
+    ScrollView,
+    ActivityIndicator
 } from 'react-native';
 import {
     Header,
@@ -27,10 +28,13 @@ import {
 
 import AwesomeButtonRick from "react-native-really-awesome-button/src/themes/rick";
 
+import FastImage from 'react-native-fast-image';
 
-class FloweringScreen extends Component {
+
+class HorticulturalScreen extends Component {
 
     state = {
+        load: false,
         isLoading: true,
 		dataSource: [],
 		data: [ 
@@ -54,36 +58,36 @@ class FloweringScreen extends Component {
 		email: '',
 		password: '',
 		userData: [],
-		type: 'Outdoor',
+        type: 'Outdoor',
+        sub_type: 'Orticola'
     }
 
     componentDidMount () {
 		
 		
-		myPlants(this.state.id_user, this.state.type).then(data => {
-			this.state.isLoading = false;
-			this.state.dataSource = data;
-			});
-			
-			fetch('http://192.168.64.2/MyLeaf/selectPlants.php', {
-				method: 'POST',
-				headers: {
-					'Accept': 'application/json',
-					'Content-Type': 'application/json'
-				},
-					body: JSON.stringify({
-						type: 'Outdoor'
-					})
-			})
-			.then((response) => response.json())
-			.then((responseJson) => {
-				this.setState({
-					isLoading: false,
-					plants: responseJson
-				});
-			});
+        selectPlants(this.state.type, this.state.sub_type)
+            .then(data => {
+                if (data != 'No Results Found') {
+                    this.state.isLoading = false;
+                    this.state.plants = data;
+                }
+            })
+            .then(res => {
+                this.setState({ load: true });
+            });
     }
-    
+
+    displayStars(stars){
+        const starsComponents = [];
+        for (i = 0; i < stars; i++) {
+            starsComponents.push(<FastImage style={styles.starImage} source={require('../imgs/star.png')}/>);
+        };
+        for (i = 0; i < 5-stars; i++) {
+            starsComponents.push(<FastImage style={styles.starImage} source={require('../imgs/starEmpty.png')}/>);
+        };
+        return starsComponents;
+    }
+
     displayRow(item, index) {
         return (
             <TouchableOpacity activeOpacity={0.7} onPress={() => {
@@ -96,33 +100,14 @@ class FloweringScreen extends Component {
             }}
             >
                 <View style={styles.row}>
-                    <Image
+                    <FastImage
                         style={styles.plantImage}
                         source={plantImg(item.id_plant)}
                     />
                     <View style={styles.col}> 
                         <Text style={styles.plantName}>{item.name}</Text>
                         <View style={styles.stars}>
-                            <Image
-                                style={styles.starImage}
-                                source={require('../imgs/star.png')}
-                            />
-                            <Image
-                                style={styles.starImage}
-                                source={require('../imgs/star.png')}
-                            />
-                            <Image
-                                style={styles.starImage}
-                                source={require('../imgs/star.png')}
-                            />
-                            <Image
-                                style={styles.starImage}
-                                source={require('../imgs/starEmpty.png')}
-                            />
-                            <Image
-                                style={styles.starImage}
-                                source={require('../imgs/starEmpty.png')}
-                            />
+                            {this.displayStars(item.difficulty)}
                         </View>
                     </View>
                 </View>
@@ -130,7 +115,7 @@ class FloweringScreen extends Component {
         )
     }
     
-    render() {
+    renderPage() {
         return (
             <View style={styles.containerMain}>
             <Image source = {require('../imgs/grassBack1.jpg')} style = {styles.bkImage}/>
@@ -159,7 +144,7 @@ class FloweringScreen extends Component {
                                 </View>
                                 <FlatList 
                                     numColumns={1}
-                                    data={this.state.dataSource}
+                                    data={this.state.plants}
                                     scrollEnabled={false}
                                     keyExtractor = {(item, index) => index.toString()}
                                     renderItem = {({item, index}) => 
@@ -175,15 +160,25 @@ class FloweringScreen extends Component {
             </View>
         );
     }
+
+    render() {
+        const { load } = (this.state.load);
+        if(!this.state.load) { return (
+            <View style={styles.loadingIndicator}>
+                <ActivityIndicator/>
+            </View>
+        )}
+        return this.renderPage();
+    }
 }
 
-export default FloweringScreen;
+export default HorticulturalScreen;
 
 const styles = StyleSheet.create({
     containerMain: {
         flex: 1,
         justifyContent: 'center',
-        backgroundColor: '#2c3e50',
+        backgroundColor: 'rgba(92, 145, 28, 1)',
     },
     container: {
         flex: 1,
@@ -197,6 +192,14 @@ const styles = StyleSheet.create({
 	},
     header: {
         backgroundColor: '#45803b',
+        shadowColor: "#000",
+        shadowOffset: {
+			width: 0,
+			height: 5,
+        },
+        shadowOpacity: 0.34,
+        shadowRadius: 6.27,
+        elevation: 10,
     },
     scrollview: {
 		flex: 1,
@@ -256,6 +259,12 @@ const styles = StyleSheet.create({
     body:{
         //alignItems: 'center', 
         backgroundColor: 'transparent'
+    },
+    loadingIndicator:{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'rgba(92, 145, 28, 1)',
     }
     
 });

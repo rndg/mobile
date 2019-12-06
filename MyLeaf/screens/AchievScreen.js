@@ -3,7 +3,6 @@ import {
     View, 
     Text,
     StyleSheet, 
-    Button,
     TouchableOpacity,
     Image,
     FlatList,
@@ -20,6 +19,18 @@ import ProgressBarAnimated from 'react-native-progress-bar-animated';
 import AwesomeButtonRick from "react-native-really-awesome-button/src/themes/rick";
 
 class WikiIndoorHomeScreen extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.props.navigation.addListener(
+            'didFocus',
+            payload => {
+                this.setState(this.state);
+            }
+        );
+    }
+    
 
     state = {
 		dataSource: [],
@@ -40,7 +51,6 @@ class WikiIndoorHomeScreen extends Component {
 			{ id: "14", name: "Achiev 14", descr: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...", prog: "10", tot:"20"},
         ],
         id_user: 1,
-        
     }
 
     displayRow(item, index) {
@@ -124,7 +134,7 @@ const styles = StyleSheet.create({
     containerMain: {
         flex: 1,
         justifyContent: 'center',
-        backgroundColor: '#2c3e50',
+        backgroundColor: 'rgba(92, 145, 28, 1)',
     },
     container: {
         flex: 1,
@@ -138,6 +148,14 @@ const styles = StyleSheet.create({
 	},
     header: {
         backgroundColor: '#45803b',
+        shadowColor: "#000",
+        shadowOffset: {
+			width: 0,
+			height: 5,
+        },
+        shadowOpacity: 0.34,
+        shadowRadius: 6.27,
+        elevation: 10,
     },
     scrollview: {
 		flex: 1,

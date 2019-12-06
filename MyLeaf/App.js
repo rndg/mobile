@@ -120,6 +120,14 @@ const AppTabNavigator = createMaterialTopTabNavigator(
       inactiveTintColor: '#000',
       style: {
         backgroundColor: '#45803b',
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 5,
+        },
+        shadowOpacity: 0.34,
+        shadowRadius: 6.27,
+        elevation: 10,
       },
       tabStyle: {
         height: 100,
@@ -145,6 +153,14 @@ const AppStackNavigator = createStackNavigator({
     navigationOptions:({navigation}) => ({
       headerStyle: {
         backgroundColor: '#45803b',
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 5,
+        },
+        shadowOpacity: 0.34,
+        shadowRadius: 6.27,
+        elevation: 10,
       },
       headerLeft: (
         <TouchableOpacity onPress = {()=> navigation.toggleDrawer()}>

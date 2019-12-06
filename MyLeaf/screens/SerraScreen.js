@@ -7,16 +7,19 @@ import {
 	ImageBackground,
 	FlatList,
 	ScrollView,
-	TouchableHighlight,
 	TouchableOpacity,
 	Modal,
 	TextInput,
 	Picker,
+	ActivityIndicator,
+	Alert
 } from 'react-native';
 
 import {
 	myPlants,
 	uploadPlantToServer,
+	selectPlants,
+	deletePlant
 } from '../functions/dbRequest'
 
 import {
@@ -25,20 +28,17 @@ import {
 
 import AwesomeButtonRick from "react-native-really-awesome-button/src/themes/rick";
 
+import FastImage from 'react-native-fast-image';
+
+
 export default class SerraScreen extends Component {
 
 	state = {
+		load: false,
 		isLoading: true,
 		dataSource: [],
 		data: [  
-			{ id: "00", name: "Relâmpago McQueen" },
-			{ id: "01", name: "Agente Tom Mate" },
-			{ id: "02", name: "Doc Hudson" },
-			{ id: "03", name: "Cruz Ramirez" },
-			{ id: "04", name: "Cruz Ramirez" },
-			{ id: "05", name: "Relâmpago McQueen" },
-			{ id: "06", name: "Agente Tom Mate" },
-			
+			{id: "1", id_plant: "3", id_user: "1", name: "Orchidea1", type: "Indoor"}			
 		],
 		modalVisible: false,
 		plant: {
@@ -48,13 +48,13 @@ export default class SerraScreen extends Component {
 		newPlant: false,
 		plants: [],
 		plantName: '',
-		id_plant: 4,
+		id_plant: 0,
 		id_user: 1,
 		email: '',
 		password: '',
 		userData: [],
 		type: 'Indoor',
-		sub_type: 'Floricola',
+		sub_type: '',
 		pickerDisplayed: true,
 	}
 
@@ -63,31 +63,57 @@ export default class SerraScreen extends Component {
 	}
 
 	componentDidMount () {
-
-		myPlants(this.state.id_user, this.state.type).then(data => {
-			this.state.isLoading = false;
-			this.state.dataSource = data;
-			});
-			
-			fetch('http://Try-env.9sjucipmt3.eu-central-1.elasticbeanstalk.com/selectPlants.php', {
-				method: 'POST',
-				headers: {
-					'Accept': 'application/json',
-					'Content-Type': 'application/json'
-				},
-					body: JSON.stringify({
-						type: this.state.type,
-						sub_type: this.state.sub_type
-					})
+		
+		myPlants(this.state.id_user, this.state.type)
+			.then(data => {
+				if (data != 'No Results Found') {
+					this.state.isLoading = false;
+					this.state.dataSource = data;
+				}
 			})
-			.then((response) => response.json())
-			.then((responseJson) => {
-				this.setState({
-					isLoading: false,
-					plants: responseJson
-				});
-			});
-			
+			.then(res => {
+                this.setState({ load: true });
+            });
+
+		selectPlants(this.state.type, this.state.sub_type).then(data => {
+			if (data != 'No Results Found') {
+				this.state.isLoading = false;
+				this.state.plants = data;
+			}
+		});
+		
+	}
+
+	componentDidUpdate () {
+		myPlants(this.state.id_user, this.state.type)
+			.then(data => {
+				if (data != 'No Results Found') {
+					this.state.isLoading = false;
+					this.state.dataSource = data;
+				}
+			})
+			.then(res => {
+                this.setState({ load: true });
+            });
+	}
+
+	addPlant(id_plant_new,id_user_new,plantName_new,type_new){
+		uploadPlantToServer(id_plant_new, id_user_new, plantName_new, type_new);
+		this.setModalVisible(false);
+		this.setState({ load: true });
+	}
+
+	deletePlants(id_plant){
+		deletePlant(id_plant)
+			.then(data => {
+				Alert.alert(
+                    data
+                );
+			})
+			.then(res => {
+                this.setState({ load: true });
+            });
+		this.setModalVisible(false);
 	}
 	
 	genEmpty () {
@@ -108,7 +134,7 @@ export default class SerraScreen extends Component {
 												this.state.plant = item;
 											}}
 											>
-								<Image
+								<FastImage
 									style={styles.plantImage}
 									source={plantImg(item.id_plant)}
 								/>
@@ -127,7 +153,7 @@ export default class SerraScreen extends Component {
 												this.state.plant = item;
 											}}
 											>
-								<Image
+								<FastImage
 									style={styles.plantImage}
 									source={plantImg(item.id_plant)}
 								/>
@@ -141,7 +167,7 @@ export default class SerraScreen extends Component {
             return (
 				<ImageBackground source={require('../imgs/mensola-up2-dx.png')} style={styles.backgroundImagePlant}>
 					<View >
-						<Image
+						<FastImage
 							style={styles.plantImage}
 						/>
 						<Text style={styles.plantName}>{item.name}</Text>
@@ -160,7 +186,7 @@ export default class SerraScreen extends Component {
 							<View style={styles.plantTitle}>
 								<Text style={styles.textTitle}>{this.state.plant.id}</Text>
 							</View>
-							<Image
+							<FastImage
 								style={[styles.plantPicture, styles.padd]}
 								source={require('../imgs/plantPicture.jpg')}
 							/>  
@@ -206,6 +232,18 @@ export default class SerraScreen extends Component {
 									<Text> Cancel </Text>
 								</AwesomeButtonRick>
 							</View>
+							<View style={styles.containerButton2}>
+								<AwesomeButtonRick type="anchor" stretch 
+									backgroundActive="rgba(153, 47, 40, 1)"	//quando è premuto
+									backgroundColor="rgba(180, 51, 33, 1)"	//quando è normale
+									backgroundDarker="rgba(112, 38, 33, 1)"	//bordino del tasto
+									borderColor="rgba(112, 38, 33, 1)"		//bordo frontale bottone
+									onPress={() => 
+										this.deletePlants(this.state.plant.id)
+									}>
+									<Text> Delete Plant </Text>
+								</AwesomeButtonRick>
+							</View>
 						</View>
 					</View>
 				</ScrollView>
@@ -236,7 +274,7 @@ export default class SerraScreen extends Component {
 								{ 
 									this.state.plants.map((item) =>{
 										return(
-											<Picker.Item  label={item.name} value={item.id} key={item.name}/>
+											<Picker.Item  label={item.name} value={item.id_plant} key={item.id_plant}/>
 										);
 									})
 								}
@@ -246,7 +284,8 @@ export default class SerraScreen extends Component {
 							<View style={styles.containerButtons}>
 								<AwesomeButtonRick type="anchor" stretch
 									onPress={() => 
-									uploadPlantToServer(this.state.id_plant, this.state.id_user, this.state.plantName, this.state.type)}>
+									this.addPlant(this.state.id_plant, this.state.id_user, this.state.plantName, this.state.type)
+									}>
 									<Text>Add plant</Text>
 								</AwesomeButtonRick>
 							</View>
@@ -265,8 +304,10 @@ export default class SerraScreen extends Component {
 		}
 	}
 
-	render(){
-		{this.genEmpty()}
+	renderPage(){
+		{	
+			this.genEmpty();
+		}
 		return (
 			<View style={styles.container}>
 			<Image source={require('../imgs/stone-piastrelle.jpg')} style={styles.bkImage}/> 
@@ -301,9 +342,9 @@ export default class SerraScreen extends Component {
 											this.setModalVisible(!this.state.modalVisible);
 											}}
 										>
-											<Image
+											<FastImage
 												style={styles.plantImage}
-												source={require('../imgs/plantEmpty.png')}
+												source={require('../imgs/vuoto.png')}
 											/>
 												<Text style={styles.plantName}>NewItem</Text>
 										</TouchableOpacity>
@@ -329,7 +370,17 @@ export default class SerraScreen extends Component {
 				</View>
 			</View>
 		);
-	};
+	}
+
+	render() {
+        const { load } = (this.state.load);
+        if(!this.state.load) { return (
+            <View style={styles.loadingIndicator}>
+                <ActivityIndicator/>
+            </View>
+        )}
+        return this.renderPage();
+    }
 }
 
 const styles = StyleSheet.create({
@@ -409,11 +460,14 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		backgroundColor: '#45803b',
 		paddingHorizontal: 5,
-		shadowColor: '#000',
-		shadowOffset: { width: 0, height: 2 },
-		shadowOpacity: 0.8,
-		shadowRadius: 2,
-		elevation: 1,
+		shadowColor: "#000",
+        shadowOffset: {
+			width: 0,
+			height: 5,
+        },
+        shadowOpacity: 0.34,
+        shadowRadius: 6.27,
+        elevation: 10,
 	},
 	spaceAroundModal: {
 		flex: 1,
@@ -511,5 +565,11 @@ const styles = StyleSheet.create({
     },
     padd: {
         paddingVertical: 60,
-    },
+	},
+    loadingIndicator:{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'rgba(92, 145, 28, 1)',
+    }
 });

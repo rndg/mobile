@@ -3,10 +3,8 @@ import {
     View, 
     Text,
     StyleSheet, 
-    Button,
     TouchableOpacity,
     Image,
-    FlatList,
 	ScrollView,
 } from 'react-native';
 import {
@@ -26,6 +24,8 @@ import {
 } from '../functions/function'
 
 import AwesomeButtonRick from "react-native-really-awesome-button/src/themes/rick";
+
+import FastImage from 'react-native-fast-image';
 
 
 class FloweringScreen extends Component {
@@ -104,7 +104,7 @@ class FloweringScreen extends Component {
                                 <View style={styles.plantTitle}>
                                     <Text style={styles.textTitle}>{item.name}</Text>
                                 </View>
-                                <Image
+                                <FastImage
                                     style={[styles.plantPicture, styles.padd]}
                                     source={require('../imgs/plantPicture.jpg')}
                                 />  
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     containerMain: {
         flex: 1,
         justifyContent: 'center',
-        backgroundColor: '#2c3e50',
+        backgroundColor: 'rgba(92, 145, 28, 1)',
     },
     container: {
         flex: 1,
@@ -153,6 +153,14 @@ const styles = StyleSheet.create({
 	},
     header: {
         backgroundColor: '#45803b',
+        shadowColor: "#000",
+        shadowOffset: {
+			width: 0,
+			height: 5,
+        },
+        shadowOpacity: 0.34,
+        shadowRadius: 6.27,
+        elevation: 10,
     },
     scrollview: {
 		flex: 1,

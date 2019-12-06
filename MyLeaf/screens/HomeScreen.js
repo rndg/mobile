@@ -16,6 +16,7 @@ import {
 
 import AwesomeButtonRick from "react-native-really-awesome-button/src/themes/rick";
 
+
 class HomeScreen extends Component {
 
     static navigationOptions = {
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
     containerMain: {
         flex: 1,
         justifyContent: 'center',
-        backgroundColor: '#2c3e50',
+        backgroundColor: 'rgba(92, 145, 28, 1)',
     },
     container: {
 		flex: 1,

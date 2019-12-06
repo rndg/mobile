@@ -2,40 +2,40 @@ export function plantImg(id) {
     let url;
     switch (id) {
         case '1':
-        return require('../image/plants/rosa.png');
+        return require('../imgs/plants/piant1.png');
         break;
         case '2':
-        return require('../image/plants/camellia.png');
+        return require('../imgs/plants/piant2.png');
         break;
         case '3':
-        return require('../image/plants/orchidea.png');
+        return require('../imgs/plants/piant3.png');
         break;
         case '4':
-        return require('../image/plants/patata.png');
+        return require('../imgs/plants/patata.png');
         break;
         case '5':
-        return require('../image/plants/carota.png');
+        return require('../imgs/plants/carota.png');
         break;
         case '6':
-        return require('../image/plants/pomodoro.png');
+        return require('../imgs/plants/piant6.png');
         break;
         case '7':
-        return require('../image/plants/gerbena.png');
+        return require('../imgs/plants/piant1.png');
         break;
         case '8':
-        return require('../image/plants/primula.png');
+        return require('../imgs/plants/piant2.png');
         break;
         case '9':
-        return require('../image/plants/peperone.png');
+        return require('../imgs/plants/piant3.png');
         break;
         case '10':
-        return require('../image/plants/melanzana.png');
+        return require('../imgs/plants/piant4.png');
         break;
         case '11':
-        return require('../image/plants/zucchina.png');
+        return require('../imgs/plants/piant5.png');
         break;
         default:
-        return require('../image/plants/camellia.png');
+        return require('../imgs/plants/piant6.png');
         break;
     }
 }
