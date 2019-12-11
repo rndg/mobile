@@ -2,19 +2,19 @@ export function plantImg(id) {
     let url;
     switch (id) {
         case '1':
-        return require('../imgs/plants/piant1.png');
+        return require('../imgs/plants/piant1.gif');
         break;
         case '2':
-        return require('../imgs/plants/piant2.png');
+        return require('../imgs/plants/piant2.gif');
         break;
         case '3':
-        return require('../imgs/plants/piant3.png');
+        return require('../imgs/plants/piant3.gif');
         break;
         case '4':
-        return require('../imgs/plants/patata.png');
+        return require('../imgs/plants/pata.gif');
         break;
         case '5':
-        return require('../imgs/plants/carota.png');
+        return require('../imgs/plants/carota.gif');
         break;
         case '6':
         return require('../imgs/plants/piant6.png');

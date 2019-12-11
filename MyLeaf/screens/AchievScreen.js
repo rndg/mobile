@@ -6,33 +6,27 @@ import {
     TouchableOpacity,
     Image,
     FlatList,
-    ScrollView
+    ScrollView,
+    ActivityIndicator
 } from 'react-native';
 import {
     Header,
     Left,
     Icon
 } from 'native-base';
+import { withNavigationFocus } from 'react-navigation';
+import {
+	getAchievementProgress
+} from '../functions/dbRequest'
 
 import ProgressBarAnimated from 'react-native-progress-bar-animated';
 
 import AwesomeButtonRick from "react-native-really-awesome-button/src/themes/rick";
 
-class WikiIndoorHomeScreen extends Component {
-
-    constructor(props) {
-        super(props);
-
-        this.props.navigation.addListener(
-            'didFocus',
-            payload => {
-                this.setState(this.state);
-            }
-        );
-    }
-    
+class AchievScreen extends Component {    
 
     state = {
+        load: false,
 		dataSource: [],
 		data: [ 
 			{ id: "00", name: "Achiev 1",  descr: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis dolor et tellus tempor pellentesque vel eget libero. ", prog: "34", tot: "100" },
@@ -51,6 +45,37 @@ class WikiIndoorHomeScreen extends Component {
 			{ id: "14", name: "Achiev 14", descr: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...", prog: "10", tot:"20"},
         ],
         id_user: 1,
+        toUpdate: false,
+    }
+
+    componentDidMount () {
+		getAchievementProgress(this.state.id_user)
+			.then(data => {
+				if (data != 'No Results Found') {
+					this.state.isLoading = false;
+					this.state.dataSource = data;
+				} else {
+					//this.state.dataSource = this.state.data;
+				}
+			})
+			.then(res => {
+                this.setState({ load: true });
+            });
+	}
+	
+	componentDidUpdate () {
+		getAchievementProgress(this.state.id_user)
+			.then(data => {
+				if (data != 'No Results Found') {
+					this.state.isLoading = false;
+					this.state.dataSource = data;
+				} else {
+					//this.state.dataSource = this.state.data;
+				}
+			})
+			.then(res => {
+                this.setState({ load: true });
+            });
     }
 
     displayRow(item, index) {
@@ -62,12 +87,12 @@ class WikiIndoorHomeScreen extends Component {
                     />
                     <View style={styles.col}> 
                         <Text style={styles.achievName}>Name: {item.name}</Text>
-                        <Text style={styles.achievDescr}>Descrizione: {item.descr}</Text>
+                        <Text style={styles.achievDescr}>Descrizione: {item.description}</Text>
                         <View style={styles.bar}>
                             <ProgressBarAnimated
                                 width = {300}
                                 height = {25}
-                                value={(item.prog/item.tot)*100}
+                                value={(item.progress/item.total)*100}
                                 maxValue = {100}
                                 backgroundColor = "#45803b"
                                 backgroundColorOnComplete="#2c3e50"
@@ -81,7 +106,7 @@ class WikiIndoorHomeScreen extends Component {
         )
     }
 
-    render() {
+    renderPage() {
         return (
             <View style={styles.containerMain}>
             <Image source = {require('../imgs/grassBack1.jpg')} style = {styles.bkImage}/>
@@ -89,6 +114,7 @@ class WikiIndoorHomeScreen extends Component {
                     <Left>
                         <TouchableOpacity onPress = {()=> {
                             this.props.navigation.goBack(null);
+                            this.setState({toUpdate: !this.state.toUpdate});
                             }
                             }>
                             <View style={{paddingHorizontal: 10}}>
@@ -110,7 +136,7 @@ class WikiIndoorHomeScreen extends Component {
                                 </View>
                                 <FlatList 
                                     numColumns={1}
-                                    data={this.state.data}
+                                    data={this.state.dataSource}
                                     scrollEnabled={false}
                                     keyExtractor = {(item, index) => index.toString()}
                                     renderItem = {({item, index}) => 
@@ -126,9 +152,19 @@ class WikiIndoorHomeScreen extends Component {
             </View>
         );
     }
+
+    render() {
+        const { load } = (this.state.load);
+        if(!this.state.load) { return (
+            <View style={styles.loadingIndicator}>
+                <ActivityIndicator/>
+            </View>
+        )}
+        return this.renderPage();
+    }
 }
 
-export default WikiIndoorHomeScreen;
+export default AchievScreen;
 
 const styles = StyleSheet.create({
     containerMain: {
@@ -156,6 +192,8 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.34,
         shadowRadius: 6.27,
         elevation: 10,
+        borderBottomWidth: 5,
+        borderBottomColor: 'rgba(135, 181, 106,1)' ,
     },
     scrollview: {
 		flex: 1,

@@ -98,9 +98,15 @@ export default class SerraScreen extends Component {
 	}
 
 	addPlant(id_plant_new,id_user_new,plantName_new,type_new){
-		uploadPlantToServer(id_plant_new, id_user_new, plantName_new, type_new);
-		this.setModalVisible(false);
-		this.setState({ load: true });
+		if(id_plant_new == 0){
+			Alert.alert(
+				'Please, select a type of plant!'
+			)
+		} else {
+			uploadPlantToServer(id_plant_new, id_user_new, plantName_new, type_new);
+			this.setModalVisible(false);
+			this.setState({ load: true });
+		};
 	}
 
 	deletePlants(id_plant){
@@ -170,7 +176,6 @@ export default class SerraScreen extends Component {
 						<FastImage
 							style={styles.plantImage}
 						/>
-						<Text style={styles.plantName}>{item.name}</Text>
 					</View>
 				</ImageBackground>
 			);
@@ -240,7 +245,7 @@ export default class SerraScreen extends Component {
 									borderColor="rgba(112, 38, 33, 1)"		//bordo frontale bottone
 									onPress={() => 
 										this.deletePlants(this.state.plant.id)
-									}>
+									}> 
 									<Text> Delete Plant </Text>
 								</AwesomeButtonRick>
 							</View>
@@ -270,7 +275,8 @@ export default class SerraScreen extends Component {
 								onValueChange={(itemValue, itemIndex) =>{
 									this.setState({id_plant: itemValue});}
 								}
-							>
+							>								
+								<Picker.Item label={'Please select a type of plant'} value={0} />
 								{ 
 									this.state.plants.map((item) =>{
 										return(
@@ -321,7 +327,7 @@ export default class SerraScreen extends Component {
 							<View style={styles.modalContainer}>
 								<View style={styles.spaceAroundModal}></View>
 								<View style={styles.mdlBody}>
-									<View>
+									<View style={styles.mdlPadd}>
 										{this.genModal()}
 									</View>
 								</View>
@@ -398,7 +404,6 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: 'transparent',
 		justifyContent: 'center',
-
 	},
 	containerModal: {
 		flex: 0,
@@ -411,6 +416,7 @@ const styles = StyleSheet.create({
 	containerNew: {
 		flex: 1,
 		alignItems:'center',
+		height: 150,
 	},
 	textInContainer:{
 		flex: 0.5,
@@ -469,6 +475,12 @@ const styles = StyleSheet.create({
         shadowRadius: 6.27,
         elevation: 10,
 	},
+	mdlPadd: {
+		flex:1,
+		borderRadius: 70,
+		paddingHorizontal: 60,
+		paddingVertical: 1,
+	},
 	spaceAroundModal: {
 		flex: 1,
 		backgroundColor: 'rgba(255, 255, 255, 0.0)',
@@ -508,6 +520,11 @@ const styles = StyleSheet.create({
 		overflow:'hidden',
 		backgroundColor: '#87B56A',
 	},
+	body:{
+		flex: 1,
+		alignContent: 'center',
+		width: '100%',
+	},
 	containerButtons:{
 		flex: 1,
 		justifyContent: 'space-around',
@@ -516,7 +533,7 @@ const styles = StyleSheet.create({
         flex: 3,
         alignContent: 'center',
         justifyContent: 'space-around',
-		width: 300,
+		width: '100%',
 		height: 300,
 		paddingBottom: 20,
     },
@@ -531,7 +548,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignContent: 'center',
         alignSelf: 'center',
-        width: 300,
+        width: '100%',
     },
     plantPicture: {
         alignSelf:'center',
@@ -545,13 +562,13 @@ const styles = StyleSheet.create({
         flex: 1,
         alignContent: 'center',
         alignSelf: 'center',
-        width: 300,
+        width: '100%',
     },
     plantField: {
         flex: 1,
         alignContent: 'center',
         alignSelf: 'center',
-        width: 300,
+        width: '100%',
     },
     textTitle:{
         textAlign: 'center',

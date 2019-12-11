@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import React, { Component } from 'react';
 import {
     View,
@@ -17,7 +18,6 @@ import {
 import { createBottomTabNavigator, createMaterialTopTabNavigator } from 'react-navigation-tabs'
 import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer'
 import { createStackNavigator } from 'react-navigation-stack';
-import 'react-native-gesture-handler';
 
 import Icon from 'react-native-vector-icons/Ionicons'
 
@@ -131,6 +131,8 @@ const AppTabNavigator = createMaterialTopTabNavigator(
       },
       tabStyle: {
         height: 100,
+        borderTopWidth: 5,
+        borderTopColor: 'rgba(135, 181, 106,1)',
       },
       iconStyle: {
 
@@ -140,7 +142,7 @@ const AppTabNavigator = createMaterialTopTabNavigator(
         fontFamily: 'Hey Comic',
       },
       indicatorStyle: {
-        borderBottomColor: '#87B56A',
+        borderBottomColor: 'rgba(135, 181, 106,1)',
         borderBottomWidth: 5,
       },
     },
@@ -152,7 +154,7 @@ const AppStackNavigator = createStackNavigator({
     screen: AppTabNavigator,
     navigationOptions:({navigation}) => ({
       headerStyle: {
-        backgroundColor: '#45803b',
+        backgroundColor: 'rgba(69, 128, 59,1)',
         shadowColor: "#000",
         shadowOffset: {
           width: 0,
@@ -161,6 +163,8 @@ const AppStackNavigator = createStackNavigator({
         shadowOpacity: 0.34,
         shadowRadius: 6.27,
         elevation: 10,
+        borderBottomWidth: 5,
+        borderBottomColor: 'rgba(135, 181, 106,1)' ,
       },
       headerLeft: (
         <TouchableOpacity onPress = {()=> navigation.toggleDrawer()}>

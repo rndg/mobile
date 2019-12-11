@@ -136,7 +136,7 @@ export default class OrtoScreen extends Component {
         if (item.id != null) {
 			if (index % 2 == 0){
 				return (
-					<ImageBackground source={require('../imgs/soil-up2-sx.png')} style={styles.backgroundImagePlant}>
+					<ImageBackground source={require('../imgs/asse6-sx.png')} style={styles.backgroundImagePlant}>
 						<View >
 							<TouchableOpacity activeOpacity={0.7} onPress={() => {
 												this.setState({newPlant: false})
@@ -155,7 +155,7 @@ export default class OrtoScreen extends Component {
 				);
 			} else {
 				return (
-					<ImageBackground source={require('../imgs/soil-up2-dx.png')} style={styles.backgroundImagePlant}>
+					<ImageBackground source={require('../imgs/asse6-dx.png')} style={styles.backgroundImagePlant}>
 						<View >
 							<TouchableOpacity activeOpacity={0.7} onPress={() => {
 												this.setState({newPlant: false})
@@ -175,12 +175,11 @@ export default class OrtoScreen extends Component {
 			}
         } else {
             return (
-				<ImageBackground source={require('../imgs/soil-up2-dx.png')} style={styles.backgroundImagePlant}>
+				<ImageBackground source={require('../imgs/asse6-dx.png')} style={styles.backgroundImagePlant}>
 					<View >
 						<FastImage
 							style={styles.plantImage}
 						/>
-						<Text style={styles.plantName}>{item.name}</Text>
 					</View>
 				</ImageBackground>
 			);
@@ -321,7 +320,7 @@ export default class OrtoScreen extends Component {
 		}
 		return (
 			<View style={styles.container}>
-			<Image source={require('../imgs/field1.jpg')} style={styles.bkImage}/>
+			<Image source={require('../imgs/soilBack1.jpg')} style={styles.bkImage}/>
 				<View style={styles.container}>
 					<View style={styles.containerModal}>
 						<Modal
@@ -332,7 +331,7 @@ export default class OrtoScreen extends Component {
 							<View style={styles.modalContainer}>
 								<View style={styles.spaceAroundModal}></View>
 								<View style={styles.mdlBody}>
-									<View>
+									<View style={styles.mdlPadd}>
 										{this.genModal()}
 									</View>
 								</View>
@@ -344,9 +343,9 @@ export default class OrtoScreen extends Component {
 						<ScrollView style={styles.scrollview} bounces={false}>
 							<Image
 								style={styles.bkImage}
-								source={require('../imgs/field1.jpg')}
+								source={require('../imgs/soilBack1.jpg')}
 							/>
-								<ImageBackground source={require('../imgs/soil-up2.png')} style={styles.backgroundImageNewPlant}>
+								<ImageBackground source={require('../imgs/asse6.png')} style={styles.backgroundImageNewPlant}>
 									<View style={styles.containerNew}>
 										<TouchableOpacity activeOpacity={0.7} onPress={() => {
 											this.setState({newPlant: true});
@@ -409,7 +408,6 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: 'transparent',
 		justifyContent: 'center',
-
 	},
 	containerModal: {
 		flex: 0,
@@ -422,6 +420,7 @@ const styles = StyleSheet.create({
 	containerNew: {
 		flex: 1,
 		alignItems:'center',
+		height: 150,
 	},
 	textInContainer:{
 		flex: 0.5,
@@ -480,6 +479,12 @@ const styles = StyleSheet.create({
         shadowRadius: 6.27,
         elevation: 10,
 	},
+	mdlPadd: {
+		flex:1,
+		borderRadius: 70,
+		paddingHorizontal: 60,
+		paddingVertical: 1,
+	},
 	spaceAroundModal: {
 		flex: 1,
 		backgroundColor: 'rgba(255, 255, 255, 0.0)',
@@ -519,6 +524,11 @@ const styles = StyleSheet.create({
 		overflow:'hidden',
 		backgroundColor: '#87B56A',
 	},
+	body:{
+		flex: 1,
+		alignContent: 'center',
+		width: '100%',
+	},
 	containerButtons:{
 		flex: 1,
 		justifyContent: 'space-around',
@@ -527,7 +537,7 @@ const styles = StyleSheet.create({
         flex: 3,
         alignContent: 'center',
         justifyContent: 'space-around',
-		width: 300,
+		width: '100%',
 		height: 300,
 		paddingBottom: 20,
     },
@@ -542,7 +552,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignContent: 'center',
         alignSelf: 'center',
-        width: 300,
+        width: '100%',
     },
     plantPicture: {
         alignSelf:'center',
@@ -556,13 +566,13 @@ const styles = StyleSheet.create({
         flex: 1,
         alignContent: 'center',
         alignSelf: 'center',
-        width: 300,
+        width: '100%',
     },
     plantField: {
         flex: 1,
         alignContent: 'center',
         alignSelf: 'center',
-        width: 300,
+        width: '100%',
     },
     textTitle:{
         textAlign: 'center',

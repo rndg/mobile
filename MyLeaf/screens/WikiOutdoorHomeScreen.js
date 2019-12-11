@@ -80,6 +80,8 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.34,
         shadowRadius: 6.27,
         elevation: 10,
+        borderBottomWidth: 5,
+        borderBottomColor: 'rgba(135, 181, 106,1)' ,
     },
     containerButtons:{
         flex: 1,

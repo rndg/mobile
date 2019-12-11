@@ -4,7 +4,8 @@ import {
     Text,
     StyleSheet,
     Button,
-    Image
+    Image,
+    Easing
 } from 'react-native';
 
 import {
@@ -14,8 +15,13 @@ import {
     Icon
 } from 'native-base';
 
+import {
+    rndBug
+} from '../functions/function';
+
 import AwesomeButtonRick from "react-native-really-awesome-button/src/themes/rick";
 
+import BouncingBalls from 'react-native-bouncing-ball';
 
 class HomeScreen extends Component {
 
@@ -30,6 +36,15 @@ class HomeScreen extends Component {
             <View style={styles.containerMain}>
             <Image source = {require('../imgs/grassBack1.jpg')} style = {styles.bkImage}/>
                 <View style={styles.containerBody}>
+                    <BouncingBalls
+                        amount={4}
+                        animationDuration={2000}
+                        minSpeed={200}
+                        maxSpeed={200}
+                        minSize={20}
+                        maxSize={50}
+                        imageBall={require('../imgs/bee1.png')}
+                    />
                     <AwesomeButtonRick type="anchor">Rick's Secondary Button</AwesomeButtonRick>
                 </View>
             </View>
