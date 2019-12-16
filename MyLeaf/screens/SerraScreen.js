@@ -34,7 +34,7 @@ import FastImage from 'react-native-fast-image';
 export default class SerraScreen extends Component {
 
 	state = {
-		load: false,
+		reload: false,
 		isLoading: true,
 		dataSource: [],
 		data: [  
@@ -67,12 +67,11 @@ export default class SerraScreen extends Component {
 		myPlants(this.state.id_user, this.state.type)
 			.then(data => {
 				if (data != 'No Results Found') {
-					this.state.isLoading = false;
 					this.state.dataSource = data;
-				}
+				} 
 			})
 			.then(res => {
-                this.setState({ load: true });
+                this.setState({ isLoading: false });
             });
 
 		selectPlants(this.state.type, this.state.sub_type).then(data => {
@@ -85,16 +84,17 @@ export default class SerraScreen extends Component {
 	}
 
 	componentDidUpdate () {
-		myPlants(this.state.id_user, this.state.type)
+		if (this.state.reload){
+			myPlants(this.state.id_user, this.state.type)
 			.then(data => {
 				if (data != 'No Results Found') {
-					this.state.isLoading = false;
 					this.state.dataSource = data;
 				}
 			})
 			.then(res => {
-                this.setState({ load: true });
+                this.setState({ reload: false });
             });
+		}
 	}
 
 	addPlant(id_plant_new,id_user_new,plantName_new,type_new){
@@ -105,7 +105,7 @@ export default class SerraScreen extends Component {
 		} else {
 			uploadPlantToServer(id_plant_new, id_user_new, plantName_new, type_new);
 			this.setModalVisible(false);
-			this.setState({ load: true });
+			this.setState({ reload: true });
 		};
 	}
 
@@ -117,7 +117,7 @@ export default class SerraScreen extends Component {
                 );
 			})
 			.then(res => {
-                this.setState({ load: true });
+                this.setState({ reload: true });
             });
 		this.setModalVisible(false);
 	}
@@ -379,8 +379,8 @@ export default class SerraScreen extends Component {
 	}
 
 	render() {
-        const { load } = (this.state.load);
-        if(!this.state.load) { return (
+        const { load } = (this.state.reload);
+        if(this.state.isLoading) { return (
             <View style={styles.loadingIndicator}>
                 <ActivityIndicator/>
             </View>
