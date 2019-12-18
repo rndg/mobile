@@ -19,7 +19,8 @@ import {
 	myPlants,
 	uploadPlantToServer,
 	selectPlants,
-	deletePlant
+	deletePlant,
+	getAction
 } from '../functions/dbRequest'
 
 import {
@@ -56,6 +57,9 @@ export default class SerraScreen extends Component {
 		type: 'Indoor',
 		sub_type: '',
 		pickerDisplayed: true,
+		actions: [],
+		lastAnna: 0,
+		lastSole: 0,
 	}
 
 	setModalVisible(visible) {
@@ -97,6 +101,64 @@ export default class SerraScreen extends Component {
 		}
 	}
 
+	getActions(id_pl) {
+		getAction(id_pl)
+			.then(data => {
+				if (data != 'No Results Found') {
+					this.state.isLoading = false;
+					this.state.actions = data;
+					for (i = 0; i < this.state.actions.length; i++) {
+						switch (this.state.actions[i].name) {
+							case 'Annaffiata':
+							this.state.lastAnna = this.state.actions[i].time;	
+								break;
+							case 'Sole':
+							this.state.lastSole = this.state.actions[i].time;	
+								break;
+							default:
+							console.log(this.state.actions[i].name);
+								break;
+						}
+					}
+				} else {
+					this.state.actions = this.state.data;
+				}
+			})
+			.then(res => {
+                this.setState({ load: true });
+            });
+	}
+
+	genActionView(){
+		var mySQLDate = this.state.lastAnna.toString();
+		var jsDate = new Date(Date.parse(mySQLDate.replace(/[-]/g,'/')));
+		var tm = (Date.now() - jsDate)/86400000;
+		console.log(tm);
+		if(tm >= 1){
+			console.log('Annaffia ziooo');	
+		}
+		if (this.state.lastAnna != 'na'){
+			return(
+				<View>
+					<View style={{flexDirection:'row', justifyContent:'space-between'}}>
+						<Text style={styles.notes}>Ultima annaffiata:</Text>
+						<Text style={styles.notes}>{this.state.lastAnna}</Text>
+					</View>
+					<View style={{flexDirection:'row', justifyContent:'space-between'}}>
+						<Text style={styles.notes}>Ultimo o' sole:</Text>
+						<Text style={styles.notes}>{this.state.lastSole}</Text>
+					</View>
+				</View>
+			);
+		} else {
+			return(
+				<View>
+					<Text style={styles.notes}>NO ACTION PRESENT</Text>
+				</View>
+			);
+		}
+	}
+
 	addPlant(id_plant_new,id_user_new,plantName_new,type_new){
 		if(id_plant_new == 0){
 			Alert.alert(
@@ -135,7 +197,8 @@ export default class SerraScreen extends Component {
 					<ImageBackground source={require('../imgs/mensola-up2-sx.png')} style={styles.backgroundImagePlant}>
 						<View >
 							<TouchableOpacity activeOpacity={0.7} onPress={() => {
-												this.setState({newPlant: false})
+												this.setState({newPlant: false});
+												this.getActions(item.id);
 												this.setModalVisible(true);
 												this.state.plant = item;
 											}}
@@ -155,6 +218,7 @@ export default class SerraScreen extends Component {
 						<View >
 							<TouchableOpacity activeOpacity={0.7} onPress={() => {
 												this.setState({newPlant: false})
+												this.getActions(item.id);
 												this.setModalVisible(true);
 												this.state.plant = item;
 											}}
@@ -203,14 +267,10 @@ export default class SerraScreen extends Component {
 								<Text style={styles.textSubTitle}>Field1:</Text>
 								<Text style={styles.textSection}>{JSON.stringify(this.state.plant)}</Text>
 							</View>
-							<View style={[styles.plantField, styles.padd]}>
-								<Text style={styles.textSubTitle}>Field2:</Text>
-								<Text style={styles.textSection}>{JSON.stringify(this.state.plant)}</Text>
+							<View>
+								{this.genActionView()}
 							</View>
-							<View style={[styles.plantField, styles.padd]}>
-								<Text style={styles.textSubTitle}>Field3:</Text>
-								<Text style={styles.textSection}>{JSON.stringify(this.state.plant)}</Text>
-							</View>
+							
 						</View>
 						<View style={styles.containerButtons2}>
 							<View style={styles.containerButton1}>
@@ -231,9 +291,11 @@ export default class SerraScreen extends Component {
 							</View>
 							<View style={styles.containerButton2}>
 								<AwesomeButtonRick type="anchor" stretch
-									onPress={() => 
-										this.setModalVisible(!this.state.modalVisible)
-									}>
+									onPress={() => {
+										this.setModalVisible(!this.state.modalVisible);
+										this.state.lastAnna = 'na';
+										this.state.lastSole = 'na';
+									}}>
 									<Text> Cancel </Text>
 								</AwesomeButtonRick>
 							</View>
@@ -297,9 +359,11 @@ export default class SerraScreen extends Component {
 							</View>
 							<View style={styles.containerButtons}>
 								<AwesomeButtonRick type="anchor" stretch
-									onPress={() => 
-										this.setModalVisible(!this.state.modalVisible)
-									}>
+									onPress={() => {
+										this.setModalVisible(!this.state.modalVisible);
+										this.state.lastAnna = 'na';
+										this.state.lastSole = 'na';
+									}}>
 									<Text> Cancel </Text>
 								</AwesomeButtonRick>
 							</View>

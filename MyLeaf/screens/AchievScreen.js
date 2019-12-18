@@ -272,6 +272,12 @@ const styles = StyleSheet.create({
     body:{
         //alignItems: 'center', 
         backgroundColor: 'transparent'
+    },
+    loadingIndicator:{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'rgba(92, 145, 28, 1)',
     }
     
 });

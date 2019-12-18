@@ -177,3 +177,22 @@ export function	deletePlant(id_pl) {
         })
     )
 };
+
+export function	getAction(id_pl) {
+    return(
+        fetch('http://myleaf.eu-central-1.elasticbeanstalk.com/getAction.php', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id_pl: id_pl
+            })
+        })
+        .then((response) => response.json())
+        .then((responseJson) => {
+            return responseJson;
+        })
+    )
+};

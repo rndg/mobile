@@ -15,48 +15,9 @@ import {
     Icon
 } from 'native-base';
 
-import {
-    rndBug
-} from '../functions/function';
-
 import AwesomeButtonRick from "react-native-really-awesome-button/src/themes/rick";
 
 import BouncingBalls from 'react-native-bouncing-ball';
-
-import PushNotificationIOS from "@react-native-community/push-notification-ios";
-
-var PushNotification = require('react-native-push-notification');
-
-PushNotification.configure({
-
-    // (optional) Called when Token is generated (iOS and Android)
-    onRegister: function(token) {
-        console.log( 'TOKEN:', token );
-    },
-
-    // (required) Called when a remote or local notification is opened or received
-    onNotification: function(notification) {
-        console.log( 'NOTIFICATION:', notification );
-    },
-
-    // IOS ONLY (optional): default: all - Permissions to register.
-    permissions: {
-        alert: true,
-        badge: true,
-        sound: true
-    },
-
-    // Should the initial notification be popped automatically
-    // default: true
-    popInitialNotification: true,
-
-    /**
-      * IOS ONLY: (optional) default: true
-      * - Specified if permissions will requested or not,
-      * - if not, you must call PushNotificationsHandler.requestPermissions() later
-      */
-    requestPermissions: true,
-});
 
 class HomeScreen extends Component {
 
@@ -64,13 +25,6 @@ class HomeScreen extends Component {
         drawerIcon: ({ tintColor }) => (
             <Icon name="ios-home" style={{ fontSize:24, color:tintColor}} />
         )
-    }
-
-    notify() {
-        PushNotification.localNotificationSchedule({
-            message: "Ale GAY", // (required)
-            date: new Date(Date.now() + (15 * 1000)) // in 60 secs
-        });
     }
 
     render () {

@@ -42,7 +42,7 @@ import WikiIndoorFlowerScreen from './screens/WikiIndoorFlowerScreen';
 
 import LogOutScreen from './screens/LogOutScreen';
 import AchievScreen from './screens/AchievScreen';
-import SettingsScreen from './screens/SettingsScreen';
+import NotifyScreen from './screens/NotifyScreen';
 
 import {
 	setCustomTextInput,
@@ -228,6 +228,7 @@ const AppDrawerNavigator = createDrawerNavigator(
     Home: AppStackNavigator,
     Wiki: WikiStackNavigator,
     Achievements: AchievScreen,
+    Notifiche: NotifyScreen,
     Logout: {
       screen: LogOutScreen,
       navigationOptions: {
