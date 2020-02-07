@@ -23,8 +23,6 @@ import ProgressBarAnimated from 'react-native-progress-bar-animated';
 
 import AwesomeButtonRick from "react-native-really-awesome-button/src/themes/rick";
 
-import ReactNativePickerModule from 'react-native-picker-module'
-
 var PushNotification = require('react-native-push-notification');
 
 PushNotification.configure({
@@ -36,11 +34,15 @@ PushNotification.configure({
 
     // (required) Called when a remote or local notification is opened or received
     onNotification: function(notification) {
-        PushNotification.localNotificationSchedule({
-            message: "Chiaraaa", // (required)
-            date: new Date(Date.now() + 5000), // in 60 secs
-            //repeatType: 'time',
-        });
+        if (notification.data.id == 2) {
+            console.log( 'NOTIFICATION:', notification );
+            PushNotification.localNotificationSchedule({
+                message: "Chiaraaa", // (required)
+                date: new Date(Date.now() + 15000), // in 60 secs
+                userInfo: { id: '2' },
+                //repeatType: 'time',
+            });
+        }
         console.log( 'NOTIFICATION:', notification );
     },
 
@@ -63,7 +65,7 @@ PushNotification.configure({
     requestPermissions: true,
 });
 
-class AchievScreen extends Component {    
+class NotifyScreen extends Component {    
 
     state = {
         selectedValue: null,
@@ -77,22 +79,11 @@ class AchievScreen extends Component {
             "7"
         ],
         load: true,
-        switchValueLun: false,
-        alertLun: '',
-        switchValueMar: false,
-        alertLun: '',
-        switchValueMer: false,
-        alertLun: '',
-        switchValueGio: false,
-        alertLun: '',
-        switchValueVen: false,
-        alertLun: '',
-        switchValueSab: false,
-        alertLun: '',
-        switchValueDom: false,
-        alertLun: '',
+        switchValueReminder: false,
+        switchValueNot: false,
         id_user: 1,
         isDateTimePickerVisible: false,
+        orario: '2019-12-19T10:55:20.724Z'
     }
 
     showDateTimePicker = () => {
@@ -103,52 +94,61 @@ class AchievScreen extends Component {
         this.setState({ isDateTimePickerVisible: false });
     };
     
-    handleDatePicked = date => {
-        console.log("A date has been picked: ", date);
+    handleDatePicked = dateTime => {
+        this.setState({switchValueReminder: true});
+        PushNotification.localNotificationSchedule({
+            message: "Questo è un promemoria", // (required)
+            date: dateTime, // in 60 secs
+            userInfo: { id: '1' },
+            repeatType: 'day',
+        });
+        console.log("A date has been picked: ", dateTime);
         this.hideDateTimePicker();
     };
 
-    toggleSwitchLun = (value) => {
-        this.setState({switchValueLun: value});
+    toggleSwitchReminder = (value) => {
+        this.setState({switchValueReminder: value});
+        if (!value){
+            this.delReminder();
+        } else {
+            this.setState({switchValueReminder: false});
+            this.showDateTimePicker();
+        }
     }
-    toggleSwitchMar = (value) => {
-        this.setState({switchValueMar: value});
-    }
-    toggleSwitchMer = (value) => {
-        this.setState({switchValueMer: value});
-    }
-    toggleSwitchGio = (value) => {
-        this.setState({switchValueGio: value});
-    }
-    toggleSwitchVen = (value) => {
-        this.setState({switchValueVen: value});
-    }
-    toggleSwitchSab = (value) => {
-        this.setState({switchValueSab: value});
-    }
-    toggleSwitchDom = (value) => {
-        this.setState({switchValueDom: value});
+
+    toggleSwitchNot = (value) => {
+        this.setState({switchValueNot: value});
+        if (!value){
+            this.delReminderNot();
+        } else {
+            this.notify();
+        }
     }
 
     notify() {
         PushNotification.localNotificationSchedule({
             message: "Chiaraaa", // (required)
             date: new Date(Date.now()), // in 60 secs
-            //repeatType: 'time',
+            userInfo: { id: '2' },
+            repeatType: 'minute',
         });
     }
 
-    delNotification(){
+    delAllNotifications(){
         PushNotification.cancelAllLocalNotifications()
+        this.setState({switchValueReminder: false});
+        this.setState({switchValueNot: false});
+
     }
 
-    showTimePicked() {
-        if (this.state.switchValue) {
-            return (
-                <Text> is truee </Text>
-            )
-        }
+    delReminder(){
+        PushNotification.cancelLocalNotifications({id: '1'});
     }
+
+    delNot(){
+        PushNotification.cancelLocalNotifications({id: '2'});
+    }
+
 
     renderPage() {
         return (
@@ -180,28 +180,25 @@ class AchievScreen extends Component {
                                 </View>
                                 <View style={styles.containerDay}>
                                     <View style={[styles.containerText, styles.row]}>
-                                        <Text>Lunedì</Text>
+                                        <Text>Promemoria</Text>
                                         <Switch
                                         ios_backgroundColor = {'red'}
-                                        onValueChange = {this.toggleSwitchLun}
-                                        value = {this.state.switchValueLun}/>
+                                        onValueChange = {
+                                            this.toggleSwitchReminder
+                                        }
+                                        value = {this.state.switchValueReminder}/>
                                     </View>
-                                    <AwesomeButtonRick type="anchor" onPress = {()=> {
-                                        this.showDateTimePicker();
-                                        }}>
-                                        Scegli un orario
-                                    </AwesomeButtonRick>
                                 </View>
                                 <View style={styles.containerDay}>
                                     <View style={[styles.containerText, styles.row]}>
-                                        <Text>Martedì</Text>
+                                        <Text>Promemoria piante</Text>
                                         <Switch
                                         ios_backgroundColor = {'red'}
-                                        onValueChange = {this.toggleSwitchMar}
-                                        value = {this.state.switchValueMar}/>
+                                        onValueChange = {this.toggleSwitchNot}
+                                        value = {this.state.switchValueNot}/>
                                     </View>
                                     <AwesomeButtonRick type="anchor" onPress = {()=> {
-                                        this.languagePicker.show();
+                                        this.dayPicker.show();
                                         }}>
                                         Scegli un orario
                                     </AwesomeButtonRick>
@@ -223,10 +220,10 @@ class AchievScreen extends Component {
                                             backgroundDarker="rgba(112, 38, 33, 1)"	//bordino del tasto
                                             borderColor="rgba(112, 38, 33, 1)"		//bordo frontale bottone
                                             onPress={() => {
-                                                this.delNotification();
+                                                this.delAllNotifications();
                                             }
                                             }> 
-                                            <Text> Delete Plant </Text>
+                                            <Text> Delete Notification </Text>
                                         </AwesomeButtonRick>
                                     </View>
                                 </View>
@@ -236,20 +233,10 @@ class AchievScreen extends Component {
                                     isVisible={this.state.isDateTimePickerVisible}
                                     onConfirm={this.handleDatePicked}
                                     onCancel={this.hideDateTimePicker}
+                                    date={new Date(Date.now())}
                                 />
                             </View>
                         </ScrollView>
-                        <ReactNativePickerModule
-                            pickerRef={e => this.languagePicker = e}
-                            value={this.state.selectedValue}
-                            title={"Seleziona ogni quanti giorni"}
-                            items={this.state.data}
-                            titleStyle={{color:'red'}}
-                            onValueChange={(index) => {
-                                this.setState({
-                                selectedValue: index
-                            })
-                        }}/>
                     </View>
                 </View>
             </View>
@@ -267,7 +254,7 @@ class AchievScreen extends Component {
     }
 }
 
-export default AchievScreen;
+export default NotifyScreen;
 
 const styles = StyleSheet.create({
     containerMain: {

@@ -100,7 +100,9 @@ class FloweringScreen extends Component {
                             style={styles.bkImage}
                             source={require('../imgs/grassBack1.jpg')}
                         />  
-                            <View style={styles.body}>
+                            <View style={styles.upSpace}>    
+                            </View>
+                            <View style={styles.containerText}>
                                 <View style={styles.plantTitle}>
                                     <Text style={styles.textTitle}>{item.name}</Text>
                                 </View>
@@ -109,20 +111,22 @@ class FloweringScreen extends Component {
                                     source={require('../imgs/plantPicture.jpg')}
                                 />  
                                 <View style={[styles.plantDescr, styles.padd]}>
-                                    <Text style={styles.textSubTitle}>Description:</Text>
-                                    <Text style={styles.textSection}>{JSON.stringify(item)}</Text>
+                                    <Text style={[styles.textSubTitle, styles.textComp]}>Description:</Text>
+                                    <Text style={[styles.textComp]}>{JSON.stringify(item)}</Text>
                                 </View>
-                                <View style={[styles.plantField, styles.padd]}>
-                                    <Text style={styles.textSubTitle}>Field1:</Text>
-                                    <Text style={styles.textSection}>{JSON.stringify(item)}</Text>
+                            </View>
+                            <View style={styles.body}>
+                                <View style={styles.containerField}>
+                                    <Text style={[styles.textSubTitle, styles.textComp]}>Field1:</Text>
+                                    <Text style={styles.textComp}>{JSON.stringify(item)}</Text>
                                 </View>
-                                <View style={[styles.plantField, styles.padd]}>
-                                    <Text style={styles.textSubTitle}>Field2:</Text>
-                                    <Text style={styles.textSection}>{JSON.stringify(item)}</Text>
+                                <View style={styles.containerField}>
+                                    <Text style={[styles.textSubTitle, styles.textComp]}>Field2:</Text>
+                                    <Text style={styles.textComp}>{JSON.stringify(item)}</Text>
                                 </View>
-                                <View style={[styles.plantField, styles.padd]}>
-                                    <Text style={styles.textSubTitle}>Field3:</Text>
-                                    <Text style={styles.textSection}>{JSON.stringify(item)}</Text>
+                                <View style={styles.containerField}>
+                                    <Text style={[styles.textSubTitle, styles.textComp]}>Field3:</Text>
+                                    <Text style={styles.textComp}>{JSON.stringify(item)}</Text>
                                 </View>
                             </View>
                         </ScrollView>
@@ -150,7 +154,50 @@ const styles = StyleSheet.create({
     containerNew: {
 		flex: 1,
 		alignItems:'center',
-	},
+    },
+    containerText: {
+        flex: 1,
+        alignContent: 'center',
+        alignSelf: 'center',
+        width: 300,
+        paddingVertical: 20,
+        paddingHorizontal: 5,
+        backgroundColor: 'rgba(149, 212, 74, 1)',
+        shadowColor: "#000",
+        shadowOffset: {
+			width: 0,
+			height: 5,
+        },
+        shadowOpacity: 0.34,
+        shadowRadius: 6.27,
+        elevation: 10,
+        borderRadius: 60,
+        borderWidth: 3,
+        borderBottomWidth: 10,
+        borderColor: 'rgba(74, 157, 43, 1)',
+    },
+    containerField: {
+        flex: 1,
+        alignContent: 'center',
+        alignSelf: 'center',
+        width: 300,
+        paddingVertical: 30,
+        paddingHorizontal: 5,
+        margin: 20,
+        backgroundColor: 'rgba(149, 212, 74, 1)',
+        shadowColor: "#000",
+        shadowOffset: {
+			width: 0,
+			height: 5,
+        },
+        shadowOpacity: 0.34,
+        shadowRadius: 6.27,
+        elevation: 10,
+        borderRadius: 60,
+        borderWidth: 3,
+        borderBottomWidth: 10,
+        borderColor: 'rgba(74, 157, 43, 1)',
+    },
     header: {
         backgroundColor: '#45803b',
         shadowColor: "#000",
@@ -257,5 +304,14 @@ const styles = StyleSheet.create({
     },
     padd: {
         paddingVertical: 60,
+    },
+    upSpace: {
+        height:50,
+        width: 300,
+    },
+    textComp: {
+        flex: 1,
+        textAlign: 'center',
+        paddingHorizontal: 5,
     },
 });

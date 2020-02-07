@@ -33,8 +33,10 @@ class WikiIndoorHomeScreen extends Component {
                 </Header>
                 <View style={styles.containerBody}>
                     <View style={styles.container}>
+                        <View style={styles.upSpace}>    
+                        </View>
                         <View style={styles.containerText}>
-                            <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam non massa vitae nunc luctus interdum. Sed rutrum sit amet tortor ut congue. Vestibulum vitae porta diam. Aliquam facilisis sem a justo aliquam euismod. Curabitur facilisis elit eget odio tristique auctor. Quisque cursus enim magna. Aliquam viverra placerat erat, quis sollicitudin risus sodales ac. Nam fermentum ex ut suscipit gravida. Praesent nec eros hendrerit mi commodo accumsan ut eu velit. Nunc vehicula faucibus diam, nec molestie nunc placerat ut. In sagittis diam vel orci convallis fermentum.</Text>
+                            <Text style={styles.textComp}>This is the section related to plants that can be grown in an outdoor environment. Explore the available categories to get information about your wild plants!</Text>
                         </View>
                         <View style={styles.containerButtons}>
                             <View style={styles.containerButton}>
@@ -65,10 +67,25 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     containerText: {
-        flex: 1,
+        flex: 0.3,
         alignContent: 'center',
-        justifyContent: 'space-around',
+        alignSelf: 'center',
         width: 300,
+        paddingVertical: 60,
+        paddingHorizontal: 5,
+        backgroundColor: 'rgba(149, 212, 74, 1)',
+        shadowColor: "#000",
+        shadowOffset: {
+			width: 0,
+			height: 5,
+        },
+        shadowOpacity: 0.34,
+        shadowRadius: 6.27,
+        elevation: 10,
+        borderRadius: 60,
+        borderWidth: 3,
+        borderBottomWidth: 10,
+        borderColor: 'rgba(74, 157, 43, 1)',
     },
     header: {
         backgroundColor: '#45803b',
@@ -107,5 +124,13 @@ const styles = StyleSheet.create({
 		left: 0,
 		right: 0,
 		bottom: 0
+    },
+    upSpace: {
+        height:50,
+        width: 300,
+    },
+    textComp: {
+        flex: 1,
+        textAlign: 'center',
     },
 });

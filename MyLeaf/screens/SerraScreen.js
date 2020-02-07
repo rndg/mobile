@@ -194,54 +194,70 @@ export default class SerraScreen extends Component {
         if (item.id != null) {
 			if (index % 2 == 0){
 				return (
-					<ImageBackground source={require('../imgs/mensola-up2-sx.png')} style={styles.backgroundImagePlant}>
-						<View >
-							<TouchableOpacity activeOpacity={0.7} onPress={() => {
-												this.setState({newPlant: false});
-												this.getActions(item.id);
-												this.setModalVisible(true);
-												this.state.plant = item;
-											}}
-											>
-								<FastImage
-									style={styles.plantImage}
-									source={plantImg(item.id_plant)}
-								/>
-									<Text style={styles.plantName}>{item.name}</Text>
-							</TouchableOpacity>
+					<View>
+						<ImageBackground source={require('../imgs/mensola-up2-sx.png')} style={styles.backgroundImagePlant}>
+							<View >
+								<TouchableOpacity activeOpacity={0.7} onPress={() => {
+													this.setState({newPlant: false});
+													this.getActions(item.id);
+													this.setModalVisible(true);
+													this.state.plant = item;
+												}}
+												>
+									<FastImage
+										style={styles.plantImage}
+										source={plantImg(item.id_plant)}
+									/>
+								</TouchableOpacity>
+							</View>
+						</ImageBackground>
+						<View style={styles.containerBanner}>
+							<ImageBackground source={require('../imgs/banner.png')} style={styles.backgroundImagePlant}>
+								<Text style={styles.plantName}>{item.name}</Text>
+							</ImageBackground>
 						</View>
-					</ImageBackground>
+					</View>
 				);
 			} else {
 				return (
-					<ImageBackground source={require('../imgs/mensola-up2-dx.png')} style={styles.backgroundImagePlant}>
-						<View >
-							<TouchableOpacity activeOpacity={0.7} onPress={() => {
-												this.setState({newPlant: false})
-												this.getActions(item.id);
-												this.setModalVisible(true);
-												this.state.plant = item;
-											}}
-											>
-								<FastImage
-									style={styles.plantImage}
-									source={plantImg(item.id_plant)}
-								/>
-									<Text style={styles.plantName}>{item.name}</Text>
-							</TouchableOpacity>
+					<View>
+						<ImageBackground source={require('../imgs/mensola-up2-dx.png')} style={styles.backgroundImagePlant}>
+							<View >
+								<TouchableOpacity activeOpacity={0.7} onPress={() => {
+													this.setState({newPlant: false})
+													this.getActions(item.id);
+													this.setModalVisible(true);
+													this.state.plant = item;
+												}}
+												>
+									<FastImage
+										style={styles.plantImage}
+										source={plantImg(item.id_plant)}
+									/>
+								</TouchableOpacity>
+							</View>
+						</ImageBackground>
+						<View style={styles.containerBanner}>
+							<ImageBackground source={require('../imgs/banner.png')} style={styles.backgroundImagePlant}>
+								<Text style={styles.plantName}>{item.name}</Text>
+							</ImageBackground>
 						</View>
-					</ImageBackground>
+					</View>
 				);
 			}
         } else {
             return (
-				<ImageBackground source={require('../imgs/mensola-up2-dx.png')} style={styles.backgroundImagePlant}>
-					<View >
-						<FastImage
-							style={styles.plantImage}
-						/>
+				<View>
+					<ImageBackground source={require('../imgs/mensola-up2-dx.png')} style={styles.backgroundImagePlant}>
+						<View >
+							<FastImage
+								style={styles.plantImage}
+							/>
+						</View>
+					</ImageBackground>
+					<View style={styles.containerBanner}>
 					</View>
-				</ImageBackground>
+				</View>
 			);
 		}
 	}
@@ -318,13 +334,16 @@ export default class SerraScreen extends Component {
 		} else {
 			return (
 				<View style={styles.containerNewPlant}>
-					<View style={styles.container}></View>
+					<View style={[styles.container, styles.alignText]}>
+						<Text>Nuova Pianta</Text>
+					</View>
 					<View style={styles.bigContainer}>
-						<View style={styles.textInContainer}> 
-							<Text style={{width: 300}}>Plant's name:</Text>
+						<View style={[styles.textInContainer, styles.rowInput]}> 
 							<TextInput
-								placeholder="Choose a name for the plant"
+								placeholder="Scegli un nome per la tua pianta"
 								onChangeText={data => this.setState({ plantName: data })}
+								autoCorrect = {'false'}
+								placeholderTextColor = {'rgba(50, 50, 50, 1)'}
 							/>
 						</View>
 						<View style={styles.pickerBox}>
@@ -338,7 +357,7 @@ export default class SerraScreen extends Component {
 									this.setState({id_plant: itemValue});}
 								}
 							>								
-								<Picker.Item label={'Please select a type of plant'} value={0} />
+								<Picker.Item label={'Seleziona un tipo di pianta!'} value={0} />
 								{ 
 									this.state.plants.map((item) =>{
 										return(
@@ -405,21 +424,27 @@ export default class SerraScreen extends Component {
 								style={styles.bkImage}
 								source={require('../imgs/stone-piastrelle.jpg')}
 							/>
-								<ImageBackground source={require('../imgs/mensola-up2.png')} style={styles.backgroundImageNewPlant}>
-									<View style={styles.containerNew}>
-										<TouchableOpacity activeOpacity={0.7} onPress={() => {
-											this.setState({newPlant: true});
-											this.setModalVisible(!this.state.modalVisible);
-											}}
-										>
-											<FastImage
-												style={styles.plantImage}
-												source={require('../imgs/vuoto.png')}
-											/>
-												<Text style={styles.plantName}>NewItem</Text>
-										</TouchableOpacity>
-									</View>
-								</ImageBackground>
+								<View style={styles.containerNewItem}>
+									<ImageBackground source={require('../imgs/mensola-up2.png')} style={styles.backgroundImageNewPlant}>
+										<View style={styles.containerNew}>
+											<TouchableOpacity activeOpacity={0.7} onPress={() => {
+												this.setState({newPlant: true});
+												this.setModalVisible(!this.state.modalVisible);
+												}}
+											>
+												<FastImage
+													style={styles.plantImage}
+													source={require('../imgs/vuoto.png')}
+												/>
+											</TouchableOpacity>
+										</View>
+									</ImageBackground>
+								</View>
+								<View style={styles.containerBannerNew}>
+									<ImageBackground source={require('../imgs/banner.png')} style={styles.backgroundImagePlant}>
+										<Text style={styles.plantName}>New Plant</Text>
+									</ImageBackground>
+								</View>
 								<FlatList 
 									numColumns={2}
 									columnWrapperStyle={styles.row}
@@ -460,6 +485,10 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 	},
+	alignText: {
+		justifyContent: 'center',
+		alignItems: 'center'
+	},
 	bigContainer:{
 		justifyContent: 'center',
 		flex: 6,
@@ -482,6 +511,17 @@ const styles = StyleSheet.create({
 		alignItems:'center',
 		height: 150,
 	},
+	containerNewItem: {
+		flex: 1,
+	},
+	containerBanner: {
+		flex: 1,
+	},
+	containerBannerNew: {
+		flex: 1,
+		alignSelf:'center',
+		width : 200,
+	},
 	textInContainer:{
 		flex: 0.5,
 		alignItems: 'center',
@@ -500,11 +540,12 @@ const styles = StyleSheet.create({
 	},
 	backgroundImagePlant: {
 		flex: 1,
+		height: 175,
 	},
 	backgroundImageNewPlant: {
 		flex: 1,
 		alignSelf:'center',
-		height: undefined,
+		height: 175,
 		width : 300,
 	},
 	plantImage: {
@@ -513,9 +554,11 @@ const styles = StyleSheet.create({
 	},
 	plantName: {
 		alignSelf:'center',
-		backgroundColor: '#45803b',
+		paddingVertical: 65,
+		
 	},
 	row: {
+		flex: 1,
 		backgroundColor: 'transparent',
 		justifyContent: 'center',
 	},
@@ -572,15 +615,16 @@ const styles = StyleSheet.create({
 	},
 	pickerItems:{
 		backgroundColor: 'transparent',
+		alignSelf: 'center',
+		width: 250,
 	},
 	pickerBox:{
-		//flex:1,
-		width: 200,
+		width: 300,
 		height: 200,
 		alignSelf: 'center',
-		borderRadius: 210, 
+		borderRadius: 60, 
 		borderWidth: 1, 
-		borderColor: '#bdc3c7', 
+		borderColor: 'rgba(0, 150, 37, 1)', 
 		overflow:'hidden',
 		backgroundColor: '#87B56A',
 	},
@@ -652,5 +696,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'rgba(92, 145, 28, 1)',
-    }
+	},
+	rowInput: {
+		flexDirection: "row",
+	},
 });

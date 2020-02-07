@@ -90,28 +90,30 @@ class HorticulturalScreen extends Component {
 
     displayRow(item, index) {
         return (
-            <TouchableOpacity activeOpacity={0.7} onPress={() => {
-                this.props.navigation.navigate('WikiOutdoorFlower', 
-                    {
-                        id: item,
-                        otherParam: 'Orticole',
-                    }
-                )
-            }}
-            >
-                <View style={styles.row}>
-                    <FastImage
-                        style={styles.plantImage}
-                        source={plantImg(item.id_plant)}
-                    />
-                    <View style={styles.col}> 
-                        <Text style={styles.plantName}>{item.name}</Text>
-                        <View style={styles.stars}>
-                            {this.displayStars(item.difficulty)}
+            <View style={styles.containerPlant}>
+                <TouchableOpacity activeOpacity={0.7} onPress={() => {
+                    this.props.navigation.navigate('WikiOutdoorFlower', 
+                        {
+                            id: item,
+                            otherParam: 'Orticole',
+                        }
+                    )
+                }}
+                >
+                    <View style={styles.row}>
+                        <FastImage
+                            style={styles.plantImage}
+                            source={plantImg(item.id_plant)}
+                        />
+                        <View style={styles.col}> 
+                            <Text style={styles.plantName}>{item.name}</Text>
+                            <View style={styles.stars}>
+                                {this.displayStars(item.difficulty)}
+                            </View>
                         </View>
                     </View>
-                </View>
-            </TouchableOpacity>
+                </TouchableOpacity>
+            </View>
         )
     }
     
@@ -131,7 +133,7 @@ class HorticulturalScreen extends Component {
                         </TouchableOpacity>
                     </Left>
                 </Header>
-                <View style={styles.container}>
+                <View style={styles.container}> 
                     <View style={styles.containerBody}>
                         <ScrollView style={styles.scrollview} bounces={false}>
                         <Image
@@ -139,8 +141,12 @@ class HorticulturalScreen extends Component {
                             source={require('../imgs/grassBack1.jpg')}
                         />  
                             <View style={styles.body}>
+                                <View style={styles.upSpace}>    
+                                </View>
                                 <View style={styles.containerText}>
-                                    <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam non massa vitae nunc luctus interdum. Sed rutrum sit amet tortor ut congue. Vestibulum vitae porta diam. Aliquam facilisis sem a justo aliquam euismod. Curabitur facilisis elit eget odio tristique auctor. Quisque cursus enim magna. Aliquam viverra placerat erat, quis sollicitudin risus sodales ac. Nam fermentum ex ut suscipit gravida. Praesent nec eros hendrerit mi commodo accumsan ut eu velit. Nunc vehicula faucibus diam, nec molestie nunc placerat ut. In sagittis diam vel orci convallis fermentum.</Text>
+                                    <Text style={styles.textComp}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam non massa vitae nunc luctus interdum. Sed rutrum sit amet tortor ut congue. Vestibulum vitae porta diam. Aliquam facilisis sem a justo aliquam euismod. Curabitur facilisis elit eget odio tristique auctor. Quisque cursus enim magna. Aliquam viverra placerat erat, quis sollicitudin risus sodales ac. Nam fermentum ex ut suscipit gravida. Praesent nec eros hendrerit mi commodo accumsan ut eu velit. Nunc vehicula faucibus diam, nec molestie nunc placerat ut. In sagittis diam vel orci convallis fermentum.</Text>
+                                </View>
+                                <View style={styles.upSpace}>    
                                 </View>
                                 <FlatList 
                                     numColumns={1}
@@ -245,11 +251,14 @@ const styles = StyleSheet.create({
     stars: {
         flex: 1,
         flexDirection: 'row',
+        paddingRight: 35,
     },
     plantBox: {
         flex: 1,
         backgroundColor: 'transparent',
-		width : 300
+        width : 300,
+        alignSelf:'center',
+        margin: 20,
     },
     containerText: {
         flex: 1,
@@ -257,6 +266,37 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         width: 300,
         paddingVertical: 60,
+        paddingHorizontal: 5,
+        backgroundColor: 'rgba(149, 212, 74, 1)',
+        shadowColor: "#000",
+        shadowOffset: {
+			width: 0,
+			height: 5,
+        },
+        shadowOpacity: 0.34,
+        shadowRadius: 6.27,
+        elevation: 10,
+        borderRadius: 60,
+        borderWidth: 3,
+        borderBottomWidth: 10,
+        borderColor: 'rgba(74, 157, 43, 1)',
+    },
+    containerPlant: {
+        flex: 1,
+        width: 300,
+        backgroundColor: 'rgba(149, 212, 74, 1)',
+        shadowColor: "#000",
+        shadowOffset: {
+			width: 0,
+			height: 5,
+        },
+        shadowOpacity: 0.34,
+        shadowRadius: 6.27,
+        elevation: 10,
+        borderRadius: 60,
+        borderWidth: 3,
+        borderBottomWidth: 10,
+        borderColor: 'rgba(74, 157, 43, 1)',
     },
     body:{
         //alignItems: 'center', 
@@ -267,6 +307,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'rgba(92, 145, 28, 1)',
-    }
-    
+    },
+    upSpace: {
+        height:50,
+        width: 300,
+    },
+    textComp: {
+        flex: 1,
+        textAlign: 'center',
+    },
 });
