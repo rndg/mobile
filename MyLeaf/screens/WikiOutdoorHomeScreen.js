@@ -18,7 +18,7 @@ class WikiIndoorHomeScreen extends Component {
     render() {
         return (
             <View style={styles.containerMain}>
-                <Image source = {require('../imgs/grassBack1.jpg')} style = {styles.bkImage}/>
+                <Image source = {require('../imgs/carpetRed3.jpg')} style = {styles.bkImage}/>
                 <Header style={styles.header}>
                     <Left>
                         <TouchableOpacity onPress = {()=> {
@@ -36,11 +36,24 @@ class WikiIndoorHomeScreen extends Component {
                         <View style={styles.upSpace}>    
                         </View>
                         <View style={styles.containerText}>
+                            <Image
+                                style={styles.bkImage}
+                                source={require('../imgs/woodBack.jpeg')}
+                            />  
                             <Text style={styles.textComp}>This is the section related to plants that can be grown in an outdoor environment. Explore the available categories to get information about your wild plants!</Text>
                         </View>
                         <View style={styles.containerButtons}>
                             <View style={styles.containerButton}>
                                 <AwesomeButtonRick type="anchor" stretch
+                                    ExtraContent={
+                                        <Image
+                                            style={styles.bkImage}
+                                            source={require('../imgs/woodBack.jpeg')}
+                                        /> 
+                                    }
+                                    borderRadius={0}
+                                    backgroundDarker="rgba(80, 48, 28, 1)"	//bordino del tasto
+                                    borderColor="rgba(80, 48, 28, 1)"
                                     onPress={() => 
                                         this.props.navigation.navigate('WikiHorticultural')}>
                                     <Text>Piante Orticole</Text>
@@ -67,11 +80,10 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     containerText: {
-        flex: 0.3,
+        flex: 1,
         alignContent: 'center',
         alignSelf: 'center',
         width: 300,
-        paddingVertical: 60,
         paddingHorizontal: 5,
         backgroundColor: 'rgba(149, 212, 74, 1)',
         shadowColor: "#000",
@@ -82,10 +94,9 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.34,
         shadowRadius: 6.27,
         elevation: 10,
-        borderRadius: 60,
         borderWidth: 3,
         borderBottomWidth: 10,
-        borderColor: 'rgba(74, 157, 43, 1)',
+        borderColor: 'rgba(80, 48, 28, 1)',
     },
     header: {
         backgroundColor: '#45803b',

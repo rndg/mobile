@@ -17,6 +17,11 @@ import {
     Icon
 } from 'native-base';
 
+import AsyncStorage from '@react-native-community/async-storage';
+
+//import { Icon } from 'react-native-elements'
+
+
 import DateTimePicker from "react-native-modal-datetime-picker";
 
 import ProgressBarAnimated from 'react-native-progress-bar-animated';
@@ -67,6 +72,11 @@ PushNotification.configure({
 
 class NotifyScreen extends Component {    
 
+    constructor(){
+        super()
+        this.getNotification()
+    }
+
     state = {
         selectedValue: null,
         data: [
@@ -83,7 +93,44 @@ class NotifyScreen extends Component {
         switchValueNot: false,
         id_user: 1,
         isDateTimePickerVisible: false,
-        orario: '2019-12-19T10:55:20.724Z'
+        orario: '2019-12-19T10:55:20.724Z',
+        notifH: ''
+    }
+
+    async storeTokenNotification(notif) {
+        notif = JSON.stringify(notif);
+		try {
+			await AsyncStorage.setItem("notification", notif);
+		} catch (error) {
+			console.log("Something went wrong", error);
+        }
+        console.log(notif);
+    }
+
+    async storeTokenDate(notDate) {
+        notDate = JSON.stringify(notDate);
+		try {
+			await AsyncStorage.setItem("notifDate", notDate);
+		} catch (error) {
+			console.log("Something went wrong", error);
+        }
+        console.log(notDate);
+    }
+
+    getNotification = async()=> {
+        notif = await AsyncStorage.getItem('notification');
+        if(notif == 'true'){
+            this.setState({switchValueReminder: true});
+            hour = await AsyncStorage.getItem('notifDate');
+            this.setState({notifH: hour});
+        } else {
+            this.setState({switchValueReminder: false});
+            this.setState({notifH: ''});
+        }
+
+        console.log(notif);
+        console.log(this.state.switchValueReminder);
+        console.log(this.state.notifH);
     }
 
     showDateTimePicker = () => {
@@ -95,7 +142,14 @@ class NotifyScreen extends Component {
     };
     
     handleDatePicked = dateTime => {
+        minutes = dateTime.getMinutes();
+        hour = dateTime.getHours();
+        dataString = hour + ':';
+        dataString = dataString + minutes;
         this.setState({switchValueReminder: true});
+        this.setState({notifH: dataString});
+        this.storeTokenNotification(true);
+        this.storeTokenDate(dataString);
         PushNotification.localNotificationSchedule({
             message: "Questo è un promemoria", // (required)
             date: dateTime, // in 60 secs
@@ -143,17 +197,30 @@ class NotifyScreen extends Component {
 
     delReminder(){
         PushNotification.cancelLocalNotifications({id: '1'});
+        this.storeTokenNotification(false);
+        this.storeTokenDate('');
+        this.setState({notifH: ''});
     }
 
     delNot(){
         PushNotification.cancelLocalNotifications({id: '2'});
     }
 
+    printTime() {
+        if (this.state.notifH=='' || this.state.notifH==null){
+        } else {
+            return (
+                <View style={styles.containerDate}>
+                    <Text style={styles.textComp}> Notify at: {this.state.notifH} </Text>
+                </View>
+            )
+        }
+    }
 
     renderPage() {
         return (
             <View style={styles.containerMain}>
-            <Image source = {require('../imgs/grassBack1.jpg')} style = {styles.bkImage}/>
+            <Image source = {require('../imgs/carpetLBlue.jpg')} style = {styles.bkImage}/>
                 <Header style={styles.header}>
                     <Left>
                         <TouchableOpacity onPress = {()=> {
@@ -162,46 +229,66 @@ class NotifyScreen extends Component {
                             }
                             }>
                             <View style={{paddingHorizontal: 10}}>
-                                <Icon name="ios-arrow-back" size={10}/>
+                                <Icon type='ionicon' name="ios-arrow-back"/>
                             </View>
                         </TouchableOpacity>
                     </Left>
                 </Header>
                 <View style={styles.container}>
                     <View style={styles.containerBody}>
-                        <ScrollView style={[styles.scrollview, styles.scrollPadd]} bounces={false} showsVerticalScrollIndicator={false}>
+                        <ScrollView style={styles.scrollview} bounces={false} showsVerticalScrollIndicator={false}>
                         <Image
                             style={styles.bkImage}
-                            source={require('../imgs/grassBack1.jpg')}
+                            source={require('../imgs/carpetLBlue.jpg')}
                         />  
                             <View style={styles.body}>
-                                <View style={styles.containerText}>
-                                    <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam non massa vitae nunc luctus interdum. Sed rutrum sit amet tortor ut congue. Vestibulum vitae porta diam. Aliquam facilisis sem a justo aliquam euismod. Curabitur facilisis elit eget odio tristique auctor. Quisque cursus enim magna. Aliquam viverra placerat erat, quis sollicitudin risus sodales ac. Nam fermentum ex ut suscipit gravida. Praesent nec eros hendrerit mi commodo accumsan ut eu velit. Nunc vehicula faucibus diam, nec molestie nunc placerat ut. In sagittis diam vel orci convallis fermentum.</Text>
+                                <View style={styles.upSpace}>    
+                                </View>
+                                <View style={styles.containerText}> 
+                                    <Image
+                                        style={styles.bkImage}
+                                        source={require('../imgs/metalBack.jpg')}
+                                    /> 
+                                    <Text style={styles.textComp}>
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam non massa vitae nunc luctus interdum. Sed rutrum sit amet tortor ut congue. Vestibulum vitae porta diam. Aliquam facilisis sem a justo aliquam euismod. Curabitur facilisis elit eget odio tristique auctor. Quisque cursus enim magna. Aliquam viverra placerat erat, quis sollicitudin risus sodales ac. Nam fermentum ex ut suscipit gravida. Praesent nec eros hendrerit mi commodo accumsan ut eu velit. Nunc vehicula faucibus diam, nec molestie nunc placerat ut. In sagittis diam vel orci convallis fermentum.
+                                    </Text>
+                                </View>
+                                <View style={styles.upSpace}>    
                                 </View>
                                 <View style={styles.containerDay}>
-                                    <View style={[styles.containerText, styles.row]}>
-                                        <Text>Promemoria</Text>
-                                        <Switch
-                                        ios_backgroundColor = {'red'}
-                                        onValueChange = {
-                                            this.toggleSwitchReminder
-                                        }
-                                        value = {this.state.switchValueReminder}/>
+                                    <View style={styles.containerText}>
+                                        <Image
+                                            style={styles.bkImage}
+                                            source={require('../imgs/metalBack.jpg')}
+                                        /> 
+                                        <View style={[styles.container, styles.row]}>
+                                            <Text style={styles.textComp}>Promemoria</Text>
+                                            <Switch
+                                            ios_backgroundColor = {'red'}
+                                            onValueChange = {
+                                                this.toggleSwitchReminder
+                                            }
+                                            value = {this.state.switchValueReminder}/>
+                                        </View>
+                                        {this.printTime()}
                                     </View>
                                 </View>
+                                <View style={styles.upSpace}>    
+                                </View>
                                 <View style={styles.containerDay}>
                                     <View style={[styles.containerText, styles.row]}>
-                                        <Text>Promemoria piante</Text>
+                                        <Image
+                                            style={styles.bkImage}
+                                            source={require('../imgs/metalBack.jpg')}
+                                        /> 
+                                        <Text style={styles.textComp}>Promemoria piante</Text>
                                         <Switch
                                         ios_backgroundColor = {'red'}
                                         onValueChange = {this.toggleSwitchNot}
                                         value = {this.state.switchValueNot}/>
                                     </View>
-                                    <AwesomeButtonRick type="anchor" onPress = {()=> {
-                                        this.dayPicker.show();
-                                        }}>
-                                        Scegli un orario
-                                    </AwesomeButtonRick>
+                                </View>
+                                <View style={styles.upSpace}>    
                                 </View>
                                 <View style={styles.containerButtons2}>
                                     <View style={styles.containerButton2}>
@@ -226,7 +313,7 @@ class NotifyScreen extends Component {
                                             <Text> Delete Notification </Text>
                                         </AwesomeButtonRick>
                                     </View>
-                                </View>
+                                </View> 
                                 <DateTimePicker
                                     mode = {'time'}
                                     locale="en_GB"
@@ -255,6 +342,7 @@ class NotifyScreen extends Component {
 }
 
 export default NotifyScreen;
+
 
 const styles = StyleSheet.create({
     containerMain: {
@@ -307,13 +395,30 @@ const styles = StyleSheet.create({
         flex: 1,
         alignContent: 'center',
         alignSelf: 'center',
-        paddingVertical: 60,
+        width: 300,
+        paddingHorizontal: 5,
+        shadowColor: "#000",
+        shadowOffset: {
+			width: 0,
+			height: 5,
+        },
+        shadowOpacity: 0.34,
+        shadowRadius: 6.27,
+        elevation: 10,
+        borderWidth: 3,
+        borderBottomWidth: 10,
+        borderColor: 'rgba(101, 101, 101, 1)',
     },
     containerDay: {
         flex: 1,
+        height: 100,
         alignContent: 'center',
         alignSelf: 'center',
-        //paddingVertical: 60,
+    },
+    containerDate: {
+        flex: 1,
+        alignContent: 'center',
+        alignSelf: 'center',
     },
     body:{
         flex: 1,
@@ -345,6 +450,13 @@ const styles = StyleSheet.create({
     scrollPadd: {
 		paddingVertical: 10,
 	},
-    
+    upSpace: {
+        height:50,
+        width: 300,
+    },
+    textComp: {
+        flex: 1,
+        textAlign: 'center'
+    }
 });
 

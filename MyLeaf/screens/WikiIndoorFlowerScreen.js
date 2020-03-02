@@ -101,7 +101,7 @@ class FloweringScreen extends Component {
         }
         return (
             <View style={styles.containerMain}>
-            <Image source = {require('../imgs/grassBack1.jpg')} style = {styles.bkImage}/>
+            <Image source = {require('../imgs/carpetBlue.jpg')} style = {styles.bkImage}/>
                 <Header style={styles.header}>
                     <Left>
                         <TouchableOpacity onPress = {()=> {
@@ -121,12 +121,18 @@ class FloweringScreen extends Component {
                 </Header>
                 <View style={styles.container}>
                     <View style={styles.containerBody}>
-                        <ScrollView style={styles.scrollview} bounces={false}>
+                    <ScrollView style={styles.scrollview} bounces={false}>
                         <Image
                             style={styles.bkImage}
-                            source={require('../imgs/grassBack1.jpg')}
+                            source={require('../imgs/carpetBlue.jpg')}
                         />  
-                            <View style={styles.body}>
+                            <View style={styles.upSpace}>    
+                            </View>
+                            <View style={styles.containerText}>
+                                <Image
+                                    style={styles.bkImage}
+                                    source={require('../imgs/woodBack.jpeg')}
+                                /> 
                                 <View style={styles.plantTitle}>
                                     <Text style={styles.textTitle}>{item.name}</Text>
                                 </View>
@@ -135,20 +141,34 @@ class FloweringScreen extends Component {
                                     source={require('../imgs/plantPicture.jpg')}
                                 />  
                                 <View style={[styles.plantDescr, styles.padd]}>
-                                    <Text style={styles.textSubTitle}>Description:</Text>
-                                    <Text style={styles.textSection}>{JSON.stringify(item)}</Text>
+                                    <Text style={[styles.textSubTitle, styles.textComp]}>Description:</Text>
+                                    <Text style={[styles.textComp]}>{JSON.stringify(item)}</Text>
                                 </View>
-                                <View style={[styles.plantField, styles.padd]}>
-                                    <Text style={styles.textSubTitle}>Field1:</Text>
-                                    <Text style={styles.textSection}>{JSON.stringify(item)}</Text>
+                            </View>
+                            <View style={styles.body}>
+                                <View style={styles.containerField}>
+                                    <Image
+                                        style={styles.bkImage}
+                                        source={require('../imgs/woodBack.jpeg')}
+                                    /> 
+                                    <Text style={[styles.textSubTitle, styles.textComp]}>Field1:</Text>
+                                    <Text style={styles.textComp}>{JSON.stringify(item)}</Text>
                                 </View>
-                                <View style={[styles.plantField, styles.padd]}>
-                                    <Text style={styles.textSubTitle}>Field2:</Text>
-                                    <Text style={styles.textSection}>{JSON.stringify(item)}</Text>
+                                <View style={styles.containerField}>
+                                    <Image
+                                        style={styles.bkImage}
+                                        source={require('../imgs/woodBack.jpeg')}
+                                    /> 
+                                    <Text style={[styles.textSubTitle, styles.textComp]}>Field2:</Text>
+                                    <Text style={styles.textComp}>{JSON.stringify(item)}</Text>
                                 </View>
-                                <View style={[styles.plantField, styles.padd]}>
-                                    <Text style={styles.textSubTitle}>Field3:</Text>
-                                    <Text style={styles.textSection}>{JSON.stringify(item)}</Text>
+                                <View style={styles.containerField}>
+                                    <Image
+                                        style={styles.bkImage}
+                                        source={require('../imgs/woodBack.jpeg')}
+                                    /> 
+                                    <Text style={[styles.textSubTitle, styles.textComp]}>Field3:</Text>
+                                    <Text style={styles.textComp}>{JSON.stringify(item)}</Text>
                                 </View>
                             </View>
                         </ScrollView>
@@ -176,7 +196,44 @@ const styles = StyleSheet.create({
     containerNew: {
 		flex: 1,
 		alignItems:'center',
-	},
+    },
+    containerText: {
+        flex: 1,
+        alignContent: 'center',
+        alignSelf: 'center',
+        width: 300,
+        paddingHorizontal: 5,
+        shadowColor: "#000",
+        shadowOffset: {
+			width: 0,
+			height: 5,
+        },
+        shadowOpacity: 0.34,
+        shadowRadius: 6.27,
+        elevation: 10,
+        borderWidth: 3,
+        borderBottomWidth: 10,
+        borderColor: 'rgba(80, 48, 28, 1)',
+    },
+    containerField: {
+        flex: 1,
+        alignContent: 'center',
+        alignSelf: 'center',
+        width: 300,
+        paddingHorizontal: 5,
+        margin: 20,
+        borderColor: 'rgba(80, 48, 28, 1)',
+        shadowColor: "#000",
+        shadowOffset: {
+			width: 0,
+			height: 5,
+        },
+        shadowOpacity: 0.34,
+        shadowRadius: 6.27,
+        elevation: 10,
+        borderWidth: 3,
+        borderBottomWidth: 10,
+    },
     header: {
         backgroundColor: '#45803b',
         shadowColor: "#000",
@@ -283,5 +340,14 @@ const styles = StyleSheet.create({
     },
     padd: {
         paddingVertical: 60,
+    },
+    upSpace: {
+        height:50,
+        width: 300,
+    },
+    textComp: {
+        flex: 1,
+        textAlign: 'center',
+        paddingHorizontal: 5,
     },
 });

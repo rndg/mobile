@@ -11,7 +11,7 @@ export function plantImg(id) {
         return require('../imgs/plants/piant3.gif');
         break;
         case '4':
-        return require('../imgs/plants/pata.gif');
+        return require('../imgs/plants/pata1.gif');
         break;
         case '5':
         return require('../imgs/plants/carota.gif');

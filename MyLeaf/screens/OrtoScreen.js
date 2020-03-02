@@ -179,9 +179,9 @@ export default class OrtoScreen extends Component {
                 );
 			})
 			.then(res => {
+				this.setModalVisible(false);
                 this.setState({ reload: true });
             });
-		this.setModalVisible(false);
 	}
 
 	genEmpty () {
@@ -194,54 +194,72 @@ export default class OrtoScreen extends Component {
         if (item.id != null) {
 			if (index % 2 == 0){
 				return (
-					<ImageBackground source={require('../imgs/asse6-sx.png')} style={styles.backgroundImagePlant}>
-						<View >
-							<TouchableOpacity activeOpacity={0.7} onPress={() => {
-												this.setState({newPlant: false})
-												this.getActions(item.id);
-												this.setModalVisible(true);
-												this.state.plant = item;
-											}}
-											>
-								<FastImage
-									style={styles.plantImage}
-									source={plantImg(item.id_plant)}
-								/>
-									<Text style={styles.plantName}>{item.name}</Text>
-							</TouchableOpacity>
+					<View>
+						<ImageBackground source={require('../imgs/asse6-sx-sh.png')} style={styles.backgroundImagePlant}>
+							<View >
+								<TouchableOpacity activeOpacity={0.7} onPress={() => {
+													this.setState({newPlant: false})
+													this.getActions(item.id);
+													this.setModalVisible(true);
+													this.state.plant = item;
+												}}
+												>
+									<FastImage
+										style={styles.plantImage}
+										source={plantImg(item.id_plant)}
+									/>
+								</TouchableOpacity>
+							</View>
+						</ImageBackground>
+						<View style={styles.containerBanner}>
+							<ImageBackground source={require('../imgs/bannerNew.png')} style={styles.backgroundImagePlant}>
+								<Text style={styles.plantName}>{item.name}</Text>
+							</ImageBackground>
 						</View>
-					</ImageBackground>
+					</View>
 				);
 			} else {
 				return (
-					<ImageBackground source={require('../imgs/asse6-dx.png')} style={styles.backgroundImagePlant}>
-						<View >
-							<TouchableOpacity activeOpacity={0.7} onPress={() => {
-												this.setState({newPlant: false})
-												this.getActions(item.id);
-												this.setModalVisible(true);
-												this.state.plant = item;
-											}}
-											>
-								<FastImage
-									style={styles.plantImage}
-									source={plantImg(item.id_plant)}
-								/>
-									<Text style={styles.plantName}>{item.name}</Text>
-							</TouchableOpacity>
+					<View>
+						<ImageBackground source={require('../imgs/asse6-dx-sh.png')} style={styles.backgroundImagePlant}>
+							<View >
+								<TouchableOpacity activeOpacity={0.7} onPress={() => {
+													this.setState({newPlant: false})
+													this.getActions(item.id);
+													this.setModalVisible(true);
+													this.state.plant = item;
+												}}
+												>
+									<FastImage
+										style={styles.plantImage}
+										source={plantImg(item.id_plant)}
+									/>
+								</TouchableOpacity>
+							</View>
+						</ImageBackground>
+						<View style={styles.containerBanner}>
+							<ImageBackground source={require('../imgs/bannerNew.png')} style={styles.backgroundImagePlant}>
+								<Text style={styles.plantName}>{item.name}</Text>
+							</ImageBackground>
 						</View>
-					</ImageBackground>
+					</View>
 				);
 			}
         } else {
             return (
-				<ImageBackground source={require('../imgs/asse6-dx.png')} style={styles.backgroundImagePlant}>
-					<View >
-						<FastImage
-							style={styles.plantImage}
-						/>
+				<View>
+					<ImageBackground source={require('../imgs/asse6-dx.png')} style={styles.backgroundImagePlant}>
+						<View >
+							<FastImage
+								style={styles.plantImage}
+							/>
+						</View>
+					</ImageBackground>
+					<View style={styles.containerBanner}>
+						<ImageBackground source={require('../imgs/bannerEmpty.png')} style={styles.backgroundImagePlant}>
+						</ImageBackground>
 					</View>
-				</ImageBackground>
+				</View>
 			);
 		}
 	}
@@ -321,7 +339,7 @@ export default class OrtoScreen extends Component {
 						<Text>Nuova Pianta</Text>
 					</View>
 					<View style={styles.bigContainer}>
-					<View style={[styles.textInContainer, styles.rowInput]}> 
+						<View style={[styles.textInContainer, styles.rowInput]}> 
 							<TextInput
 								placeholder="Scegli un nome per la tua pianta"
 								onChangeText={data => this.setState({ plantName: data })}
@@ -382,7 +400,7 @@ export default class OrtoScreen extends Component {
 		}
 		return (
 			<View style={styles.container}>
-			<Image source={require('../imgs/soilBack1.jpg')} style={styles.bkImage}/>
+			<Image source={require('../imgs/carpetRed3.jpg')} style={styles.bkImage}/>
 				<View style={styles.container}>
 					<View style={styles.containerModal}>
 						<Modal
@@ -405,23 +423,29 @@ export default class OrtoScreen extends Component {
 						<ScrollView style={styles.scrollview} bounces={false}>
 							<Image
 								style={styles.bkImage}
-								source={require('../imgs/soilBack1.jpg')}
+								source={require('../imgs/carpetRed3.jpg')}
 							/>
-								<ImageBackground source={require('../imgs/asse6.png')} style={styles.backgroundImageNewPlant}>
-									<View style={styles.containerNew}>
-										<TouchableOpacity activeOpacity={0.7} onPress={() => {
-											this.setState({newPlant: true});
-											this.setModalVisible(!this.state.modalVisible);
-											}}
-										>
-											<FastImage
-												style={styles.plantImage}
-												source={require('../imgs/soilEmpty.png')}
-											/>
-												<Text style={styles.plantName}>NewItem</Text>
-										</TouchableOpacity>
-									</View>
-								</ImageBackground>
+								<View style={styles.containerNewItem}>
+									<ImageBackground source={require('../imgs/asse6-sh.png')} style={styles.backgroundImageNewPlant}>
+										<View style={styles.containerNew}>
+											<TouchableOpacity activeOpacity={0.7} onPress={() => {
+												this.setState({newPlant: true});
+												this.setModalVisible(!this.state.modalVisible);
+												}}
+											>
+												<FastImage
+													style={styles.plantImage}
+													source={require('../imgs/vuotoMetal.png')}
+												/>
+											</TouchableOpacity>
+										</View>
+									</ImageBackground>
+								</View>
+								<View style={styles.containerBannerNew}>
+									<ImageBackground source={require('../imgs/bannerNew.png')} style={styles.backgroundImagePlant}>
+										<Text style={styles.plantName}>New Plant</Text>
+									</ImageBackground>
+								</View>
 								<FlatList 
 									numColumns={2}
 									columnWrapperStyle={styles.row}
@@ -445,7 +469,6 @@ export default class OrtoScreen extends Component {
 	}
 
 	render() {
-        const { load } = (this.state.reload);
         if(this.state.isLoading) { return (
             <View style={styles.loadingIndicator}>
                 <ActivityIndicator/>
@@ -488,6 +511,17 @@ const styles = StyleSheet.create({
 		alignItems:'center',
 		height: 150,
 	},
+	containerNewItem: {
+		flex: 1,
+	},
+	containerBanner: {
+		flex: 1,
+	},
+	containerBannerNew: {
+		flex: 1,
+		alignSelf:'center',
+		width : 200,
+	},
 	textInContainer:{
 		flex: 0.5,
 		alignItems: 'center',
@@ -506,11 +540,12 @@ const styles = StyleSheet.create({
 	},
 	backgroundImagePlant: {
 		flex: 1,
+		height: 175,
 	},
 	backgroundImageNewPlant: {
 		flex: 1,
 		alignSelf:'center',
-		height: undefined,
+		height: 175,
 		width : 300,
 	},
 	plantImage: {
@@ -519,9 +554,11 @@ const styles = StyleSheet.create({
 	},
 	plantName: {
 		alignSelf:'center',
-		backgroundColor: '#45803b',
+		paddingVertical: 65,
+		
 	},
 	row: {
+		flex: 1,
 		backgroundColor: 'transparent',
 		justifyContent: 'center',
 	},

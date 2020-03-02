@@ -5,7 +5,7 @@ import {
     StyleSheet,
     Button,
     TouchableOpacity,
-    Image,
+    Image
 } from 'react-native';
 
 import {
@@ -71,27 +71,49 @@ class WikiScreen extends Component {
             <View style={styles.container}>
                 <View style={styles.upSpace}>    
                 </View>
-                <View style={styles.containerText}>
-                        <Text style={styles.textComp}>
-                            This is the wiki section. Here you can explore the types of plants supported by the application. You will find all the information regarding your favourite plants divided by the area in which it grows and then divided by type.
-                        </Text>
+                <View style={styles.containerText}> 
+                    <Image
+                        style={styles.bkImage}
+                        source={require('../imgs/woodBack.jpeg')}
+                    /> 
+                    <Text style={styles.textComp}>
+                        This is the wiki section. Here you can explore the types of plants supported by the application. You will find all the information regarding your favourite plants divided by the area in which it grows and then divided by type.
+                    </Text>
                 </View>
                 <View style={styles.containerButtons}>
-					<View style={styles.containerButton1}>
-						<AwesomeButtonRick type="anchor" stretch
-							onPress={() => 
-                                this.props.navigation.navigate('WikiIndoor')}>
-							<Text>Piante da Serra</Text>
-						</AwesomeButtonRick>
-					</View>
-					<View style={styles.containerButton2}>
-						<AwesomeButtonRick type="anchor" stretch
-							onPress={() => 
-								this.props.navigation.navigate('WikiOutdoor')}>
-							<Text>Piante da Orto</Text>
-						</AwesomeButtonRick>
-					</View>
-				</View>
+                    <View style={styles.containerButton1}>
+                        <AwesomeButtonRick type="anchor" stretch
+                            ExtraContent={
+                                <Image
+                                    style={styles.bkImage}
+                                    source={require('../imgs/woodBack.jpeg')}
+                                /> 
+                            }
+                            borderRadius={0}
+                            backgroundDarker="rgba(80, 48, 28, 1)"	//bordino del tasto
+                            borderColor="rgba(80, 48, 28, 1)"	
+                            onPress={() => 
+                            this.props.navigation.navigate('WikiIndoor')}>
+                            <Text>Piante da Serra</Text>
+                        </AwesomeButtonRick>
+                    </View>
+                    <View style={styles.containerButton2}>
+                        <AwesomeButtonRick type="anchor" stretch
+                            ExtraContent={
+                                <Image
+                                    style={styles.bkImage}
+                                    source={require('../imgs/woodBack.jpeg')}
+                                /> 
+                            }
+                            borderRadius={0}
+                            backgroundDarker="rgba(80, 48, 28, 1)"	//bordino del tasto
+                            borderColor="rgba(80, 48, 28, 1)"
+                            onPress={() => 
+                                this.props.navigation.navigate('WikiOutdoor')}>
+                            <Text>Piante da Orto</Text>
+                        </AwesomeButtonRick>
+                    </View>
+                </View>
             </View>
         );
     }
@@ -126,7 +148,7 @@ class WikiScreen extends Component {
     render () {
         return (
             <View style={styles.containerMain}>
-                <Image source = {require('../imgs/grassBack1.jpg')} style = {styles.bkImage}/>
+                <Image source = {require('../imgs/carpetGreen.jpg')} style = {styles.bkImage}/>
                 <Header style={styles.header}>
                     <Left>
                         <TouchableOpacity onPress = {()=> {
@@ -141,6 +163,7 @@ class WikiScreen extends Component {
                     </Left>
                 </Header>
                 <View style={styles.containerBody}>
+                    
                     {this.displayRoute()}
                 </View>
             </View>
@@ -160,14 +183,15 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
+    containerBody: {
+        flex: 1,
+    },
     containerText: {
-        flex: 0.5,
+        flex: 1,
         alignContent: 'center',
         alignSelf: 'center',
         width: 300,
-        paddingVertical: 60,
         paddingHorizontal: 5,
-        backgroundColor: 'rgba(149, 212, 74, 1)',
         shadowColor: "#000",
         shadowOffset: {
 			width: 0,
@@ -176,10 +200,9 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.34,
         shadowRadius: 6.27,
         elevation: 10,
-        borderRadius: 60,
         borderWidth: 3,
         borderBottomWidth: 10,
-        borderColor: 'rgba(74, 157, 43, 1)',
+        borderColor: 'rgba(80, 48, 28, 1)',
     },
     header: {
         backgroundColor: '#45803b',
@@ -229,5 +252,9 @@ const styles = StyleSheet.create({
     textComp: {
         flex: 1,
         textAlign: 'center'
+    },
+    scrollview: {
+		flex: 1,
+		backgroundColor: 'transparent'
     },
 });

@@ -75,13 +75,15 @@ export default class SerraScreen extends Component {
 				} 
 			})
 			.then(res => {
-                this.setState({ isLoading: false });
+				this.setState({ isLoading: false });
+				this.setState({ reload: false });
             });
 
 		selectPlants(this.state.type, this.state.sub_type).then(data => {
 			if (data != 'No Results Found') {
 				this.state.isLoading = false;
 				this.state.plants = data;
+				this.setState({ reload: false });
 			}
 		});
 		
@@ -195,7 +197,7 @@ export default class SerraScreen extends Component {
 			if (index % 2 == 0){
 				return (
 					<View>
-						<ImageBackground source={require('../imgs/mensola-up2-sx.png')} style={styles.backgroundImagePlant}>
+						<ImageBackground source={require('../imgs/mensola-up2-sx-sh.png')} style={styles.backgroundImagePlant}>
 							<View >
 								<TouchableOpacity activeOpacity={0.7} onPress={() => {
 													this.setState({newPlant: false});
@@ -212,7 +214,7 @@ export default class SerraScreen extends Component {
 							</View>
 						</ImageBackground>
 						<View style={styles.containerBanner}>
-							<ImageBackground source={require('../imgs/banner.png')} style={styles.backgroundImagePlant}>
+							<ImageBackground source={require('../imgs/bannerNew.png')} style={styles.backgroundImagePlant}>
 								<Text style={styles.plantName}>{item.name}</Text>
 							</ImageBackground>
 						</View>
@@ -221,7 +223,7 @@ export default class SerraScreen extends Component {
 			} else {
 				return (
 					<View>
-						<ImageBackground source={require('../imgs/mensola-up2-dx.png')} style={styles.backgroundImagePlant}>
+						<ImageBackground source={require('../imgs/mensola-up2-dx-sh.png')} style={styles.backgroundImagePlant}>
 							<View >
 								<TouchableOpacity activeOpacity={0.7} onPress={() => {
 													this.setState({newPlant: false})
@@ -238,7 +240,7 @@ export default class SerraScreen extends Component {
 							</View>
 						</ImageBackground>
 						<View style={styles.containerBanner}>
-							<ImageBackground source={require('../imgs/banner.png')} style={styles.backgroundImagePlant}>
+							<ImageBackground source={require('../imgs/bannerNew.png')} style={styles.backgroundImagePlant}>
 								<Text style={styles.plantName}>{item.name}</Text>
 							</ImageBackground>
 						</View>
@@ -256,6 +258,8 @@ export default class SerraScreen extends Component {
 						</View>
 					</ImageBackground>
 					<View style={styles.containerBanner}>
+						<ImageBackground source={require('../imgs/bannerEmpty.png')} style={styles.backgroundImagePlant}>
+						</ImageBackground>
 					</View>
 				</View>
 			);
@@ -285,8 +289,7 @@ export default class SerraScreen extends Component {
 							</View>
 							<View>
 								{this.genActionView()}
-							</View>
-							
+							</View>	
 						</View>
 						<View style={styles.containerButtons2}>
 							<View style={styles.containerButton1}>
@@ -399,7 +402,7 @@ export default class SerraScreen extends Component {
 		}
 		return (
 			<View style={styles.container}>
-			<Image source={require('../imgs/stone-piastrelle.jpg')} style={styles.bkImage}/> 
+			<Image source={require('../imgs/carpetBlue.jpg')} style={styles.bkImage}/> 
 				<View style={styles.container}>
 					<View style={styles.containerModal}>
 						<Modal
@@ -422,10 +425,10 @@ export default class SerraScreen extends Component {
 						<ScrollView style={styles.scrollview} bounces={false}>
 							<Image
 								style={styles.bkImage}
-								source={require('../imgs/stone-piastrelle.jpg')}
+								source={require('../imgs/carpetBlue.jpg')}
 							/>
 								<View style={styles.containerNewItem}>
-									<ImageBackground source={require('../imgs/mensola-up2.png')} style={styles.backgroundImageNewPlant}>
+									<ImageBackground source={require('../imgs/mensola-up2-sh.png')} style={styles.backgroundImageNewPlant}>
 										<View style={styles.containerNew}>
 											<TouchableOpacity activeOpacity={0.7} onPress={() => {
 												this.setState({newPlant: true});
@@ -441,7 +444,7 @@ export default class SerraScreen extends Component {
 									</ImageBackground>
 								</View>
 								<View style={styles.containerBannerNew}>
-									<ImageBackground source={require('../imgs/banner.png')} style={styles.backgroundImagePlant}>
+									<ImageBackground source={require('../imgs/bannerNew.png')} style={styles.backgroundImagePlant}>
 										<Text style={styles.plantName}>New Plant</Text>
 									</ImageBackground>
 								</View>

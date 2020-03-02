@@ -81,16 +81,23 @@ class AchievScreen extends Component {
     displayRow(item, index) {
         return (
             <View style={styles.row}>
-                <View style={styles.details}>
+                <View style={styles.containerTextAchiev}> 
                     <Image
-                        style={styles.AchievImage}
-                    />
-                    <View style={styles.col}> 
-                        <Text style={styles.achievName}>Name: {item.name}</Text>
-                        <Text style={styles.achievDescr}>Descrizione: {item.description}</Text>
+                        style={styles.bkImage}
+                        source={require('../imgs/woodBack.jpeg')}
+                    /> 
+                    <View style={styles.containerImage}>
+                        <Image
+                            style={styles.AchievImage}
+                            source={require('../imgs/medagliaOro.png')}
+                        />
+                    </View>
+                    <View style={styles.container}>
+                        <Text style={styles.achievName}>{item.name}</Text>
+                        <Text style={styles.achievDescr}>{item.description}</Text>
                         <View style={styles.bar}>
                             <ProgressBarAnimated
-                                width = {300}
+                                width = {285}
                                 height = {25}
                                 value={(item.progress/item.total)*100}
                                 maxValue = {100}
@@ -100,8 +107,7 @@ class AchievScreen extends Component {
                             />
                         </View>
                     </View>
-                </View>
-                
+                </View>        
             </View>
         )
     }
@@ -109,7 +115,7 @@ class AchievScreen extends Component {
     renderPage() {
         return (
             <View style={styles.containerMain}>
-            <Image source = {require('../imgs/grassBack1.jpg')} style = {styles.bkImage}/>
+            <Image source = {require('../imgs/carpetLBlue.jpg')} style = {styles.bkImage}/>
                 <Header style={styles.header}>
                     <Left>
                         <TouchableOpacity onPress = {()=> {
@@ -128,11 +134,21 @@ class AchievScreen extends Component {
                         <ScrollView style={styles.scrollview} bounces={false}>
                         <Image
                             style={styles.bkImage}
-                            source={require('../imgs/grassBack1.jpg')}
+                            source={require('../imgs/carpetLBlue.jpg')}
                         />  
                             <View style={styles.body}>
-                                <View style={styles.containerText}>
-                                    <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam non massa vitae nunc luctus interdum. Sed rutrum sit amet tortor ut congue. Vestibulum vitae porta diam. Aliquam facilisis sem a justo aliquam euismod. Curabitur facilisis elit eget odio tristique auctor. Quisque cursus enim magna. Aliquam viverra placerat erat, quis sollicitudin risus sodales ac. Nam fermentum ex ut suscipit gravida. Praesent nec eros hendrerit mi commodo accumsan ut eu velit. Nunc vehicula faucibus diam, nec molestie nunc placerat ut. In sagittis diam vel orci convallis fermentum.</Text>
+                                <View style={styles.upSpace}>    
+                                </View>
+                                <View style={styles.containerText}> 
+                                    <Image
+                                        style={styles.bkImage}
+                                        source={require('../imgs/woodBack.jpeg')}
+                                    /> 
+                                    <Text style={styles.textComp}>
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam non massa vitae nunc luctus interdum. Sed rutrum sit amet tortor ut congue. Vestibulum vitae porta diam. Aliquam facilisis sem a justo aliquam euismod. Curabitur facilisis elit eget odio tristique auctor. Quisque cursus enim magna. Aliquam viverra placerat erat, quis sollicitudin risus sodales ac. Nam fermentum ex ut suscipit gravida. Praesent nec eros hendrerit mi commodo accumsan ut eu velit. Nunc vehicula faucibus diam, nec molestie nunc placerat ut. In sagittis diam vel orci convallis fermentum.
+                                    </Text>
+                                </View>
+                                <View style={styles.upSpace}>    
                                 </View>
                                 <FlatList 
                                     numColumns={1}
@@ -181,7 +197,12 @@ const styles = StyleSheet.create({
     containerNew: {
 		flex: 1,
 		alignItems:'center',
-	},
+    },
+    containerImage: {
+        flex: 1,
+        height: 50,
+        paddingTop: 10,
+    },
     header: {
         backgroundColor: '#45803b',
         shadowColor: "#000",
@@ -210,17 +231,20 @@ const styles = StyleSheet.create({
 		bottom: 0
     },
     AchievImage: {
+        alignSelf: 'center',
         backgroundColor:'rgba(200, 200, 0, 1)',
         borderRadius:50,
         borderWidth: 3,
         borderColor: 'rgba(255, 0, 0, 0.3)',
         height: 30,
-		width : 30,
+        width : 30,
     },
     row: {
         flex: 1,
-        paddingLeft: 25,
-        paddingRight: 10,
+        alignSelf: 'center',
+        //paddingLeft: 25,
+        //paddingRight: 10,
+        width: 300,
     },
     details: {
         flex: 1,
@@ -232,7 +256,6 @@ const styles = StyleSheet.create({
     bar: {
         flex: 1,
         paddingVertical: 15,
-        //paddingHorizontal: 15,
     },
     col:{
         flex: 1,
@@ -267,7 +290,36 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         alignSelf: 'center',
         width: 300,
-        paddingVertical: 60,
+        paddingHorizontal: 5,
+        shadowColor: "#000",
+        shadowOffset: {
+			width: 0,
+			height: 5,
+        },
+        shadowOpacity: 0.34,
+        shadowRadius: 6.27,
+        elevation: 10,
+        borderWidth: 3,
+        borderBottomWidth: 10,
+        borderColor: 'rgba(80, 48, 28, 1)',
+    },
+    containerTextAchiev: {
+        flex: 1,
+        alignContent: 'center',
+        alignSelf: 'center',
+        width: 300,
+        paddingHorizontal: 5,
+        shadowColor: "#000",
+        shadowOffset: {
+			width: 0,
+			height: 5,
+        },
+        shadowOpacity: 0.34,
+        shadowRadius: 6.27,
+        elevation: 10,
+        borderWidth: 3,
+        borderBottomWidth: 10,
+        borderColor: 'rgba(80, 48, 28, 1)',
     },
     body:{
         //alignItems: 'center', 
@@ -278,7 +330,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'rgba(92, 145, 28, 1)',
+    },
+    upSpace: {
+        height:50,
+        width: 300,
+    },
+    textComp: {
+        flex: 1,
+        textAlign: 'center'
     }
-    
 });
 

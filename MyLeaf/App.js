@@ -55,7 +55,7 @@ import AwesomeButtonRick from "react-native-really-awesome-button/src/themes/ric
 const customTextInputProps = {
 	underlineColorAndroid: 'rgba(0,0,0,0)',
 	style: {
-		fontSize: 15,
+		fontSize: 18,
 		fontFamily: 'Hey Comic',
 	}
 };
@@ -63,7 +63,7 @@ const customTextInputProps = {
 // Setting default styles for all Text components.
 const customTextProps = {
 	style: {
-		fontSize: 15,
+		fontSize: 18,
 		fontFamily: 'Hey Comic',
 		//alignSelf: 'center',
 	}

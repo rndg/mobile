@@ -89,15 +89,26 @@ class OrnamentalScreen extends Component {
     displayRow(item, index) {
         return (
             <View style={styles.containerPlant}>
-                <TouchableOpacity activeOpacity={0.7} onPress={() => {
-                    this.props.navigation.navigate('WikiIndoorFlower',
-                        {
-                            id: item,
-                            otherParam: 'Ornamentali',
+                <AwesomeButtonRick type="anchor" stretch
+                    ExtraContent={
+                        <Image
+                            style={styles.bkImage}
+                            source={require('../imgs/woodBack.jpeg')}
+                        /> 
+                    }
+                    borderRadius={0}
+                    backgroundDarker="rgba(80, 48, 28, 1)"	//bordino del tasto
+                    borderColor="rgba(80, 48, 28, 1)"
+                    height={200}
+                    onPress={() => {
+                            this.props.navigation.navigate('WikiIndoorFlower',
+                            {
+                                id: item,
+                                otherParam: 'Ornamentali',
+                            }
+                        )
                         }
-                    )
-                }}
-                >
+                    }>
                     <View style={styles.row}>
                         <FastImage
                             style={styles.plantImage}
@@ -110,7 +121,8 @@ class OrnamentalScreen extends Component {
                             </View>
                         </View>
                     </View>
-                </TouchableOpacity>
+                </AwesomeButtonRick>
+                
             </View>
         )
     }
@@ -118,7 +130,7 @@ class OrnamentalScreen extends Component {
     renderPage() {
         return (
             <View style={styles.containerMain}>
-            <Image source = {require('../imgs/grassBack1.jpg')} style = {styles.bkImage}/>
+            <Image source = {require('../imgs/carpetBlue.jpg')} style = {styles.bkImage}/>
                 <Header style={styles.header}>
                     <Left>
                         <TouchableOpacity onPress = {()=> {
@@ -133,15 +145,19 @@ class OrnamentalScreen extends Component {
                 </Header>
                 <View style={styles.container}>
                     <View style={styles.containerBody}>
-                        <ScrollView style={styles.scrollview} bounces={false}>
+                        <ScrollView style={styles.scrollview} bounces={false} showsVerticalScrollIndicator={false}>
                         <Image
                             style={styles.bkImage}
-                            source={require('../imgs/grassBack1.jpg')}
+                            source={require('../imgs/carpetBlue.jpg')}
                         />  
                             <View style={styles.body}>
                                 <View style={styles.upSpace}>    
                                 </View>
                                 <View style={styles.containerText}>
+                                    <Image
+                                        style={styles.bkImage}
+                                        source={require('../imgs/woodBack.jpeg')}
+                                    />
                                     <Text style={styles.textComp}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam non massa vitae nunc luctus interdum. Sed rutrum sit amet tortor ut congue. Vestibulum vitae porta diam. Aliquam facilisis sem a justo aliquam euismod. Curabitur facilisis elit eget odio tristique auctor. Quisque cursus enim magna. Aliquam viverra placerat erat, quis sollicitudin risus sodales ac. Nam fermentum ex ut suscipit gravida. Praesent nec eros hendrerit mi commodo accumsan ut eu velit. Nunc vehicula faucibus diam, nec molestie nunc placerat ut. In sagittis diam vel orci convallis fermentum.</Text>
                                 </View>
                                 <View style={styles.upSpace}>    
@@ -157,6 +173,8 @@ class OrnamentalScreen extends Component {
                                         </View>
                                     } 
                                 />
+                                <View style={styles.emptyRow}>    
+                                </View>
                             </View>
                         </ScrollView>
                     </View>
@@ -234,6 +252,10 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
     },
+    emptyRow: {
+        flex: 1,
+        height: 150,
+    },
     col:{
         flex: 1,
         flexDirection: 'column',
@@ -263,7 +285,6 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         alignSelf: 'center',
         width: 300,
-        paddingVertical: 60,
         paddingHorizontal: 5,
         backgroundColor: 'rgba(149, 212, 74, 1)',
         shadowColor: "#000",
@@ -274,27 +295,13 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.34,
         shadowRadius: 6.27,
         elevation: 10,
-        borderRadius: 60,
         borderWidth: 3,
         borderBottomWidth: 10,
-        borderColor: 'rgba(74, 157, 43, 1)',
+        borderColor: 'rgba(80, 48, 28, 1)',
     },
     containerPlant: {
         flex: 1,
         width: 300,
-        backgroundColor: 'rgba(149, 212, 74, 1)',
-        shadowColor: "#000",
-        shadowOffset: {
-			width: 0,
-			height: 5,
-        },
-        shadowOpacity: 0.34,
-        shadowRadius: 6.27,
-        elevation: 10,
-        borderRadius: 60,
-        borderWidth: 3,
-        borderBottomWidth: 10,
-        borderColor: 'rgba(74, 157, 43, 1)',
     },
     body:{
         //alignItems: 'center', 
